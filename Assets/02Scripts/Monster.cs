@@ -65,7 +65,7 @@ public class Monster : MonoBehaviour
 
         Vector3 dir = _target.position - this.transform.position;
         dir.Normalize();
-        Vector3 dir = _target.transform.position - this.transform.position;
+        //Vector3 dir = _target.transform.position - this.transform.position;
 
 
         // 내비게이션 목적지를 타겟으로 위치
