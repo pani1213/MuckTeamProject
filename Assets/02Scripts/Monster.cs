@@ -85,7 +85,7 @@ public class monster : MonoBehaviour
     public void Trace()
     {
         Vector3 dir = _target.transform.position - this.transform.position;
-        dir = nomal
+        //dir = nomal
 
         _navMeshAgent.destination = _target.position;
 
