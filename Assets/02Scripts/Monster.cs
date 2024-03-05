@@ -62,8 +62,11 @@ public class Monster : MonoBehaviour
 
     public void Trace()
     {
+
         Vector3 dir = _target.position - this.transform.position;
         dir.Normalize();
+        Vector3 dir = _target.transform.position - this.transform.position;
+
 
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
