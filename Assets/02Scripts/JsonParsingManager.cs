@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using System;
-using static UnityEditor.Progress;
-using UnityEngine.UI;
-using JetBrains.Annotations;
 
-public class JsonParsingManager : MonoBehaviour
+
+public class JsonParsingManager : Singleton<JsonParsingManager>
 {
-
     public TextAsset itemTextAsset;
-
-    void Start()
+    public Items itemData;
+    public void InIt()
     {
-        Items itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
+        itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
         foreach (Item it in itemData.ItemData) ;
     }
 }
@@ -37,5 +33,9 @@ public class Item
     public int makeCount;
     public int cookingTime;
 }
-
+public class InvenItem
+{ 
+    public Item item;
+    public int count;
+}
 

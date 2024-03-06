@@ -7,9 +7,7 @@ public enum MonsterState
     Idle,
     Trace,
     Comeback
-
 }
-
 public class Monster : MonoBehaviour
 {
     private Transform _target;            // 플레이어
