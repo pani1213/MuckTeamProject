@@ -31,14 +31,18 @@ public class Monster : MonoBehaviour, IHitable
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
     private float _idleTimer;
-    
 
+    public CharacterController _characterController;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
+        _characterController = GetComponent<CharacterController>();
+        _characterController.isTrigger = false;
+
+
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = MoveSpeed;
 
@@ -96,7 +100,10 @@ public class Monster : MonoBehaviour, IHitable
 
         Vector3 dir = _target.transform.position - this.transform.position;
         dir.Normalize();
-       
+
+        // 내비게이션이 접근하는 최소 거리를 공격 가능 거리로 설정
+        _navMeshAgent.stoppingDistance = AttackDistance;
+
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
 
@@ -105,6 +112,13 @@ public class Monster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
+        }
+
+        if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
+        {
+            Debug.Log("상태 전환: Trace -> Attack");
+            _animator.SetTrigger("TraceToAttack");
+            _currentState = MonsterState.Attack;
         }
 
     }

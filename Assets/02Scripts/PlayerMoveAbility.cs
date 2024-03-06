@@ -10,7 +10,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private float currentCameraRotationX;
 
     private CharacterController _characterController;
-
+    private Animator _animator;
     // wasd: 이동
     public float MoveSpeed = 5;
 
@@ -33,9 +33,14 @@ public class PlayerMoveAbility : MonoBehaviour
     private const float GravityConstant = -9.81f; // 중력 상수
 
 
-    void Start()
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();
+    }
+    void Start()
+    {
+   
         Cursor.visible = false;
 
         lookSensitivity = 2f; // 마우스 민감도를 조절하는 값, 적절한 값으로 조정
@@ -63,7 +68,7 @@ public class PlayerMoveAbility : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir.Normalize();
 
-        float speed = MoveSpeed;
+        dir = Camera.main.transform.TransformDirection(dir); // 글로벌 좌표계 (세상의 동서남북)
 
         // Shift 누르면 빨리 뛰기
         if (Input.GetKey(KeyCode.LeftShift))

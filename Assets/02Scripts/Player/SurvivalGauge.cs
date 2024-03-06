@@ -15,12 +15,15 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
     public void Hit(DamageInfo damageInfo)
     {
-        
         PlayerHealth -= damageInfo.Amount;
 
         if (PlayerHealth <= 0)
         {
-            gameObject.SetActive(false); // 플레이어 사망
+
+            
+            gameObject.SetActive(false);
+
+           
         }
     }
 
