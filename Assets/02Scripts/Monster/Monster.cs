@@ -10,20 +10,29 @@ public enum MonsterState
     Comeback,
     Attack,
     Die
-
 }
-
+public enum MonsterType
+{
+    Melee,
+    LongRange
+}
+ 
 public class Monster : MonoBehaviour, IHitable
 {
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
     /********************************************************/
-
     private Transform _target;            // 플레이
+    private Vector3 StartPosition;         // 시작위치
+    public MonsterType _monsterType;      
+
+    public CharacterController _characterController;
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+
     public float MoveSpeed       = 5;     // 몬스터 속도
     public float FindDistance    = 5f;    // 감지거리
-    public Vector3 StartPosition;         // 시작위치
     public float MoveDistance    = 40f;   // 움직일 수 있는 거리
     public const float TOLERANCE = 0.1f;  // 오차범위
     public float AttackDistance  = 2f;    // 공격범위
@@ -32,9 +41,10 @@ public class Monster : MonoBehaviour, IHitable
     public const float AttackDelay = 1f;  // 공격딜레이
     private float _idleTimer;
 
-    public CharacterController _characterController;
-    private NavMeshAgent _navMeshAgent;
-    private Animator _animator;
+    public GameObject BulletPrefab;
+    public Transform BulletPoint;
+    public float BulletSpeed = 10f;
+
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
@@ -158,7 +168,6 @@ public class Monster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
-            
             return;
         }
 
@@ -167,7 +176,15 @@ public class Monster : MonoBehaviour, IHitable
         if (_attackTimer >= AttackDelay)
         {
             _animator.SetTrigger("Attack");
-            MeleeAttack();
+            if (_monsterType == MonsterType.Melee)
+            {
+                MeleeAttack();
+            }
+            
+            if (_monsterType == MonsterType.LongRange)
+            {
+                LongRangeAttack();
+            }
             
         }
 
@@ -184,6 +201,27 @@ public class Monster : MonoBehaviour, IHitable
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
         }
+    }
+    
+   public void LongRangeAttack()
+    {
+
+        
+        transform.LookAt(_target);
+
+        
+        _attackTimer = 0f;
+
+        
+        GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
+
+
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+ 
+        Vector3 bulletDir = _target.position - BulletPoint.position;
+        rb.velocity = bulletDir.normalized * BulletSpeed;
+        Debug.Log(rb.velocity);
+        
     }
     
 
