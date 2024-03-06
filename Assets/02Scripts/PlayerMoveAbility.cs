@@ -35,8 +35,13 @@ public class PlayerMoveAbility : MonoBehaviour
 
     void Start()
     {
-        _characterController = GetComponent<CharacterController>();  
+        _characterController = GetComponent<CharacterController>();
         Cursor.visible = false;
+
+        lookSensitivity = 2f; // 마우스 민감도를 조절하는 값, 적절한 값으로 조정
+        cameraRotationLimit = 85f; // 카메라가 위아래로 회전할 수 있는 최대 각도, 85도 정도가 적당
+        currentCameraRotationX = 0f; // 초기 카메라 X축 회전값을 0으로 설정
+
     }
 
 
@@ -64,15 +69,13 @@ public class PlayerMoveAbility : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Stamina -= StaminaConsumeSpeed * Time.deltaTime;
+            dir *= RunSpeed;
 
-            if (Stamina > 0)
-            {
-                speed = RunSpeed;
-            }
         }
         else
         {
             Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
+            dir *= MoveSpeed;
         }
 
         Stamina = Mathf.Clamp(Stamina, 0, 100); // 값이 넘어가지 않도록
@@ -128,16 +131,16 @@ public class PlayerMoveAbility : MonoBehaviour
         currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
 
         // 카메라의 회전을 적용
-        theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+        theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, theCamera.transform.localEulerAngles.y, 0f);
     }
 
     private void CharacterRotation()
     {
         // 마우스 좌우(X) 움직임을 받아 캐릭터의 회전을 결정
         float _yRotation = Input.GetAxisRaw("Mouse X");
-        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * lookSensitivity;
+        Vector3 _characterRotationY = Vector3.up * _yRotation * lookSensitivity;
 
         // 캐릭터의 회전을 적용
-        _characterController.transform.Rotate(_characterRotationY);
+        transform.Rotate(_characterRotationY);
     }
 }
