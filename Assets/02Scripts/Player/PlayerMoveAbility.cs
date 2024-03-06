@@ -11,19 +11,11 @@ public class PlayerMoveAbility : MonoBehaviour
 
     private CharacterController _characterController;
     private Animator _animator;
+
     // wasd: 이동
     public float MoveSpeed = 5;
 
-    // shift: 스태미나
-
-    public float RunSpeed = 10;
-    public float Stamina = 100;             // 스태미나
-    public const float MaxStamina = 100;    // 최대량
-    public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
-    public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
-
     // spacebar: 점프
-
     public float JumpPower = 10;
     public int JumpMaxCount = 2;
     public int JumpRemainCount;
@@ -32,15 +24,15 @@ public class PlayerMoveAbility : MonoBehaviour
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
     private const float GravityConstant = -9.81f; // 중력 상수
 
-
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
     }
+
     void Start()
     {
-   
+        _characterController = GetComponent<CharacterController>();
         Cursor.visible = false;
 
         lookSensitivity = 2f; // 마우스 민감도를 조절하는 값, 적절한 값으로 조정
@@ -68,22 +60,8 @@ public class PlayerMoveAbility : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir.Normalize();
 
-        dir = Camera.main.transform.TransformDirection(dir); // 글로벌 좌표계 (세상의 동서남북)
+        dir = Camera.main.transform.TransformDirection(dir);
 
-        // Shift 누르면 빨리 뛰기
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Stamina -= StaminaConsumeSpeed * Time.deltaTime;
-            dir *= RunSpeed;
-
-        }
-        else
-        {
-            Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
-            dir *= MoveSpeed;
-        }
-
-        Stamina = Mathf.Clamp(Stamina, 0, 100); // 값이 넘어가지 않도록
 
         bool isGrounded()
         {
