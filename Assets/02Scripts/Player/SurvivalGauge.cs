@@ -26,17 +26,19 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
     private CharacterController _characterController;
 
+
+    void Start()
+    {
+        PlayerHealth = Maxhealth;
+        PlayerHunger = Maxhunger;
+    }
     public void Hit(DamageInfo damageInfo)
     {
         PlayerHealth -= damageInfo.Amount;
 
         if (PlayerHealth <= 0)
         {
-
-            
-            gameObject.SetActive(false);
-
-           
+            gameObject.SetActive(false);          
         }
     }
 
@@ -64,11 +66,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         //_characterController.Move(dir * Time.deltaTime);
     }
 
-    void Start()
-    {
-        PlayerHealth = Maxhealth;
-        PlayerHunger = Maxhunger;
-    }
+
 
     void Update()
     {

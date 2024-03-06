@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour, IHitable
     public float MoveDistance    = 40f;   // 움직일 수 있는 거리
     public const float TOLERANCE = 0.1f;  // 오차범위
     public float AttackDistance  = 2f;    // 공격범위
-    public float Damage          = 10;
+    public int Damage            = 10;    // 공격력
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
     private float _idleTimer;
@@ -48,7 +48,7 @@ public class Monster : MonoBehaviour, IHitable
 
         _animator = GetComponentInChildren<Animator>();
 
-        _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 태그 플레이어를 넣어줌
+        _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 플레이어를 넣어줌
 
         StartPosition = transform.position;
 
@@ -158,69 +158,38 @@ public class Monster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
+            
             return;
         }
 
-        // 실습 과제 35. Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
+        // Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
         {
             _animator.SetTrigger("Attack");
+            MeleeAttack();
             
         }
 
     }
 
-    public void PlayerAttack()
+    public void MeleeAttack()
     {
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null)
         {
             Debug.Log("때렸다!");
 
-            DamageInfo damageInfo = new DamageInfo(DamageType.Normal, (int)Damage);
+            DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
         }
     }
+    
 
     public void Hit(DamageInfo damage)
     {
-        if (_currentState == MonsterState.Die)
-        {
-            return;
-        }
-
-        // Todo. 데미지 타입이 크리티컬이면 피흘리기
-        if (damage.DamageType == DamageType.Critical)
-        {
-           
-        }
-        // Todo. 실습 과제 47: 블러드를 팩토리패턴으로 구현하기 (파일 및 클래스명: BloodFactory)
-
-
-
         Health -= damage.Amount;
-        if (Health <= 0)
-        {
-
-            if (Random.Range(0, 2) == 0)
-            {
-                Debug.Log("상태 전환: Any -> Die1");
-                _animator.SetTrigger("Die1");
-                _currentState = MonsterState.Die;
-            }
-            else
-            {
-                Debug.Log("상태 전환: Any -> Die2");
-                _animator.SetTrigger("Die2");
-                _currentState = MonsterState.Die;
-
-
-            }
-
-        }
-       
     }
     public void Die()
     {
