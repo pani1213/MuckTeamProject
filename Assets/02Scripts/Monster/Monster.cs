@@ -2,16 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 public enum MonsterState
 {
     Idle,
     Trace,
-    Comeback
+    Comeback,
+    Attack,
+    Die
 
 }
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IHitable
 {
+    public int Health;
+    public int MaxHealth = 100;
+    public Slider HealthSliderUI;
+    /********************************************************/
+
     private Transform _target;            // 플레이어
     public float MoveSpeed       = 5;     // 몬스터 속도
     public float FindDistance    = 5f;    // 감지거리
@@ -23,6 +31,7 @@ public class Monster : MonoBehaviour
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
     private float _idleTimer;
+    
 
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
@@ -45,10 +54,13 @@ public class Monster : MonoBehaviour
     public void Init()
     {
         _idleTimer = 0f;
+        Health = MaxHealth;
     }
 
     public void Update()
     {
+        HealthSliderUI.value = (float)Health / (float)MaxHealth; // 체력바 0 ~ 1
+
         switch (_currentState)
         {
             case MonsterState.Idle:
@@ -59,6 +71,12 @@ public class Monster : MonoBehaviour
                 break;
             case MonsterState.Comeback:
                 Comeback();
+                break;
+            case MonsterState.Attack:
+                Attack();
+                break;
+            case MonsterState.Die:
+                Die();
                 break;
         }
     }
@@ -115,6 +133,84 @@ public class Monster : MonoBehaviour
             _currentState = MonsterState.Idle;
         }
 
+    }
+
+    private void Attack()
+    {
+        // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
+        if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
+        {
+            _attackTimer = 0f;
+            Debug.Log("상태 전환: Attack -> Trace");
+            _animator.SetTrigger("AttackToTrace");
+            _currentState = MonsterState.Trace;
+            return;
+        }
+
+        // 실습 과제 35. Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
+        _attackTimer += Time.deltaTime;
+        if (_attackTimer >= AttackDelay)
+        {
+            _animator.SetTrigger("Attack");
+            
+        }
+
+    }
+
+    public void PlayerAttack()
+    {
+        IHitable playerHitable = _target.GetComponent<IHitable>();
+        if (playerHitable != null)
+        {
+            Debug.Log("때렸다!");
+
+            DamageInfo damageInfo = new DamageInfo(DamageType.Normal, (int)Damage);
+            playerHitable.Hit(damageInfo);
+            _attackTimer = 0f;
+        }
+    }
+
+    public void Hit(DamageInfo damage)
+    {
+        if (_currentState == MonsterState.Die)
+        {
+            return;
+        }
+
+        // Todo. 데미지 타입이 크리티컬이면 피흘리기
+        if (damage.DamageType == DamageType.Critical)
+        {
+           
+        }
+        // Todo. 실습 과제 47: 블러드를 팩토리패턴으로 구현하기 (파일 및 클래스명: BloodFactory)
+
+
+
+        Health -= damage.Amount;
+        if (Health <= 0)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+                Debug.Log("상태 전환: Any -> Die1");
+                _animator.SetTrigger("Die1");
+                _currentState = MonsterState.Die;
+            }
+            else
+            {
+                Debug.Log("상태 전환: Any -> Die2");
+                _animator.SetTrigger("Die2");
+                _currentState = MonsterState.Die;
+
+
+            }
+
+        }
+       
+    }
+    public void Die()
+    {
+        
     }
 }
 
