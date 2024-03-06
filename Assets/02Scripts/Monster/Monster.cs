@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour, IHitable
     public Slider HealthSliderUI;
     /********************************************************/
 
-    private Transform _target;            // 플레이어
+    private Transform _target;            // 플레이
     public float MoveSpeed       = 5;     // 몬스터 속도
     public float FindDistance    = 5f;    // 감지거리
     public Vector3 StartPosition;         // 시작위치
