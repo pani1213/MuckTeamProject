@@ -52,6 +52,7 @@ public class PlayerMoveAbility : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
     }
 
+    // 구현필요) 앞으로 키 + 마우스를 누르고 있으면 카메라가 보는 방향 앞으로 가야한다.
     private void Move()
     {
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
