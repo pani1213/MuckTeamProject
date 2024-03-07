@@ -22,7 +22,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private bool _isJumping = false;
     // private float _gravity = -5;        // 중력 값
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
-    private const float GravityConstant = -9.81f; // 중력 상수
+    private const float GravityConstant = -20.81f; // 중력 상수
 
     private void Start()
     {
