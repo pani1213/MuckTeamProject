@@ -49,10 +49,8 @@ public class PlayerMoveAbility : MonoBehaviour
 
         dir = Camera.main.transform.TransformDirection(dir);
 
-
         // 접지 확인 함수
         bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
-
 
         if (isGrounded)
         {
@@ -102,6 +100,6 @@ public class PlayerMoveAbility : MonoBehaviour
         _characterController.transform.Rotate(rotation);
 
         // 카메라의 y축 회전도 같이 적용하여 카메라가 캐릭터를 따라 회전하도록 함
-        theCamera.transform.Rotate(0f, _yRotation, 0f);
+        theCamera.transform.Rotate(rotation);
     }
 }

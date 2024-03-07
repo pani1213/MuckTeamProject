@@ -18,11 +18,19 @@ public class InventoryController : MonoBehaviour
 
     private ItemSlot _currentSeletItemSlot;
     private ItemSlot _dropItemSlot;
+    private int halfCount = 0;
+
+    private bool isRightClick = false;
     private void Start()
     {
         InIt();
         GameManager.instance.action = InIt;
         mPointerEventData = new PointerEventData(null);
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+            InIt();
     }
     public void InIt()
     {
@@ -37,28 +45,41 @@ public class InventoryController : MonoBehaviour
         mPointerEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         mRayCaster.Raycast(mPointerEventData, results);
+
+        if (results.Count <= 0)
+            return;
         // 오른쪽클릭 드래그 (전체 선택)
         if (Input.GetMouseButton(0))
         {
-            if (results.Count > 0)
+            Debug.Log(results[0].gameObject.name);
+            if (results[0].gameObject.TryGetComponent<ItemSlot>(out _currentSeletItemSlot))
             {
-                Debug.Log(results[0].gameObject.name);
-                if (results[0].gameObject.TryGetComponent<ItemSlot>(out _currentSeletItemSlot))
-                {
-                    _currentSeletItemSlot.Empty_UI();
-                    DragSlot.dragInven = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
-                    DragSlot.InIt_DragSlot();
-                }
-                else
-                    Debug.Log("result에서 itemSlot을 찾을수 없음");
+                _currentSeletItemSlot.Empty_UI();
+                DragSlot.dragInven = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
+                DragSlot.InIt_DragSlot();
             }
             else
-                Debug.Log("드래그 대상 없음");
+                Debug.Log("result에서 itemSlot을 찾을수 없음");
         }
         // 왼쪽클릭 드래그 (절반선택)
         if (Input.GetMouseButton(1))
         {
+            isRightClick = true;
+            Debug.Log(results[0].gameObject.name);
+            if (results[0].gameObject.TryGetComponent<ItemSlot>(out _currentSeletItemSlot))
+            {
+                int count = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].count;
+                DragSlot.dragInven = new InvenItem()
+                { item = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].item, count = count.GetHalf().A };
+                halfCount = count.GetHalf().B;
+                ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].count = halfCount;
+                Debug.Log(ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].count);
 
+                DragSlot.InIt_DragSlot();
+                _currentSeletItemSlot.Refresh_SlotUI();
+            }
+            else
+                Debug.Log("result에서 itemSlot을 찾을수 없음");
         }
     }
     //event_trigger
@@ -75,26 +96,59 @@ public class InventoryController : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         mRayCaster.Raycast(mPointerEventData, results);
 
-        if (results.Count > 0)
+        if (results.Count <= 0)
         {
+            Debug.Log("닿은 객체 없음");
+            EndDrag();
+            return;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log(0);
             if (results[0].gameObject.TryGetComponent<ItemSlot>(out _dropItemSlot))
             {
                 if (DragSlot.dragInven != null)
                 {
+                    ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.slotIndex, _dropItemSlot.slotIndex);
                     _dropItemSlot.Refresh_SlotUI();
                 }
-
-
             }
         }
+        if (Input.GetMouseButtonUp(1))
+        {
+            Debug.Log(1);
+        }
+
         EndDrag();
     }
 
     private void EndDrag()
     {
-        DragSlot.dragInven = null;
+
+        if (isRightClick)
+        {
+            if (_dropItemSlot == null)
+            { 
+                ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].count += DragSlot.dragInven.count;
+                Debug.Log(ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex].count);
+                _currentSeletItemSlot.Refresh_SlotUI();
+            }
+            else
+            { 
+                ItemInfoManager.instance.itemInventory[_dropItemSlot.slotIndex].count += DragSlot.dragInven.count;
+                Debug.Log(ItemInfoManager.instance.itemInventory[_dropItemSlot.slotIndex].count);
+                _dropItemSlot.Refresh_SlotUI();
+            }
+        }
+        
+        _currentSeletItemSlot = null;
+        _dropItemSlot = null;
+
+        isRightClick = false;
         DragSlot.dragInven = null;
         DragSlot.InIt_DragSlot();
+        if(_currentSeletItemSlot != null)
         _currentSeletItemSlot.Refresh_SlotUI();
     }
 }

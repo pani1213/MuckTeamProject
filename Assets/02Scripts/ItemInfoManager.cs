@@ -17,7 +17,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
             itemInventory.Add(new InvenItem() { item = null, count = 0 });
     }
     public void InsertItemInventory(Item _item,int _count = 1)
-    {
+    { 
         int emptyIndex = GetEmptyInvenIndex();
         int itemIndex = GetItemIndex(_item);
         if (itemIndex == -1) // 중복된 아이템이 없을때 -1
@@ -34,6 +34,17 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
             SetInven(itemIndex, _item, _count);
         }
     }
+    // 인벤토리 요소 스왑 (전체스왑)
+    public void InvenSwap(int _indexA , int _indexB)
+    {
+        InvenItem tempInve = null;
+
+        tempInve = itemInventory[_indexA];
+        itemInventory[_indexA] = itemInventory[_indexB];
+        itemInventory[_indexB] = tempInve;
+        //Debug.Log(itemInventory[_indexA].);
+    }
+    
     /// <summary>
     /// full item return null
     /// </summary>
@@ -42,7 +53,10 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     {
         for (int i = 0; i < itemInventory.Count; i++)
             if (itemInventory[i].item == null)
+            {
                 return i;
+            }
+
         return -1;
     }
     /// <summary>
