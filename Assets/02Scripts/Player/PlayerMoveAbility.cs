@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMoveAbility : MonoBehaviour
 {
     public Camera theCamera;
-    private float lookSensitivity;          // 마우스의 움직임에 따른 회전 민감도
-    private float cameraRotationLimit;
-    private float currentCameraRotationX;
+    private float lookSensitivity = 2f;          // 마우스의 움직임에 따른 회전 민감도
+    private float cameraRotationLimit = 85f;
+    private float currentCameraRotationX = 0f;
 
     private CharacterController _characterController;
     private Animator _animator;
@@ -24,20 +24,12 @@ public class PlayerMoveAbility : MonoBehaviour
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
     private const float GravityConstant = -9.81f; // 중력 상수
 
-    private void Awake()
+    private void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
-    }
-
-    void Start()
-    {
-        _characterController = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        lookSensitivity = 2f; // 마우스 민감도를 조절하는 값, 적절한 값으로 조정
-        cameraRotationLimit = 85f; // 카메라가 위아래로 회전할 수 있는 최대 각도, 85도 정도가 적당
-        currentCameraRotationX = 0f; // 초기 카메라 X축 회전값을 0으로 
     }
 
     private void Update()
@@ -45,9 +37,6 @@ public class PlayerMoveAbility : MonoBehaviour
         Move();
         CameraRotation();       // 마우스 위아래(Y) 움직임
         CharacterRotation();    // 마우스 좌우(X) 움직임
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Move()
@@ -55,73 +44,64 @@ public class PlayerMoveAbility : MonoBehaviour
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
 
-        Vector3 dir = new Vector3(h, 0, v);
+        Vector3 dir = transform.right * h + transform.forward * v;
         dir.Normalize();
 
         dir = Camera.main.transform.TransformDirection(dir);
 
 
-        bool isGrounded()
-        {
-            float distanceToGround = _characterController.height / 2;
-            return Physics.Raycast(transform.position, -Vector3.up, distanceToGround + 0.1f);
-        }
+        // 접지 확인 함수
+        bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
 
-        if (isGrounded())
+
+        if (isGrounded)
         {
             _isJumping = false;
-            //_gravity = 0;
-            _yVelocity = 0f;
+            _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
             JumpRemainCount = JumpMaxCount;
-        }
-        else if (!_characterController.isGrounded && !_isJumping)
-        {
-            JumpRemainCount = 0;
         }
 
         // 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space) && (_characterController.isGrounded || JumpRemainCount > 0))
+        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0)
         {
+            _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
             JumpRemainCount--;
-
-            _yVelocity = JumpPower; // y축에 점프파워 적용
         }
 
         // 중력 적용
-        if (!_characterController.isGrounded)
+        if (!_characterController.isGrounded || _isJumping)
         {
             _yVelocity += GravityConstant * Time.deltaTime; // 중력 가속도
-            dir.y = _yVelocity;
         }
 
-
+        // 최종 이동 벡터에 y축 속도를 추가
+        Vector3 velocity = dir * MoveSpeed + Vector3.up * _yVelocity;
         // 이동하기
-        //transform.position += speed * dir * Time.deltaTime;
-        _characterController.Move(dir * Time.deltaTime);
+        _characterController.Move(velocity * Time.deltaTime);
     }
 
     private void CameraRotation()
     {
-        // 마우스를 위아래(Y) 움직임을 받아 카메라의 회전을 결정
-        float _xRotation = Input.GetAxisRaw("Mouse Y");
-        float _cameraRotationX = _xRotation * lookSensitivity;
-
-        // 카메라의 회전을 업데이트하고, 제한 범위 내에 있는지 확인
-        currentCameraRotationX -= _cameraRotationX;
+        // 마우스의 상하 움직임에 따라 카메라 회전
+        float _xRotation = Input.GetAxisRaw("Mouse Y") * lookSensitivity;
+        currentCameraRotationX -= _xRotation;
         currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
 
-        // 카메라의 회전을 적용
+        // 카메라의 x축 회전을 적용
         theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, theCamera.transform.localEulerAngles.y, 0f);
     }
 
     private void CharacterRotation()
     {
-        // 마우스 좌우(X) 움직임을 받아 캐릭터의 회전을 결정
-        float _yRotation = Input.GetAxisRaw("Mouse X");
-        Vector3 _characterRotationY = Vector3.up * _yRotation * lookSensitivity;
+        // 마우스의 좌우 움직임에 따라 캐릭터 회전
+        float _yRotation = Input.GetAxisRaw("Mouse X") * lookSensitivity;
+        Vector3 rotation = new Vector3(0f, _yRotation, 0f);
 
-        // 캐릭터의 회전을 적용
-        transform.Rotate(_characterRotationY);
+        // 캐릭터 회전을 적용
+        _characterController.transform.Rotate(rotation);
+
+        // 카메라의 y축 회전도 같이 적용하여 카메라가 캐릭터를 따라 회전하도록 함
+        theCamera.transform.Rotate(0f, _yRotation, 0f);
     }
 }

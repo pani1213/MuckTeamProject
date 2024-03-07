@@ -6,35 +6,52 @@ using UnityEngine.UI;
 public enum MonsterState
 {
     Idle,
+    Patrol,
     Trace,
     Comeback,
     Attack,
     Die
-
 }
-
+public enum MonsterType
+{
+    Melee,
+    LongRange
+}
+ 
 public class Monster : MonoBehaviour, IHitable
 {
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
     /********************************************************/
-
     private Transform _target;            // 플레이
+    private Vector3 StartPosition;         // 시작위치
+    public MonsterType _monsterType;      
+
+    public CharacterController _characterController;
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+
     public float MoveSpeed       = 5;     // 몬스터 속도
     public float FindDistance    = 5f;    // 감지거리
-    public Vector3 StartPosition;         // 시작위치
     public float MoveDistance    = 40f;   // 움직일 수 있는 거리
     public const float TOLERANCE = 0.1f;  // 오차범위
     public float AttackDistance  = 2f;    // 공격범위
     public int Damage            = 10;    // 공격력
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
-    private float _idleTimer;
 
-    public CharacterController _characterController;
-    private NavMeshAgent _navMeshAgent;
-    private Animator _animator;
+    public float IDLE_DURATION = 3f;
+    private float _idleTimer;
+    public Transform Patrolpoint;
+
+
+    public GameObject BulletPrefab;
+    public Transform BulletPoint;
+    public float BulletSpeed = 10f;
+
+    float bulletLifetime = 2f;
+
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
@@ -70,6 +87,9 @@ public class Monster : MonoBehaviour, IHitable
             case MonsterState.Idle:
                 Idle();
                 break;
+            case MonsterState.Patrol:
+                Patrol();
+                break;
             case MonsterState.Trace:
                 Trace();
                 break;
@@ -87,6 +107,14 @@ public class Monster : MonoBehaviour, IHitable
     public void Idle()
     {
         _idleTimer += Time.deltaTime;
+        if (Patrolpoint != null && _idleTimer >= IDLE_DURATION)
+        {
+            _idleTimer = 0f;
+            Debug.Log("상태 전환: Idle -> Patrol");
+            _animator.SetTrigger("IdleToPatrol");
+            _currentState = MonsterState.Patrol;
+        }
+
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             Debug.Log("상태 전환: Idle -> Trace");
@@ -94,6 +122,27 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
+    public void Patrol()
+    {
+        _navMeshAgent.stoppingDistance = 0;
+        _navMeshAgent.SetDestination(Patrolpoint.position); // 지정값으로 간다
+
+        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
+        {
+            Debug.Log("상태 전환: Patrol -> Comeback");
+            _animator.SetTrigger("PatrolToComeback");
+            _currentState = MonsterState.Comeback;
+        }
+
+        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
+        {
+            Debug.Log("상태 전환: Patrol -> Trace");
+            _animator.SetTrigger("PatrolToTrace");
+            _currentState = MonsterState.Trace;
+        }
+
+    }
+
 
     public void Trace()
     {
@@ -147,6 +196,12 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Idle;
         }
 
+        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
+        {
+            Debug.Log("상태 전환: Comeback -> Trace");
+            _animator.SetTrigger("ComebackToTrace");
+            _currentState = MonsterState.Trace;
+        }
     }
 
     private void Attack()
@@ -158,7 +213,6 @@ public class Monster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
-            
             return;
         }
 
@@ -167,7 +221,15 @@ public class Monster : MonoBehaviour, IHitable
         if (_attackTimer >= AttackDelay)
         {
             _animator.SetTrigger("Attack");
-            MeleeAttack();
+            if (_monsterType == MonsterType.Melee)
+            {
+                MeleeAttack();
+            }
+            
+            if (_monsterType == MonsterType.LongRange)
+            {
+                LongRangeAttack();
+            }
             
         }
 
@@ -186,6 +248,24 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
     
+   public void LongRangeAttack()
+    {    
+        transform.LookAt(_target);
+   
+        GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
+
+        Bullet bulletdamage = bullet.GetComponent<Bullet>();
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+        bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
+        Vector3 bulletDir = _target.position - BulletPoint.position;
+        rb.velocity = bulletDir.normalized * BulletSpeed;
+        Debug.Log(rb.velocity);
+
+        _attackTimer = 0f;
+  
+    }
+
 
     public void Hit(DamageInfo damage)
     {
@@ -193,7 +273,11 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Die()
     {
-        
+        if (Health >= 0)
+        {
+            gameObject.SetActive(false);
+            HealthSliderUI.gameObject.SetActive(false);
+        }
     }
 }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHitable 
+public class Fire : MonoBehaviour
 {
-    public void Hit(DamageInfo damageInfo); 
+    public GameObject FireEffect;
 }

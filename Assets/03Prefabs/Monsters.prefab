@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 6177825267948974396}
   m_Layer: 0
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,13 +137,14 @@ MonoBehaviour:
   Health: 0
   MaxHealth: 100
   HealthSliderUI: {fileID: 4119466827115539933}
+  StartPosition: {x: 0, y: 0, z: 0}
+  _monsterType: 0
+  _characterController: {fileID: 0}
   MoveSpeed: 5
   FindDistance: 5
-  StartPosition: {x: 0, y: 0, z: 0}
   MoveDistance: 10
-  AttackDistance: 2
-  Damage: 10
-  _characterController: {fileID: 0}
+  AttackDistance: 3
+  Damage: 20
 --- !u!111 &872360617109748690
 Animation:
   m_ObjectHideFlags: 0
@@ -530,7 +531,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2754137832100676702
 CanvasRenderer:
