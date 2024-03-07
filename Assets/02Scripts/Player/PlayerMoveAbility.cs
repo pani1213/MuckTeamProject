@@ -17,12 +17,12 @@ public class PlayerMoveAbility : MonoBehaviour
 
     // spacebar: 점프
     public float JumpPower = 10;
-    public int JumpMaxCount = 2;
-    public int JumpRemainCount;
+    //public int JumpMaxCount = 2;
+    //public int JumpRemainCount;
     private bool _isJumping = false;
     // private float _gravity = -5;        // 중력 값
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
-    private const float GravityConstant = -9.81f; // 중력 상수
+    private const float GravityConstant = -20.81f; // 중력 상수
 
     private void Start()
     {
@@ -44,27 +44,39 @@ public class PlayerMoveAbility : MonoBehaviour
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
 
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0; // 수직 이동을 제거하여 순수한 수평 이동만을 고려합니다.
+        cameraRight.y = 0;
+        cameraForward.Normalize(); // 정규화를 통해 방향만을 유지하며, 크기는 1로 만듭니다.
+        cameraRight.Normalize();
+
+
+
+
         Vector3 dir = transform.right * h + transform.forward * v;
         dir.Normalize();
 
-        dir = Camera.main.transform.TransformDirection(dir);
+       // dir = Camera.main.transform.TransformDirection(dir);
+
 
         // 접지 확인 함수
         bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
+
 
         if (isGrounded)
         {
             _isJumping = false;
             _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
-            JumpRemainCount = JumpMaxCount;
+            //JumpRemainCount = JumpMaxCount;
         }
 
         // 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space)) //&& JumpRemainCount > 0
         {
             _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
-            JumpRemainCount--;
+            //JumpRemainCount--;
         }
 
         // 중력 적용
@@ -77,6 +89,13 @@ public class PlayerMoveAbility : MonoBehaviour
         Vector3 velocity = dir * MoveSpeed + Vector3.up * _yVelocity;
         // 이동하기
         _characterController.Move(velocity * Time.deltaTime);
+
+        // 캐릭터의 회전을 이동 방향에 맞춥니다.
+        if (dir != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(dir, Vector3.up);
+            _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, toRotation, lookSensitivity * Time.deltaTime);
+        }
     }
 
     private void CameraRotation()
@@ -94,12 +113,9 @@ public class PlayerMoveAbility : MonoBehaviour
     {
         // 마우스의 좌우 움직임에 따라 캐릭터 회전
         float _yRotation = Input.GetAxisRaw("Mouse X") * lookSensitivity;
-        Vector3 rotation = new Vector3(0f, _yRotation, 0f);
-
-        // 캐릭터 회전을 적용
-        _characterController.transform.Rotate(rotation);
-
-        // 카메라의 y축 회전도 같이 적용하여 카메라가 캐릭터를 따라 회전하도록 함
-        theCamera.transform.Rotate(rotation);
+        Vector3 currentRotation = _characterController.transform.eulerAngles;
+        float newYRotation = currentRotation.y + _yRotation;
+        _characterController.transform.eulerAngles = new Vector3(0, newYRotation, 0);
+        
     }
 }
