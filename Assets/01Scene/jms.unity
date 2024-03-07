@@ -215,11 +215,11 @@ MonoBehaviour:
   MoveSpeed: 5
   FindDistance: 20
   MoveDistance: 10
-  AttackDistance: 50
+  AttackDistance: 5
   Damage: 10
   BulletPrefab: {fileID: 1654736843778140, guid: 78e8b38d431ddef4fa2994a3f2d6e2ff, type: 3}
   BulletPoint: {fileID: 1657644406}
-  BulletSpeed: 1
+  BulletSpeed: 10
 --- !u!1 &174714904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2354,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5741518653290561398, guid: bef91eaabee09884aa489665b08c0112, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 5916187408414725078, guid: bef91eaabee09884aa489665b08c0112, type: 3}
       propertyPath: m_Enabled

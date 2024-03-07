@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum MonsterState
 {
     Idle,
+    Patrol,
     Trace,
     Comeback,
     Attack,
@@ -39,7 +40,11 @@ public class Monster : MonoBehaviour, IHitable
     public int Damage            = 10;    // 공격력
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
+
+    public float IDLE_DURATION = 3f;
     private float _idleTimer;
+    public Transform Patrolpoint;
+
 
     public GameObject BulletPrefab;
     public Transform BulletPoint;
@@ -82,6 +87,9 @@ public class Monster : MonoBehaviour, IHitable
             case MonsterState.Idle:
                 Idle();
                 break;
+            case MonsterState.Patrol:
+                Patrol();
+                break;
             case MonsterState.Trace:
                 Trace();
                 break;
@@ -99,6 +107,14 @@ public class Monster : MonoBehaviour, IHitable
     public void Idle()
     {
         _idleTimer += Time.deltaTime;
+        if (Patrolpoint != null && _idleTimer >= IDLE_DURATION)
+        {
+            _idleTimer = 0f;
+            Debug.Log("상태 전환: Idle -> Patrol");
+            _animator.SetTrigger("IdleToPatrol");
+            _currentState = MonsterState.Patrol;
+        }
+
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             Debug.Log("상태 전환: Idle -> Trace");
@@ -106,6 +122,27 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
+    public void Patrol()
+    {
+        _navMeshAgent.stoppingDistance = 0;
+        _navMeshAgent.SetDestination(Patrolpoint.position); // 지정값으로 간다
+
+        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
+        {
+            Debug.Log("상태 전환: Patrol -> Comeback");
+            _animator.SetTrigger("PatrolToComeback");
+            _currentState = MonsterState.Comeback;
+        }
+
+        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
+        {
+            Debug.Log("상태 전환: Patrol -> Trace");
+            _animator.SetTrigger("PatrolToTrace");
+            _currentState = MonsterState.Trace;
+        }
+
+    }
+
 
     public void Trace()
     {
@@ -159,6 +196,12 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Idle;
         }
 
+        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
+        {
+            Debug.Log("상태 전환: Comeback -> Trace");
+            _animator.SetTrigger("ComebackToTrace");
+            _currentState = MonsterState.Trace;
+        }
     }
 
     private void Attack()
@@ -211,10 +254,10 @@ public class Monster : MonoBehaviour, IHitable
    
         GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
 
-        Bullet asd = bullet.GetComponent<Bullet>();
+        Bullet bulletdamage = bullet.GetComponent<Bullet>();
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
-        asd.info = new DamageInfo(DamageType.Normal, Damage);
+        bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
         Vector3 bulletDir = _target.position - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
         Debug.Log(rb.velocity);
