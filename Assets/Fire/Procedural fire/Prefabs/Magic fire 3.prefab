@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4774984165177464}
   - component: {fileID: 198534899231001976}
   - component: {fileID: 199966516103863158}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4856,7 +4856,7 @@ GameObject:
   - component: {fileID: 1411076355876911925}
   - component: {fileID: 8984031609976029511}
   - component: {fileID: -8267853992945451887}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Magic fire 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9750,6 +9750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d549390126a7b6468e7f5c3f0120220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BulletAttackTime: 0
+  BulletDestroy: 3
 --- !u!1 &1675696825032014
 GameObject:
   m_ObjectHideFlags: 0
@@ -9761,7 +9763,7 @@ GameObject:
   - component: {fileID: 4410048752619904}
   - component: {fileID: 198998320551559234}
   - component: {fileID: 199212127845639146}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14603,7 +14605,7 @@ GameObject:
   - component: {fileID: 4681315946005572}
   - component: {fileID: 198249098858994738}
   - component: {fileID: 199456283217507706}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
