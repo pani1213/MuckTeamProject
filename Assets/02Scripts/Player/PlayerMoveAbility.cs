@@ -52,56 +52,46 @@ public class PlayerMoveAbility : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // 구현필요) 앞으로 키 + 마우스를 누르고 있으면 카메라가 보는 방향 앞으로 가야한다.
     private void Move()
     {
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
 
-        Vector3 dir = new Vector3(h, 0, v);
+        Vector3 dir = transform.right * h + transform.forward * v;
         dir.Normalize();
 
         dir = Camera.main.transform.TransformDirection(dir);
 
 
-        bool isGrounded()
-        {
-            float distanceToGround = _characterController.height / 2;
-            return Physics.Raycast(transform.position, -Vector3.up, distanceToGround + 0.1f);
-        }
+        // 접지 확인 함수
+        bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
 
-        if (isGrounded())
+
+        if (isGrounded)
         {
             _isJumping = false;
-            //_gravity = 0;
-            _yVelocity = 0f;
+            _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
             JumpRemainCount = JumpMaxCount;
-        }
-        else if (!_characterController.isGrounded && !_isJumping)
-        {
-            JumpRemainCount = 0;
         }
 
         // 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space) && (_characterController.isGrounded || JumpRemainCount > 0))
+        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0)
         {
+            _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
             JumpRemainCount--;
-
-            _yVelocity = JumpPower; // y축에 점프파워 적용
         }
 
         // 중력 적용
-        if (!_characterController.isGrounded)
+        if (!_characterController.isGrounded || _isJumping)
         {
             _yVelocity += GravityConstant * Time.deltaTime; // 중력 가속도
-            dir.y = _yVelocity;
         }
 
-
+        // 최종 이동 벡터에 y축 속도를 추가
+        Vector3 velocity = dir * MoveSpeed + Vector3.up * _yVelocity;
         // 이동하기
-        //transform.position += speed * dir * Time.deltaTime;
-        _characterController.Move(dir * Time.deltaTime);
+        _characterController.Move(velocity * Time.deltaTime);
     }
 
     private void CameraRotation()

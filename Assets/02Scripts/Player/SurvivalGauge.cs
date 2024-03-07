@@ -23,6 +23,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
     public bool _isStamina = true;
+    private bool _isRunning = false;
 
     private CharacterController _characterController;
 
@@ -55,7 +56,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
 
-        // Vector3 dir = new Vector3(h, 0, v);
         Vector3 dir = transform.right * h + transform.forward * v;
         dir.Normalize();
 
@@ -64,17 +64,22 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         {
             Stamina -= StaminaConsumeSpeed * Time.deltaTime;
             dir *= RunSpeed;
+            _isRunning = true;
         }
         else
         {
-            if (_isStamina)
+            if (!Input.GetKey(KeyCode.LeftShift)) 
+            {
+                _isRunning = false; 
+            }
+            if (!_isRunning && _isStamina)
             {
                 Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
             }
             dir *= MoveSpeed;
         }
 
-        Stamina = Mathf.Clamp(Stamina, 0, 100); // 값이 넘어가지 않도록
+        Stamina = Mathf.Clamp(Stamina, 0, MaxStamina); // 값이 넘어가지 않도록
         _characterController.Move(dir * Time.deltaTime);
     }
 
