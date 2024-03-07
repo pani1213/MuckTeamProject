@@ -17,8 +17,8 @@ public class PlayerMoveAbility : MonoBehaviour
 
     // spacebar: 점프
     public float JumpPower = 10;
-    //public int JumpMaxCount = 2;
-    //public int JumpRemainCount;
+    public int JumpMaxCount = 1;
+    public int JumpRemainCount;
     private bool _isJumping = false;
     // private float _gravity = -5;        // 중력 값
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
@@ -68,15 +68,15 @@ public class PlayerMoveAbility : MonoBehaviour
         {
             _isJumping = false;
             _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
-            //JumpRemainCount = JumpMaxCount;
+            JumpRemainCount = JumpMaxCount;
         }
 
         // 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space)) //&& JumpRemainCount > 0
+        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0) 
         {
             _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
-            //JumpRemainCount--;
+            JumpRemainCount--;
         }
 
         // 중력 적용

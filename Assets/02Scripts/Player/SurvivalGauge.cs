@@ -23,7 +23,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
     public bool _isStamina = true;
-    private bool _isRunning = false;
+    private bool _isRunning = false; 
 
     private CharacterController _characterController;
 
@@ -49,6 +49,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         }
     }
 
+    // 구현 필요) 점프하면 스태미나 닳고, 스태미나 바닥이면 점프도 안됨
     private void FastMove()
     {
         if (!_characterController) return;
