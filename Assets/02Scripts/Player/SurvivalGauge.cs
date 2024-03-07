@@ -17,7 +17,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
     // 스태미나
     public float MoveSpeed = 5;
-    public float RunSpeed = 10;
+    public float RunSpeed = 15;
     public float Stamina = 100;             // 스태미나
     public const float MaxStamina = 100;    
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
