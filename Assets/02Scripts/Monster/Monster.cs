@@ -277,7 +277,7 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
     public void Die()
-    {
+    { 
         gameObject.SetActive(false);
     }
 
