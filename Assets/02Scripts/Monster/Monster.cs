@@ -45,6 +45,8 @@ public class Monster : MonoBehaviour, IHitable
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
 
+    float bulletLifetime = 2f;
+
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
@@ -204,26 +206,23 @@ public class Monster : MonoBehaviour, IHitable
     }
     
    public void LongRangeAttack()
-    {
-
-        
+    {    
         transform.LookAt(_target);
-
-        
-        _attackTimer = 0f;
-
-        
+   
         GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
 
-
+        Bullet asd = bullet.GetComponent<Bullet>();
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
- 
+
+        asd.info = new DamageInfo(DamageType.Normal, Damage);
         Vector3 bulletDir = _target.position - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
         Debug.Log(rb.velocity);
-        
+
+        _attackTimer = 0f;
+  
     }
-    
+
 
     public void Hit(DamageInfo damage)
     {

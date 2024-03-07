@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHitable 
 {
-    public void Hit(DamageInfo damageInfo);
+    public void Hit(DamageInfo damageInfo); 
 }
