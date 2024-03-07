@@ -37,10 +37,8 @@ public class PlayerMoveAbility : MonoBehaviour
 
         lookSensitivity = 2f; // 마우스 민감도를 조절하는 값, 적절한 값으로 조정
         cameraRotationLimit = 85f; // 카메라가 위아래로 회전할 수 있는 최대 각도, 85도 정도가 적당
-        currentCameraRotationX = 0f; // 초기 카메라 X축 회전값을 0으로 설정
-
+        currentCameraRotationX = 0f; // 초기 카메라 X축 회전값을 0으로 
     }
-
 
     private void Update()
     {

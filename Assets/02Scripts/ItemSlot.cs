@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemSlot : MonoBehaviour
 {
     public int slotIndex;
-    public int itemId = 0;
-    public Sprite emptySprite;
     public Image itemImage_UI;
     public Text itemCountText_UI;
 
@@ -15,31 +13,24 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         Debug.Log(slotIndex);
     }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        ItemInfoManager.instance.dragItem = JsonParsingManager.instance.itemDictionary[itemId];
-        ItemInfoManager.instance.inventoryIdex = slotIndex;
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnDrag 호출");
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnEndDrag 호출");
-        ItemInfoManager.instance.dragItem = null;
-        ItemInfoManager.instance.inventoryIdex = 0;
-    }
     public void Refresh_SlotUI()
     {
         if (ItemInfoManager.instance.itemInventory[slotIndex].count <= 0)
         {
-            Debug.Log($"slot{slotIndex} 의 count : {ItemInfoManager.instance.itemInventory[slotIndex].count}");
-            itemImage_UI.sprite = emptySprite;
-            itemCountText_UI.text = "";
+            Empty_UI();
             return;
         }
         itemImage_UI.sprite = ItemInfoManager.instance.itemSpriteAtlas.GetSprite(ItemInfoManager.instance.itemInventory[slotIndex].item.imageFileName);
         itemCountText_UI.text = ItemInfoManager.instance.itemInventory[slotIndex].count.ToString();
+    }
+    public void Refresh_SlotUI(InvenItem _invenItem)
+    {
+        itemImage_UI.sprite = ItemInfoManager.instance.itemSpriteAtlas.GetSprite(_invenItem.item.imageFileName);
+        itemCountText_UI.text = _invenItem.count.ToString();
+    }
+    public void Empty_UI()
+    {
+        itemImage_UI.sprite = ItemInfoManager.instance.itemSpriteAtlas.GetSprite("empty");
+        itemCountText_UI.text = "";
     }
 }

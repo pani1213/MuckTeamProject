@@ -21,17 +21,16 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         myRigid = GetComponent<Rigidbody>();  // private
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
-
     void Update()  // 컴퓨터마다 다르지만 대략 1초에 60번 실행
     {
         Move();                 // 1️⃣ 키보드 입력에 따라 이동
         CameraRotation();       // 2️⃣ 마우스를 위아래(Y) 움직임에 따라 카메라 X 축 회전 
         CharacterRotation();    // 3️⃣ 마우스 좌우(X) 움직임에 따라 캐릭터 Y 축 회전 
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Cursor.lockState = CursorLockMode.Locked;
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //    Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Move()
