@@ -50,7 +50,7 @@ public class Monster : MonoBehaviour, IHitable
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
 
-    float bulletLifetime = 2f;
+    
 
 
     private MonsterState _currentState = MonsterState.Idle;
@@ -270,14 +270,15 @@ public class Monster : MonoBehaviour, IHitable
     public void Hit(DamageInfo damage)
     {
         Health -= damage.Amount;
+        if (Health <= 0)
+        {
+            _animator.SetTrigger("Die");
+            _currentState = MonsterState.Die;            
+        }
     }
     public void Die()
     {
-        if (Health >= 0)
-        {
-            gameObject.SetActive(false);
-            HealthSliderUI.gameObject.SetActive(false);
-        }
+        
     }
 }
 
