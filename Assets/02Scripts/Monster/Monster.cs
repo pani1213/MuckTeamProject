@@ -10,41 +10,55 @@ public enum MonsterState
     Comeback,
     Attack,
     Die
-
 }
-
+public enum MonsterType
+{
+    Melee,
+    LongRange
+}
+ 
 public class Monster : MonoBehaviour, IHitable
 {
     public int Health;
     public int MaxHealth = 100;
     public Slider HealthSliderUI;
     /********************************************************/
-
     private Transform _target;            // 플레이
+    private Vector3 StartPosition;         // 시작위치
+    public MonsterType _monsterType;      
+
+    public CharacterController _characterController;
+    private NavMeshAgent _navMeshAgent;
+    private Animator _animator;
+
     public float MoveSpeed       = 5;     // 몬스터 속도
     public float FindDistance    = 5f;    // 감지거리
-    public Vector3 StartPosition;         // 시작위치
     public float MoveDistance    = 40f;   // 움직일 수 있는 거리
     public const float TOLERANCE = 0.1f;  // 오차범위
     public float AttackDistance  = 2f;    // 공격범위
-    public float Damage          = 10;
+    public int Damage            = 10;    // 공격력
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
     private float _idleTimer;
-    
 
-    private NavMeshAgent _navMeshAgent;
-    private Animator _animator;
+    public GameObject BulletPrefab;
+    public Transform BulletPoint;
+    public float BulletSpeed = 10f;
+
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
+        _characterController = GetComponent<CharacterController>();
+        _characterController.isTrigger = false;
+
+
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = MoveSpeed;
 
         _animator = GetComponentInChildren<Animator>();
 
-        _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 태그 플레이어를 넣어줌
+        _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 플레이어를 넣어줌
 
         StartPosition = transform.position;
 
@@ -96,7 +110,10 @@ public class Monster : MonoBehaviour, IHitable
 
         Vector3 dir = _target.transform.position - this.transform.position;
         dir.Normalize();
-       
+
+        // 내비게이션이 접근하는 최소 거리를 공격 가능 거리로 설정
+        _navMeshAgent.stoppingDistance = AttackDistance;
+
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
 
@@ -105,6 +122,13 @@ public class Monster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
+        }
+
+        if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
+        {
+            Debug.Log("상태 전환: Trace -> Attack");
+            _animator.SetTrigger("TraceToAttack");
+            _currentState = MonsterState.Attack;
         }
 
     }
@@ -147,66 +171,63 @@ public class Monster : MonoBehaviour, IHitable
             return;
         }
 
-        // 실습 과제 35. Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
+        // Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
         {
             _animator.SetTrigger("Attack");
+            if (_monsterType == MonsterType.Melee)
+            {
+                MeleeAttack();
+            }
+            
+            if (_monsterType == MonsterType.LongRange)
+            {
+                LongRangeAttack();
+            }
             
         }
 
     }
 
-    public void PlayerAttack()
+    public void MeleeAttack()
     {
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null)
         {
             Debug.Log("때렸다!");
 
-            DamageInfo damageInfo = new DamageInfo(DamageType.Normal, (int)Damage);
+            DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
         }
     }
+    
+   public void LongRangeAttack()
+    {
+
+        
+        transform.LookAt(_target);
+
+        
+        _attackTimer = 0f;
+
+        
+        GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
+
+
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+ 
+        Vector3 bulletDir = _target.position - BulletPoint.position;
+        rb.velocity = bulletDir.normalized * BulletSpeed;
+        Debug.Log(rb.velocity);
+        
+    }
+    
 
     public void Hit(DamageInfo damage)
     {
-        if (_currentState == MonsterState.Die)
-        {
-            return;
-        }
-
-        // Todo. 데미지 타입이 크리티컬이면 피흘리기
-        if (damage.DamageType == DamageType.Critical)
-        {
-           
-        }
-        // Todo. 실습 과제 47: 블러드를 팩토리패턴으로 구현하기 (파일 및 클래스명: BloodFactory)
-
-
-
         Health -= damage.Amount;
-        if (Health <= 0)
-        {
-
-            if (Random.Range(0, 2) == 0)
-            {
-                Debug.Log("상태 전환: Any -> Die1");
-                _animator.SetTrigger("Die1");
-                _currentState = MonsterState.Die;
-            }
-            else
-            {
-                Debug.Log("상태 전환: Any -> Die2");
-                _animator.SetTrigger("Die2");
-                _currentState = MonsterState.Die;
-
-
-            }
-
-        }
-       
     }
     public void Die()
     {

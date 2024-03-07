@@ -8,10 +8,11 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
 {
     public TextAsset itemTextAsset;
     public Items itemData;
+    public Dictionary<int, Item> itemDictionary = new Dictionary<int, Item>();
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
-        foreach (Item it in itemData.ItemData) ;
+        foreach (Item it in itemData.ItemData)  {  itemDictionary.Add(it.id, it); };
     }
 }
 [Serializable]

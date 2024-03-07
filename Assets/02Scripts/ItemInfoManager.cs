@@ -1,9 +1,17 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class ItemInfoManager : Singleton<ItemInfoManager>
 {
+    //Item_Sprite_Datas
+    public SpriteAtlas itemSpriteAtlas;
+
+    public int inventoryIdex;
+    public Item dragItem;
 
     private const int INVENTORY_MAX_COUNT = 18;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
