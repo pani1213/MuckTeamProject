@@ -273,7 +273,11 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Die()
     {
-        
+        if (Health >= 0)
+        {
+            gameObject.SetActive(false);
+            HealthSliderUI.gameObject.SetActive(false);
+        }
     }
 }
 
