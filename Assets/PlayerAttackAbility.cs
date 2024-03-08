@@ -9,7 +9,5 @@ public class PlayerAttackAbility : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
             animation.Play("swingClip");
-        
-        
     }
 }

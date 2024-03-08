@@ -247,11 +247,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 504655513}
+  m_Father: {fileID: 462574252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -706, y: 123}
+  m_AnchoredPosition: {x: 260.6668, y: -127.000015}
   m_SizeDelta: {x: 452.9128, y: 84.9211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &52172021
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press E key Get Item
+  m_Text: 
 --- !u!222 &52172022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1657,6 +1657,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 52172020}
   - {fileID: 784093680}
   - {fileID: 1858022454}
   - {fileID: 504655513}
@@ -1807,7 +1808,6 @@ RectTransform:
   - {fileID: 631228742}
   - {fileID: 1522156307}
   - {fileID: 2066350486}
-  - {fileID: 52172020}
   m_Father: {fileID: 462574252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -3168,6 +3168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTextAsset: {fileID: 4900000, guid: c48fcdb839153df43be6b811e925f456, type: 3}
   ResourceTextAsset: {fileID: 4900000, guid: 8881eeddeb8e6cf46a3ecb1e3f0bd347, type: 3}
+  boxItemTextAsset: {fileID: 4900000, guid: e1bdf45b89d859149806346cf6def8d6, type: 3}
   itemData:
     ItemData: []
   resourceData:

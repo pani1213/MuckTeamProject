@@ -5,8 +5,6 @@ using UnityEngine;
 public class QickSlotController : MonoBehaviour
 {
     public ItemSlot[] slots;
-    
-
     private void Start()
     {
         InIt();
