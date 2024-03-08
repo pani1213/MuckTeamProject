@@ -10,6 +10,7 @@ public enum MonsterState
     Trace,
     Comeback,
     Attack,
+    Damage,
     Die
 }
 public enum MonsterType
@@ -49,7 +50,15 @@ public class Monster : MonoBehaviour, IHitable
     public GameObject BulletPrefab;
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
-    
+
+    private Vector3 _knockbackStartPosition;
+    private Vector3 _knockbackEndPosition;
+    private const float KNOCKBACK_DURATION = 0.1f;
+    private float _knockbackProgress = 0f;
+    public float KnockbackPower = 1.2f;
+
+    public Transform regenTransform; // 리젠 트랜스폼 위치
+    public float regenDelay = 20f; // 리젠 딜레이
 
 
 
@@ -99,6 +108,9 @@ public class Monster : MonoBehaviour, IHitable
                 break;
             case MonsterState.Attack:
                 Attack();
+                break;
+            case MonsterState.Damage:
+                Damaged();
                 break;
             case MonsterState.Die:
                 Die();
@@ -278,6 +290,38 @@ public class Monster : MonoBehaviour, IHitable
         _attackTimer = 0f;
   
     }
+    private void Damaged()
+    {
+        // 1. Damage 애니메이션 실행(0.5초)
+        // todo: 애니메이션 실행
+
+        // 2. 넉백 구현
+        // 2-1. 넉백 시작/최종 위치를 구한다.
+        if (_knockbackProgress == 0)
+        {
+            _knockbackStartPosition = transform.position;
+
+            Vector3 dir = transform.position - _target.position;
+            dir.y = 0;
+            dir.Normalize();
+
+            _knockbackEndPosition = transform.position + dir * KnockbackPower;
+        }
+
+        _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
+
+        // 2-2. Lerp를 이용해 넉백하기
+        transform.position = Vector3.Lerp(_knockbackStartPosition, _knockbackEndPosition, _knockbackProgress);
+
+        if (_knockbackProgress > 1)
+        {
+            _knockbackProgress = 0f;
+
+            Debug.Log("상태 전환: Damaged -> Trace");
+            _animator.SetTrigger("DamagedToTrace");
+            _currentState = MonsterState.Trace;
+        }
+    }
 
 
     public void Hit(DamageInfo damage)
@@ -287,6 +331,12 @@ public class Monster : MonoBehaviour, IHitable
         {
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;            
+        }
+        else
+        {
+            // 넉백 상태로 전환
+            _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
+            _currentState = MonsterState.Damage;
         }
     }
     public void Die()

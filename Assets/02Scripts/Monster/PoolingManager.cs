@@ -6,10 +6,11 @@ using UnityEngine.UIElements;
 public class PoolingManager : Singleton<PoolingManager>
 {
     public List<GameObject> MonsterPrefab;
+    public Transform respawnPoint; // 리스폰 위치 설정
 
     private List<Monster> _monsterpool;
     public int PoolSize = 20;
-
+    public float regenDelay = 20f; // 몬스터 리젠 딜레이
 
     public void Start()
     {
@@ -39,24 +40,33 @@ public class PoolingManager : Singleton<PoolingManager>
         return null;
     }
 
-    public void Make(MonsterType monsterType, Transform transform)
+    public void Make(MonsterType monsterType)
     {
         Monster monster = Get(monsterType);
-        GameObject obj;
+        //GameObject obj;
         if (monster != null)
         {
-            monster.transform.position = transform.position;
+            monster.transform.position = respawnPoint.position;
+            monster.transform.rotation = respawnPoint.rotation;
             monster.Init();
             monster.gameObject.SetActive(true);
         }
         else
         {
-            if (monsterType == MonsterType.Melee)
-                obj = Instantiate(MonsterPrefab[0], transform);
-            else
-                obj = Instantiate(MonsterPrefab[1], transform);
-
+            GameObject obj = Instantiate(MonsterPrefab[(int)monsterType], respawnPoint.position, respawnPoint.rotation);
             _monsterpool.Add(obj.GetComponent<Monster>());
+            /*        if (monsterType == MonsterType.Melee)
+                    {
+                        obj = Instantiate(MonsterPrefab[0], transform);
+                    }
+
+                    else
+                    {
+                        obj = Instantiate(MonsterPrefab[1], transform);
+                    }
+
+
+                    _monsterpool.Add(obj.GetComponent<Monster>());*/
         }
     }
 
@@ -64,8 +74,16 @@ public class PoolingManager : Singleton<PoolingManager>
     {
         if (_monsterpool.Contains(monster))
         {
-            // 죽은 몬스터를 비활성화하고 풀에 반환합니다.
-            monster.gameObject.SetActive(false);
+            // 몬스터를 비활성화하고 일정 시간 후에 리젠하도록 설정
+            StartCoroutine(RegenerateMonster(monster, regenDelay));
+            monster.gameObject.SetActive(true);
         }
     }
+    private IEnumerator RegenerateMonster(Monster monster, float delay)
+    {
+        monster.gameObject.SetActive(false);
+        yield return new WaitForSeconds(delay);
+        Make(monster._monsterType);
+    }
 }
+
