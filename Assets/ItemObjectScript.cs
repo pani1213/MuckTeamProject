@@ -15,6 +15,8 @@ public class ItemObjectScript : MonoBehaviour
     public void GetItem()
     {
         ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[id], count);
+        //obj pool
+        gameObject.SetActive(false);
     }
 }
 

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2271806808810176818}
   - component: {fileID: 4921212672959385345}
   - component: {fileID: -5764830611661018154}
+  - component: {fileID: 8544320865041317536}
   m_Layer: 0
   m_Name: 1009
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,3 +99,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1009
   count: 1
+--- !u!65 &8544320865041317536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713434901451192881}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.284816, y: 1.0392267, z: 0.03849239}
+  m_Center: {x: 0, y: 0.38916433, z: -0.000000030733645}

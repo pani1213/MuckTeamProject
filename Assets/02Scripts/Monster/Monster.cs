@@ -155,14 +155,11 @@ public class Monster : MonoBehaviour, IHitable
         _randomPosition = hit.position;
         _navMeshAgent.SetDestination(_randomPosition); // 몬스터 이동 목표 설정
     }
-
-
     public void Trace()
     {
 
         Vector3 dir = _target.transform.position - this.transform.position;
         dir.Normalize();
-
         // 내비게이션이 접근하는 최소 거리를 공격 가능 거리로 설정
         _navMeshAgent.stoppingDistance = AttackDistance;
 
@@ -243,9 +240,7 @@ public class Monster : MonoBehaviour, IHitable
             {
                 LongRangeAttack();
             }
-            
         }
-
     }
 
     public void MeleeAttack()
@@ -254,7 +249,6 @@ public class Monster : MonoBehaviour, IHitable
         if (playerHitable != null)
         {
             Debug.Log("때렸다!");
-
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
@@ -276,10 +270,7 @@ public class Monster : MonoBehaviour, IHitable
         Debug.Log(rb.velocity);
 
         _attackTimer = 0f;
-  
     }
-
-
     public void Hit(DamageInfo damage)
     {
         Health -= damage.Amount;
