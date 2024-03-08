@@ -68,7 +68,6 @@ public class Monster : MonoBehaviour, IHitable
         _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 플레이어를 넣어줌
         _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
-        
 
         Init();
     }
@@ -157,29 +156,24 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Trace()
     {
-
         Vector3 dir = _target.transform.position - this.transform.position;
         dir.Normalize();
         // 내비게이션이 접근하는 최소 거리를 공격 가능 거리로 설정
         _navMeshAgent.stoppingDistance = AttackDistance;
-
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
-
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
         }
-
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
         {
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
         }
-
     }
     public void Comeback()
     {
@@ -213,7 +207,6 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
-
     private void Attack()
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace

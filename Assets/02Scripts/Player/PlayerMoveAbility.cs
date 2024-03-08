@@ -13,7 +13,6 @@ public class PlayerMoveAbility : MonoBehaviour
     private Animator _animator;
     // wasd: 이동
     public float MoveSpeed = 5;
-
     // spacebar: 점프
     public float JumpPower = 10;
     public int JumpMaxCount = 1;
@@ -30,7 +29,6 @@ public class PlayerMoveAbility : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
     private void Update()
     {
         Move();
@@ -40,7 +38,6 @@ public class PlayerMoveAbility : MonoBehaviour
             CharacterRotation();   // 마우스 좌우(X) 움직임
         }
     }
-
     private void Move()
     {
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
@@ -53,18 +50,13 @@ public class PlayerMoveAbility : MonoBehaviour
         cameraForward.Normalize(); // 정규화를 통해 방향만을 유지하며, 크기는 1로 만듭니다.
         cameraRight.Normalize();
 
-
-
-
         Vector3 dir = transform.right * h + transform.forward * v;
         dir.Normalize();
 
        // dir = Camera.main.transform.TransformDirection(dir);
 
-
         // 접지 확인 함수
         bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
-
 
         if (isGrounded)
         {
