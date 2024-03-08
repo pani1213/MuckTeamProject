@@ -105,7 +105,8 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         // if(소비 아이템을 먹었을 때)
         {
             _isStamina = true;
-            // PlayerHunger 아이템 성능만큼 증가 / _hungerTimer 아이템 성능만큼 감소
+            //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 증가
+            //_hungerTimer -= 아이템 성능; // 아이템 성능만큼 허기 타이머 감소
         }
     }
 }

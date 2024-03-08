@@ -58,11 +58,15 @@ public class PlayerMoveAbility : MonoBehaviour
         // 접지 확인 함수
         bool isGrounded = Physics.Raycast(transform.position, -Vector3.up, _characterController.height / 2 + 0.1f);
 
-        if (isGrounded)
+        if (isGrounded && _yVelocity < 0)
         {
             _isJumping = false;
             _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
             JumpRemainCount = JumpMaxCount;
+        }
+        else
+        {
+            _yVelocity += GravityConstant * Time.deltaTime; // 중력 가속도
         }
 
         // 점프 구현
@@ -71,12 +75,6 @@ public class PlayerMoveAbility : MonoBehaviour
             _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
             JumpRemainCount--;
-        }
-
-        // 중력 적용
-        if (!_characterController.isGrounded || _isJumping)
-        {
-            _yVelocity += GravityConstant * Time.deltaTime; // 중력 가속도
         }
 
         // 최종 이동 벡터에 y축 속도를 추가
