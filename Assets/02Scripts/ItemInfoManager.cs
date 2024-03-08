@@ -8,14 +8,24 @@ using UnityEngine.UI;
 public class ItemInfoManager : Singleton<ItemInfoManager>
 {
     public SpriteAtlas itemSpriteAtlas;
-    private const int INVENTORY_MAX_COUNT = 18;
+    private const int INVENTORY_MAX_COUNT = 24;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
 
+    public List<GameObject> ItemPrefabs;
+    public InventoryController inventoryController;
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
             itemInventory.Add(new InvenItem() { item = null, count = 0 });
     }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+            inventoryController.InIt();
+        
+    }
+
+
     public void InsertItemInventory(Item _item,int _count = 1)
     { 
         int emptyIndex = GetEmptyInvenIndex();

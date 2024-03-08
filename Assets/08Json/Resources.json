@@ -1,0 +1,55 @@
+{
+  "ResourcesData": [
+    {
+      "id": "1001",
+      "name": "wood",
+      "hp": "50",
+      "dropItemId": [
+        1001,
+        1012
+      ],
+      "dropItemCountMinRange": [
+        5,
+        1
+      ],
+      "dropItemCountMaxRange": [
+        10,
+        2
+      ],
+      "dropPercentage": [
+        100,
+        50
+      ]
+    },
+    {
+      "id": "1002",
+      "name": "stone",
+      "hp": "50",
+      "dropItemId": "1002",
+      "dropItemCountMinRange": "5",
+      "dropItemCountMaxRange": "10",
+      "dropPercentage": "100"
+    },
+    {
+      "id": "1003",
+      "name": "steel",
+      "hp": "150",
+      "dropItemId": [
+        1005,
+        1002
+      ],
+      "dropItemCountMinRange": [
+        5,
+        5
+      ],
+      "dropItemCountMaxRange": [
+        10,
+        5
+      ],
+      "dropPercentage": [
+        100,
+        100
+      ]
+    }
+  ]
+}
