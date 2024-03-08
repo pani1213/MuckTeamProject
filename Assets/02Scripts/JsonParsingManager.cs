@@ -6,14 +6,32 @@ using System;
 
 public class JsonParsingManager : Singleton<JsonParsingManager>
 {
-    public TextAsset itemTextAsset;
+    public TextAsset itemTextAsset,ResourceTextAsset;
     public Items itemData;
-    public Dictionary<int, Item> itemDictionary = new Dictionary<int, Item>();
+    public ResourceList resourceData;
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
-        foreach (Item it in itemData.ItemData)  {  itemDictionary.Add(it.id, it); };
+        foreach (Item it in itemData.ItemData);
+        resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
+        foreach (Resources it in resourceData.ResourcesData) ; 
     }
+}
+[Serializable]
+public class ResourceList
+{
+    public List<Resources> ResourcesData;
+}
+[Serializable]
+public class Resources
+{
+    public int id;
+    public string name;
+    public int hp;
+    public int[] dropItemId;
+    public int[] dropItemCountMinRange;
+    public int[] dropItemCountMaxRange;
+    public int[] DropPercentage;
 }
 [Serializable]
 public class Items
