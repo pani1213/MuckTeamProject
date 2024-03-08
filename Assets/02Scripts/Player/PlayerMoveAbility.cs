@@ -11,7 +11,6 @@ public class PlayerMoveAbility : MonoBehaviour
 
     private CharacterController _characterController;
     private Animator _animator;
-
     // wasd: ¿Ãµø
     public float MoveSpeed = 5;
 

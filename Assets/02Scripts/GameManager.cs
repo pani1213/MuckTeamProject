@@ -15,15 +15,6 @@ public class GameManager : Singleton<GameManager>
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.itemData.ItemData[0]);
-            action();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.itemData.ItemData[3]);
-            action();
-        }
+       
     }
 }
