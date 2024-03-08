@@ -41,16 +41,16 @@ public class Monster : MonoBehaviour, IHitable
     private float _attackTimer   = 0f;    // 공격타임
     public const float AttackDelay = 1f;  // 공격딜레이
 
+    public float patrolRadius = 10f;
     public float IDLE_DURATION = 3f;
     private float _idleTimer;
-    public Transform Patrolpoint;
-
+    private Vector3 _randomPosition;
 
     public GameObject BulletPrefab;
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
-
     
+
 
 
     private MonsterState _currentState = MonsterState.Idle;
@@ -66,8 +66,9 @@ public class Monster : MonoBehaviour, IHitable
         _animator = GetComponentInChildren<Animator>();
 
         _target = GameObject.FindGameObjectWithTag("Player").transform; // 타겟에다가 플레이어를 넣어줌
-
+        _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
+        
 
         Init();
     }
@@ -107,12 +108,13 @@ public class Monster : MonoBehaviour, IHitable
     public void Idle()
     {
         _idleTimer += Time.deltaTime;
-        if (Patrolpoint != null && _idleTimer >= IDLE_DURATION)
+        if (_idleTimer >= IDLE_DURATION)
         {
             _idleTimer = 0f;
             Debug.Log("상태 전환: Idle -> Patrol");
             _animator.SetTrigger("IdleToPatrol");
             _currentState = MonsterState.Patrol;
+            SetRandomPatrolPoint();
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
@@ -124,9 +126,11 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Patrol()
     {
-        _navMeshAgent.stoppingDistance = 0;
-        _navMeshAgent.SetDestination(Patrolpoint.position); // 지정값으로 간다
-
+        if (_navMeshAgent.remainingDistance <= TOLERANCE)
+        {
+            SetRandomPatrolPoint();
+        }
+        
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
         {
             Debug.Log("상태 전환: Patrol -> Comeback");
@@ -141,6 +145,15 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
 
+    }
+    private void SetRandomPatrolPoint()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius; // 반경 내에서 무작위 방향 설정
+        randomDirection += transform.position; // 몬스터 위치에 더함
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, 1); // 네비메쉬 상에 유효한 위치 찾기
+        _randomPosition = hit.position;
+        _navMeshAgent.SetDestination(_randomPosition); // 몬스터 이동 목표 설정
     }
 
 
