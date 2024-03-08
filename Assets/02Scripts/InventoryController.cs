@@ -25,6 +25,12 @@ public class InventoryController : MonoBehaviour
     public void InIt()
     {
         gameObject.SetActive(!gameObject.activeSelf);
+        UnityEngine.Cursor.visible = gameObject.activeSelf;
+        if(UnityEngine.Cursor.visible)
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        else
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
         for (int i = 0; i < itemSlots.Length; i++)
             itemSlots[i].Refresh_SlotUI();
         mPointerEventData = new PointerEventData(null);

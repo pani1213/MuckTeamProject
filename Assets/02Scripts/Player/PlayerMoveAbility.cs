@@ -34,8 +34,11 @@ public class PlayerMoveAbility : MonoBehaviour
     private void Update()
     {
         Move();
-        CameraRotation();       // 마우스 위아래(Y) 움직임
-        CharacterRotation();    // 마우스 좌우(X) 움직임
+        if (Cursor.lockState == CursorLockMode.Locked)
+        { 
+            CameraRotation();       // 마우스 위아래(Y) 움직임
+            CharacterRotation();   // 마우스 좌우(X) 움직임
+        }
     }
 
     private void Move()

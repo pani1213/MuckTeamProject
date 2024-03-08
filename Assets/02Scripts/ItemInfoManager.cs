@@ -21,7 +21,10 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
+        { 
             inventoryController.InIt();
+
+        }
         
     }
 
