@@ -17,6 +17,11 @@ public class PlayerRayCast : MonoBehaviour
                 {
                     hit.collider.gameObject.GetComponent<IHitable>().Hit(new DamageInfo(DamageType.Normal,10));
                 }
+                if (hit.collider.CompareTag("Item"))
+                {
+                    Debug.Log("item get");
+                    hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
+                }
             }
         }
     }

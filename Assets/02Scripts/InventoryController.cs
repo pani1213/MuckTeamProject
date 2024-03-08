@@ -21,21 +21,13 @@ public class InventoryController : MonoBehaviour
     private int halfCount = 0;
 
     private bool isRightClick = false;
-    private void Start()
-    {
-        InIt();
-        GameManager.instance.action = InIt;
-        mPointerEventData = new PointerEventData(null);
-    }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-            InIt();
-    }
+ 
     public void InIt()
     {
+        gameObject.SetActive(!gameObject.activeSelf);
         for (int i = 0; i < itemSlots.Length; i++)
             itemSlots[i].Refresh_SlotUI();
+        mPointerEventData = new PointerEventData(null);
         
     }
     //event_trigger

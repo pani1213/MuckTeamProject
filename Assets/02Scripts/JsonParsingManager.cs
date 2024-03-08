@@ -9,12 +9,14 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
     public TextAsset itemTextAsset,ResourceTextAsset;
     public Items itemData;
     public ResourceList resourceData;
+    public Dictionary<int, Resources> resourceDictionary = new Dictionary<int, Resources>();
+    public Dictionary<int, Item> ItemDic = new Dictionary<int, Item>();
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
-        foreach (Item it in itemData.ItemData);
+        foreach (Item it in itemData.ItemData) { ItemDic.Add(it.id, it); };
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
-        foreach (Resources it in resourceData.ResourcesData) ; 
+        foreach (Resources it in resourceData.ResourcesData){resourceDictionary.Add(it.id, it);}; 
     }
 }
 [Serializable]

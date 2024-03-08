@@ -10,7 +10,9 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public SpriteAtlas itemSpriteAtlas;
     private const int INVENTORY_MAX_COUNT = 24;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
-    public GameObject inventory_UI;
+
+    public List<GameObject> ItemPrefabs;
+    public InventoryController inventoryController;
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
@@ -19,7 +21,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
-            inventory_UI.gameObject.SetActive(!inventory_UI.activeSelf);
+            inventoryController.InIt();
         
     }
 
