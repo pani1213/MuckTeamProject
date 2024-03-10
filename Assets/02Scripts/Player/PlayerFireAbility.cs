@@ -7,9 +7,10 @@ public class PlayerFireAbility : MonoBehaviour
     public Transform SwingPosition;
     public int Damage = 10; // 공격력
     public float AttackRange = 10f; // 공격 범위
+    public float AttackSpeed = 1f;
     private GameObject equipmentInstance; // 현재 활성화된 무기 인스턴스를 추적
     private bool isEquipped = false; // 무기 장착 상태를 판단하는 변수
-
+    private float lastAttackTime = 0f;
 
     private void Update()
     {
@@ -36,14 +37,23 @@ public class PlayerFireAbility : MonoBehaviour
             else
             {
                 equipmentInstance = Instantiate(EquipmentPrefab, SwingPosition.position, SwingPosition.rotation, SwingPosition);
+                _animator = equipmentInstance.GetComponent<Animator>();
                 isEquipped = true;
             }
         }
-
-        if (Input.GetMouseButtonDown(0) && _animator != null && isEquipped)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            
-            _animator.SetTrigger("PickaxeHit");
+            AttackSpeed -= 0.2F;
+            Debug.Log(AttackSpeed);
+        }
+        if (Input.GetMouseButton(0) && Time.time - lastAttackTime > AttackSpeed && isEquipped)
+        {
+            lastAttackTime = Time.time;
+            Debug.Log(lastAttackTime);
+            if (_animator != null)
+            {
+                _animator.SetTrigger("PickaxeHit");
+            } 
             AttackIfInRange();
            
         }
@@ -71,7 +81,6 @@ public class PlayerFireAbility : MonoBehaviour
 
                 }
             }
-        }
-            
+        }   
     }
 }

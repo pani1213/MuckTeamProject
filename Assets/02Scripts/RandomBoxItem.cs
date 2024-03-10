@@ -1,49 +1,130 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum RandomItemType
-{
-    YummyNuts,  // + 스태미나
-    Dumbell,    // + 기본 힘 10% 증가
-    Broccoli,   // + 건강 재생
-    Jetpack,    // + 점프 높이가 증가
-    Dracula,    // + 최대 체력은 처치할 때마다 이 파워업의 양만큼 증가 (최대40 제한)
-    Hammer      // + 번개 확률 과 번개 피해가 증가
-}
 
 public class RandomBoxItem : MonoBehaviour
 {
-    public RandomItemType ItemType;
-    public int Count;
-    public RandomBoxItem(RandomItemType itemType, int count)
+
+    public SurvivalGauge SurvivalGauge;
+    public PlayerFireAbility PlayerFireAbility;
+    public PlayerMoveAbility PlayerMoveAbility;
+    public Monster Monster;
+
+    public int id;
+    public string type;
+    public int value;
+
+
+    public void InIt(int _boxItemId, string _type, int _value)
     {
-        ItemType = itemType;
-        Count = count;
+        id = _boxItemId;
+        type = _type;
+        value = _value;
     }
-
-
-    public bool TryUse()
+    public void GetItem()
     {
-        if (Count == 0)
+        switch (type)
         {
-            return false;
+            case "maxhp":
+                ApplymaxHp(value);
+                break;
+
+            case "stamina":
+                ApplyStamina(value);
+                break;
+
+            case "power":
+                ApplyPower(value);
+                break;
+
+            case "hp":
+                ApplyHp(value);
+                break;
+
+            case "speed":
+                ApplySpeed(value);
+                break;
+
+            case "attackSpeed":
+                ApplyAttackSpeed(value);
+                break;
+
+            case "jumpPower":
+                ApplyJumpPower(value);
+                break;
+
+            case "hunger":
+                ApplyHunger(value);
+                break;
+
+            case "defense":
+                ApplyDefense(value);
+                break;
+
+            case "Lifesteal":
+                ApplyLifesteal(value);
+                break;
+
         }
 
-        Count -= 1;
-
-        switch (ItemType)
-        {
-            /*case ItemType.YummyNuts:
-                {
-                    // Todo: 스태미나를 키워줌
-                    SurvivalGauge survivalGauge = GameObject.FindWithTag("Player").GetComponent<SurvivalGauge>();
-                    survivalGauge.Stamina = survivalGauge.MaxStamina;
-                    survivalGauge.RefreshAnimation();
-                    break;
-                }*/
-        }
-
-        return true;
+        gameObject.SetActive(false);
     }
 
+    private void ApplymaxHp(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1001].imageFileName);
+        SurvivalGauge.Maxhealth += value;
+    }
+    private void ApplyStamina(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1002].imageFileName);
+        SurvivalGauge.Stamina += value;
+    }
+    private void ApplyPower(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1003].imageFileName);
+        PlayerFireAbility.Damage += value;
+    }
+
+    private void ApplyHp(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
+        SurvivalGauge.PlayerHealth += value;
+    }
+
+    private void ApplySpeed(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1005].imageFileName);
+        PlayerMoveAbility.MoveSpeed += value;
+    }
+    private void ApplyAttackSpeed(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1006].imageFileName);
+        PlayerFireAbility.AttackSpeed += value;
+    }
+    private void ApplyJumpPower(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1007].imageFileName);
+        PlayerMoveAbility.JumpPower += value;
+    }
+    private void ApplyHunger(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1008].imageFileName);
+        SurvivalGauge.Maxhunger += value;
+    }
+    private void ApplyDefense(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1009].imageFileName);
+        SurvivalGauge.Defense += value;
+    }
+    private void ApplyLifesteal(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
+        if(Monster.Health <= Monster.MaxHealth) 
+        {
+            SurvivalGauge.PlayerHealth += value;
+            Monster.Health -= value;
+        }
+        
+    }
 }
