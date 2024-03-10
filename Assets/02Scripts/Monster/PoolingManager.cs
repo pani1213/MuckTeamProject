@@ -12,6 +12,7 @@ public class PoolingManager : Singleton<PoolingManager>
     public Transform respawnPoint;
     public void Start()
     {
+
         _monsterpool = new List<Monster>();
 
         for (int i = 0; i < PoolSize; i++)
@@ -23,48 +24,31 @@ public class PoolingManager : Singleton<PoolingManager>
                 _monsterpool.Add(monsters.GetComponent<Monster>());
             }
         }
-
-        Make(MonsterType.Melee);
     }
     private Monster Get(MonsterType monsterType) // 창고 뒤지기
     {
 
-        Debug.Log(_monsterpool.Count);
+        
         for (int i = 0; i < _monsterpool.Count; i++)
         {
-        Debug.Log(_monsterpool[i].gameObject.activeSelf);
             if (!_monsterpool[i].gameObject.activeSelf && _monsterpool[i]._monsterType == monsterType)
             {
-
-                Debug.Log(_monsterpool[i].name);
                 return _monsterpool[i];
             }
         }
-        //foreach (Monster monsterObject in _monsterpool)
-        //{
-        //    
-        //    if (monsterObject.gameObject.activeSelf  == false&& monsterObject._monsterType == monsterType)
-        //    {
-        //    Debug.Log("return monster");
-        //        return monsterObject;
-        //    }
-        //
-        //}
-            Debug.Log("null");
         return null;
     }
 
-    public void Make(MonsterType monsterType)
+    public void Make(MonsterType monsterType, Vector3 position)
     {
         Monster monster = Get(monsterType);
         GameObject obj;
         if (monster != null)
         {
-            monster.transform.position = respawnPoint.position;
-            monster.transform.rotation = respawnPoint.rotation;
+            monster.transform.position = position;
             monster.Init();
             monster.gameObject.SetActive(true);
-            Debug.Log(0);
+           
 
         }
         else
@@ -72,25 +56,16 @@ public class PoolingManager : Singleton<PoolingManager>
 
             if (monsterType == MonsterType.Melee)
             {
-                obj = Instantiate(MonsterPrefab[0], transform);
-       
+                obj = Instantiate(MonsterPrefab[0]);
+                obj.transform.position = position;
             }
-
             else
             {
-                obj = Instantiate(MonsterPrefab[1], transform);
+                obj = Instantiate(MonsterPrefab[1]);
+                obj.transform.position = position;
             }
-            Debug.Log(1);
             _monsterpool.Add(obj.GetComponent<Monster>());
         }
-    }
-
-    private void ResetMonster(Monster monster)
-    {
-        monster.transform.position = respawnPoint.position;
-        monster.transform.rotation = respawnPoint.rotation;
-        monster.Init();
-        monster.gameObject.SetActive(true);
     }
 
 }
