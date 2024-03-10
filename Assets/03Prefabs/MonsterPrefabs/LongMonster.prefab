@@ -529,11 +529,10 @@ GameObject:
   - component: {fileID: 7108569258351891583}
   - component: {fileID: 9212445759617208816}
   - component: {fileID: 92520727294848806}
+  - component: {fileID: 1745234507206767798}
   - component: {fileID: 5358856756288185721}
   - component: {fileID: 1465636006504910237}
   - component: {fileID: 8684688969632087390}
-  - component: {fileID: 1745234507206767798}
-  - component: {fileID: 7686506226631647798}
   m_Layer: 0
   m_Name: LongMonster
   m_TagString: Monster
@@ -645,6 +644,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1745234507206767798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8520775904152034995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e421c70c5b40941b85801cc2c6a62f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
+  MaxHealth: 100
+  HealthSliderUI: {fileID: 6275805178793076482}
+  _monsterType: 1
+  _characterController: {fileID: 0}
+  MoveSpeed: 5
+  FindDistance: 5
+  MoveDistance: 40
+  AttackDistance: 20
+  Damage: 10
+  patrolRadius: 10
+  IDLE_DURATION: 3
+  BulletPrefab: {fileID: 1654736843778140, guid: 78e8b38d431ddef4fa2994a3f2d6e2ff, type: 3}
+  BulletPoint: {fileID: 3195911982757827437}
+  BulletSpeed: 10
+  KnockbackPower: 1.2
 --- !u!195 &5358856756288185721
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -720,59 +747,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1745234507206767798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8520775904152034995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e421c70c5b40941b85801cc2c6a62f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 0
-  MaxHealth: 100
-  HealthSliderUI: {fileID: 6275805178793076482}
-  _monsterType: 1
-  _characterController: {fileID: 0}
-  MoveSpeed: 5
-  FindDistance: 5
-  MoveDistance: 40
-  AttackDistance: 2
-  Damage: 10
-  patrolRadius: 10
-  IDLE_DURATION: 3
-  BulletPrefab: {fileID: 1654736843778140, guid: 78e8b38d431ddef4fa2994a3f2d6e2ff, type: 3}
-  BulletPoint: {fileID: 3195911982757827437}
-  BulletSpeed: 10
-  KnockbackPower: 1.2
---- !u!114 &7686506226631647798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8520775904152034995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e421c70c5b40941b85801cc2c6a62f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: 0
-  MaxHealth: 100
-  HealthSliderUI: {fileID: 6275805178793076482}
-  _monsterType: 1
-  _characterController: {fileID: 1465636006504910237}
-  MoveSpeed: 5
-  FindDistance: 20
-  MoveDistance: 10
-  AttackDistance: 20
-  Damage: 10
-  patrolRadius: 10
-  IDLE_DURATION: 3
-  BulletPrefab: {fileID: 1654736843778140, guid: 78e8b38d431ddef4fa2994a3f2d6e2ff, type: 3}
-  BulletPoint: {fileID: 3195911982757827437}
-  BulletSpeed: 10
-  KnockbackPower: 1.2
