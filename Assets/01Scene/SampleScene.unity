@@ -5133,6 +5133,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1392870571519566214, guid: ffce31c9583149f498e7c0e2824a5ce9, type: 3}
+      propertyPath: cameraRotationLimit
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 4346835253869201888, guid: ffce31c9583149f498e7c0e2824a5ce9, type: 3}
       propertyPath: m_Name
       value: PlayerAsset

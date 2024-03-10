@@ -37,6 +37,7 @@ public class InventoryController : MonoBehaviour
     //event_trigger
     public void BeginDragAction()
     {
+        
         mPointerEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         mRayCaster.Raycast(mPointerEventData, results);
