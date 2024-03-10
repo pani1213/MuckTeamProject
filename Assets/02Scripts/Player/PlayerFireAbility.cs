@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerFireAbility : MonoBehaviour
 {
+    public static PlayerFireAbility Instance {  get; private set; } 
+
     public Animator _animator;
     public GameObject EquipmentPrefab;
     public Transform SwingPosition;
@@ -11,6 +13,18 @@ public class PlayerFireAbility : MonoBehaviour
     private GameObject equipmentInstance; // 현재 활성화된 무기 인스턴스를 추적
     private bool isEquipped = false; // 무기 장착 상태를 판단하는 변수
     private float lastAttackTime = 0f;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Update()
     {

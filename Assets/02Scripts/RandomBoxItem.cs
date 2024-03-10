@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class RandomBoxItem : MonoBehaviour
 {
-
-    public SurvivalGauge SurvivalGauge;
-    public PlayerFireAbility PlayerFireAbility;
-    public PlayerMoveAbility PlayerMoveAbility;
-    public Monster Monster;
+    //public Monster Monster; <- 싱글톤으로 불러올 수 있는지
 
     public int id;
     public string type;
@@ -73,58 +69,58 @@ public class RandomBoxItem : MonoBehaviour
     private void ApplymaxHp(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1001].imageFileName);
-        SurvivalGauge.Maxhealth += value;
+        SurvivalGauge.Instance.Maxhealth += value;
     }
     private void ApplyStamina(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1002].imageFileName);
-        SurvivalGauge.Stamina += value;
+        SurvivalGauge.Instance.Stamina += value;
     }
     private void ApplyPower(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1003].imageFileName);
-        PlayerFireAbility.Damage += value;
+        PlayerFireAbility.Instance.Damage += value;
     }
 
     private void ApplyHp(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
-        SurvivalGauge.PlayerHealth += value;
+        SurvivalGauge.Instance.PlayerHealth += value;
     }
 
     private void ApplySpeed(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1005].imageFileName);
-        PlayerMoveAbility.MoveSpeed += value;
+        PlayerMoveAbility.Instance.MoveSpeed += value;
     }
     private void ApplyAttackSpeed(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1006].imageFileName);
-        PlayerFireAbility.AttackSpeed += value;
+        PlayerFireAbility.Instance.AttackSpeed += value;
     }
     private void ApplyJumpPower(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1007].imageFileName);
-        PlayerMoveAbility.JumpPower += value;
+        PlayerMoveAbility.Instance.JumpPower += value;
     }
     private void ApplyHunger(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1008].imageFileName);
-        SurvivalGauge.Maxhunger += value;
+        SurvivalGauge.Instance.Maxhunger += value;
     }
     private void ApplyDefense(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1009].imageFileName);
-        SurvivalGauge.Defense += value;
+        SurvivalGauge.Instance.Defense += value;
     }
     private void ApplyLifesteal(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
-        if(Monster.Health <= Monster.MaxHealth) 
+        /*if(Monster.Health <= Monster.MaxHealth) 
         {
             SurvivalGauge.PlayerHealth += value;
             Monster.Health -= value;
-        }
+        }*/
         
     }
 }

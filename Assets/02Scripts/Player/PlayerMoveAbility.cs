@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMoveAbility : MonoBehaviour
 {
+    public static PlayerMoveAbility Instance { get; private set; }
+
     public Camera theCamera;
     private float lookSensitivity = 2f;          // 마우스의 움직임에 따른 회전 민감도
     public float cameraRotationLimit = 35f;
@@ -22,6 +25,17 @@ public class PlayerMoveAbility : MonoBehaviour
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
     private const float GravityConstant = -15.81f; // 중력 상수
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
