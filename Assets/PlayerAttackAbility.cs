@@ -8,7 +8,7 @@ public class PlayerAttackAbility : MonoBehaviour
     public BoxCollider BoxCollider;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         { 
             animation.Play("swingClip");
             StartCoroutine(Attack_Coroutione());
