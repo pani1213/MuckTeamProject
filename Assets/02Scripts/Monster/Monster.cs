@@ -122,7 +122,7 @@ public class Monster : MonoBehaviour, IHitable
         if (_idleTimer >= IDLE_DURATION)
         {
             _idleTimer = 0f;
-            Debug.Log("상태 전환: Idle -> Patrol");
+            //Debug.Log("상태 전환: Idle -> Patrol");
             _animator.SetTrigger("IdleToPatrol");
             _currentState = MonsterState.Patrol;
             SetRandomPatrolPoint();
@@ -130,7 +130,7 @@ public class Monster : MonoBehaviour, IHitable
 
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
-            Debug.Log("상태 전환: Idle -> Trace");
+            //Debug.Log("상태 전환: Idle -> Trace");
             _animator.SetTrigger("IdleToTrace");
             _currentState = MonsterState.Trace;
         }
@@ -144,14 +144,14 @@ public class Monster : MonoBehaviour, IHitable
         
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
         {
-            Debug.Log("상태 전환: Patrol -> Comeback");
+           // Debug.Log("상태 전환: Patrol -> Comeback");
             _animator.SetTrigger("PatrolToComeback");
             _currentState = MonsterState.Comeback;
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
-            Debug.Log("상태 전환: Patrol -> Trace");
+           // Debug.Log("상태 전환: Patrol -> Trace");
             _animator.SetTrigger("PatrolToTrace");
             _currentState = MonsterState.Trace;
         }
@@ -182,14 +182,14 @@ public class Monster : MonoBehaviour, IHitable
 
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
-            Debug.Log("상태 전환: Trace -> Comeback");
+            //Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
         {
-            Debug.Log("상태 전환: Trace -> Attack");
+            //Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
         }
@@ -208,21 +208,21 @@ public class Monster : MonoBehaviour, IHitable
 
         if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
         {
-            Debug.Log("상태 전환: Comeback -> idle");
+           // Debug.Log("상태 전환: Comeback -> idle");
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
 
         if (Vector3.Distance(StartPosition, transform.position) <= TOLERANCE)
         {
-            Debug.Log("상태 전환: Comeback -> idle");
+           // Debug.Log("상태 전환: Comeback -> idle");
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
-            Debug.Log("상태 전환: Comeback -> Trace");
+           // Debug.Log("상태 전환: Comeback -> Trace");
             _animator.SetTrigger("ComebackToTrace");
             _currentState = MonsterState.Trace;
         }
@@ -234,7 +234,7 @@ public class Monster : MonoBehaviour, IHitable
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
         {
             _attackTimer = 0f;
-            Debug.Log("상태 전환: Attack -> Trace");
+            //Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
             return;
@@ -264,7 +264,7 @@ public class Monster : MonoBehaviour, IHitable
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null)
         {
-            Debug.Log("때렸다!");
+            //Debug.Log("때렸다!");
 
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
@@ -284,7 +284,7 @@ public class Monster : MonoBehaviour, IHitable
         bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
         Vector3 bulletDir = _target.position - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
 
         _attackTimer = 0f;
   
@@ -316,7 +316,7 @@ public class Monster : MonoBehaviour, IHitable
         {
             _knockbackProgress = 0f;
 
-            Debug.Log("상태 전환: Damaged -> Trace");
+            //Debug.Log("상태 전환: Damaged -> Trace");
             _animator.SetTrigger("DamagedToTrace");
             _currentState = MonsterState.Trace;
         }

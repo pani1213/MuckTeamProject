@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
         BulletAttackTime += Time.deltaTime;
         if (BulletAttackTime >= BulletDestroy)
         {
-            gameObject.SetActive(false);
+           gameObject.SetActive(false);
         }
     }
 }
