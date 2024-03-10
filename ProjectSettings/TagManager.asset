@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - Item
+  - BoxItem
   layers:
   - Default
   - TransparentFX
