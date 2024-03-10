@@ -13,15 +13,15 @@ public class PlayerRayCast : MonoBehaviour
     {
         if (hit.collider == null)
         {
-            informationText_UI.text = "";
+           // informationText_UI.text = "";
         }
         else
         {
-            if (hit.collider.CompareTag("Item"))
-                informationText_UI.text = "Prees 'E' key Get Item";
-            else
-                informationText_UI.text = "";
-
+           //if (hit.collider.CompareTag("Item"))
+           //    informationText_UI.text = "Prees 'E' key Get Item";
+           //else
+           //    informationText_UI.text = "";
+           //
             if (Input.GetMouseButtonDown(0))
             {
                 if (hit.collider.CompareTag("Monster"))
