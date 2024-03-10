@@ -13,8 +13,5 @@ public class GameManager : Singleton<GameManager>
         JsonParsingManager.instance.InIt();
         ItemInfoManager.instance.InIt();
     }
-    public void Update()
-    {
-       
-    }
+
 }

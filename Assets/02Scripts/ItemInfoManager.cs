@@ -10,7 +10,9 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public SpriteAtlas itemSpriteAtlas;
     private const int INVENTORY_MAX_COUNT = 24;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
-    public GameObject inventory_UI;
+
+    public List<GameObject> ItemPrefabs;
+    public InventoryController inventoryController;
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
@@ -19,11 +21,8 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
-            inventory_UI.gameObject.SetActive(!inventory_UI.activeSelf);
-        
+            inventoryController.InIt();
     }
-
-
     public void InsertItemInventory(Item _item,int _count = 1)
     { 
         int emptyIndex = GetEmptyInvenIndex();
@@ -38,9 +37,8 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
             SetInven(emptyIndex, _item, _count);
         }
         else
-        {
             SetInven(itemIndex, _item, _count);
-        }
+        
     }
     // 인벤토리 요소 스왑 (전체스왑)
     public void InvenSwap(int _indexA , int _indexB)
@@ -52,7 +50,6 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         itemInventory[_indexB] = tempInve;
         //Debug.Log(itemInventory[_indexA].);
     }
-    
     /// <summary>
     /// full item return null
     /// </summary>

@@ -1,0 +1,74 @@
+{
+  "BoxItemData": [
+    {
+      "id": "1001",
+      "name": "redPill",
+      "type": "hp",
+      "value": "10",
+      "imageFileName": "apple"
+    },
+    {
+      "id": "1002",
+      "name": "peanutButter",
+      "type": "stamina",
+      "value": "10",
+      "imageFileName": "bakedmeet"
+    },
+    {
+      "id": "1003",
+      "name": "dumbbell",
+      "type": "power",
+      "value": "10",
+      "imageFileName": "bark"
+    },
+    {
+      "id": "1004",
+      "name": "brocoli",
+      "type": "hp",
+      "value": "1",
+      "imageFileName": "coal"
+    },
+    {
+      "id": "1005",
+      "name": "sneakers",
+      "type": "speed",
+      "value": "1",
+      "imageFileName": "empty"
+    },
+    {
+      "id": "1006",
+      "name": "orangeJuice",
+      "type": "attackSpeed",
+      "value": "0.2",
+      "imageFileName": "house"
+    },
+    {
+      "id": "1007",
+      "name": "jetPack",
+      "type": "jumpPower",
+      "value": "1",
+      "imageFileName": "meet"
+    },
+    {
+      "id": "1008",
+      "name": "spoooBean",
+      "type": "hunger",
+      "value": "1",
+      "imageFileName": "redMurshRoom"
+    },
+    {
+      "id": "1009",
+      "name": "stringBones",
+      "type": "defense",
+      "value": "1",
+      "imageFileName": "steelAx"
+    },
+    {
+      "id": "1010",
+      "name": "crimsonDagger",
+      "type": "Lifesteal",
+      "value": "10",
+      "imageFileName": "steelBar"
+    }
+  ]
+}

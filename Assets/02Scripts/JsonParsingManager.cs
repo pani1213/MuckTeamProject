@@ -2,20 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-
 public class JsonParsingManager : Singleton<JsonParsingManager>
 {
-    public TextAsset itemTextAsset,ResourceTextAsset;
+    public TextAsset itemTextAsset,ResourceTextAsset,boxItemTextAsset;
     public Items itemData;
     public ResourceList resourceData;
+    public BoxItems BoxItems;
+    public Dictionary<int, Resources> resourceDictionary = new Dictionary<int, Resources>();
+    public Dictionary<int, Item> ItemDic = new Dictionary<int, Item>();
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
-        foreach (Item it in itemData.ItemData);
+        foreach (Item it in itemData.ItemData) { ItemDic.Add(it.id, it); };
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
-        foreach (Resources it in resourceData.ResourcesData) ; 
+        foreach (Resources it in resourceData.ResourcesData){resourceDictionary.Add(it.id, it);};
+        BoxItems = JsonUtility.FromJson<BoxItems>(boxItemTextAsset.text);
+        foreach (BoxItem it in BoxItems.BoxItemData){ Debug.Log(it.id); };
     }
+}
+public class BoxItems
+{
+    public List<BoxItem> BoxItemData;
+}
+[Serializable]
+public class BoxItem
+{
+    public int id;
+    public string name;
+    public string type;
+    public float value;
+    public string imageFileName;
 }
 [Serializable]
 public class ResourceList
