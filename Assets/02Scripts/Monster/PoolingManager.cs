@@ -6,12 +6,10 @@ using UnityEngine.UIElements;
 public class PoolingManager : Singleton<PoolingManager>
 {
     public List<GameObject> MonsterPrefab;
-    public Transform respawnPoint; // 리스폰 위치 설정
-
-    private List<Monster> _monsterpool;
+    public List<Monster> _monsterpool;
     public int PoolSize = 20;
     public float regenDelay = 20f; // 몬스터 리젠 딜레이
-
+    public Transform respawnPoint;
     public void Start()
     {
         _monsterpool = new List<Monster>();
@@ -21,69 +19,79 @@ public class PoolingManager : Singleton<PoolingManager>
             foreach (GameObject prefab in MonsterPrefab)
             {
                 GameObject monsters = Instantiate(prefab);
-                _monsterpool.Add(monsters.GetComponent<Monster>());
                 monsters.SetActive(false);
+                _monsterpool.Add(monsters.GetComponent<Monster>());
             }
         }
+
+        Make(MonsterType.Melee);
     }
     private Monster Get(MonsterType monsterType) // 창고 뒤지기
-
     {
-        foreach (Monster monsterObject in _monsterpool)
-        {
-            if (!monsterObject.gameObject.activeSelf && monsterObject._monsterType == monsterType)
-            {
-                return monsterObject;
-            }
 
+        Debug.Log(_monsterpool.Count);
+        for (int i = 0; i < _monsterpool.Count; i++)
+        {
+        Debug.Log(_monsterpool[i].gameObject.activeSelf);
+            if (!_monsterpool[i].gameObject.activeSelf && _monsterpool[i]._monsterType == monsterType)
+            {
+
+                Debug.Log(_monsterpool[i].name);
+                return _monsterpool[i];
+            }
         }
+        //foreach (Monster monsterObject in _monsterpool)
+        //{
+        //    
+        //    if (monsterObject.gameObject.activeSelf  == false&& monsterObject._monsterType == monsterType)
+        //    {
+        //    Debug.Log("return monster");
+        //        return monsterObject;
+        //    }
+        //
+        //}
+            Debug.Log("null");
         return null;
     }
 
     public void Make(MonsterType monsterType)
     {
         Monster monster = Get(monsterType);
-        //GameObject obj;
+        GameObject obj;
         if (monster != null)
         {
             monster.transform.position = respawnPoint.position;
             monster.transform.rotation = respawnPoint.rotation;
             monster.Init();
             monster.gameObject.SetActive(true);
+            Debug.Log(0);
+
         }
         else
         {
-            GameObject obj = Instantiate(MonsterPrefab[(int)monsterType], respawnPoint.position, respawnPoint.rotation);
+
+            if (monsterType == MonsterType.Melee)
+            {
+                obj = Instantiate(MonsterPrefab[0], transform);
+       
+            }
+
+            else
+            {
+                obj = Instantiate(MonsterPrefab[1], transform);
+            }
+            Debug.Log(1);
             _monsterpool.Add(obj.GetComponent<Monster>());
-            /*        if (monsterType == MonsterType.Melee)
-                    {
-                        obj = Instantiate(MonsterPrefab[0], transform);
-                    }
-
-                    else
-                    {
-                        obj = Instantiate(MonsterPrefab[1], transform);
-                    }
-
-
-                    _monsterpool.Add(obj.GetComponent<Monster>());*/
         }
     }
 
-    public void ReturnMonster(Monster monster)
+    private void ResetMonster(Monster monster)
     {
-        if (_monsterpool.Contains(monster))
-        {
-            // 몬스터를 비활성화하고 일정 시간 후에 리젠하도록 설정
-            StartCoroutine(RegenerateMonster(monster, regenDelay));
-            monster.gameObject.SetActive(true);
-        }
+        monster.transform.position = respawnPoint.position;
+        monster.transform.rotation = respawnPoint.rotation;
+        monster.Init();
+        monster.gameObject.SetActive(true);
     }
-    private IEnumerator RegenerateMonster(Monster monster, float delay)
-    {
-        monster.gameObject.SetActive(false);
-        yield return new WaitForSeconds(delay);
-        Make(monster._monsterType);
-    }
+
 }
 

@@ -57,14 +57,13 @@ public class Monster : MonoBehaviour, IHitable
     private float _knockbackProgress = 0f;
     public float KnockbackPower = 1.2f;
 
-    public Transform regenTransform; // ¸®Á¨ Æ®·£½ºÆû À§Ä¡
-    public float regenDelay = 20f; // ¸®Á¨ µô·¹ÀÌ
 
 
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
+
         _characterController = GetComponent<CharacterController>();
         _characterController.isTrigger = false;
 
