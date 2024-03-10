@@ -36,7 +36,13 @@ public class PlayerRayCast : MonoBehaviour
                     Debug.Log("item get");
                     hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
                 }
+                if (hit.collider.CompareTag("Box"))
+                {
+                    Debug.Log("boxItem get");
+                    hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
+                }
             }
+
         }
     }
     private void FixedUpdate()

@@ -8,6 +8,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     // 체력
     public int PlayerHealth = 100; // 하트 이미지 S2
     public int Maxhealth = 100;
+    public int Defense = 0;        // 방어력
 
     // 허기
     public int PlayerHunger = 100; // 치킨 이미지 @
@@ -23,7 +24,10 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
     public bool _isStamina = true;
-    private bool _isRunning = false; 
+    private bool _isRunning = false;
+
+    
+    
 
     private CharacterController _characterController;
 
@@ -41,7 +45,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public void Hit(DamageInfo damageInfo)
     {
         
-        PlayerHealth -= damageInfo.Amount;
+        PlayerHealth -= damageInfo.Amount - Defense;
 
         if (PlayerHealth <= 0)
         {

@@ -10,6 +10,7 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
     public BoxItems BoxItems;
     public Dictionary<int, Resources> resourceDictionary = new Dictionary<int, Resources>();
     public Dictionary<int, Item> ItemDic = new Dictionary<int, Item>();
+    public Dictionary<int, BoxItem> boxItemDic = new Dictionary<int, BoxItem>();
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
@@ -17,7 +18,7 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
         foreach (Resources it in resourceData.ResourcesData){resourceDictionary.Add(it.id, it);};
         BoxItems = JsonUtility.FromJson<BoxItems>(boxItemTextAsset.text);
-        foreach (BoxItem it in BoxItems.BoxItemData){ Debug.Log(it.id); };
+        foreach (BoxItem it in BoxItems.BoxItemData){ boxItemDic.Add(it.id, it); };
     }
 }
 public class BoxItems
