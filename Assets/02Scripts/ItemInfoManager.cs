@@ -11,7 +11,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     private const int INVENTORY_MAX_COUNT = 24;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
 
-    public List<GameObject> ItemPrefabs;
+    public List<ItemObjectScript> ItemPrefabs;
     public InventoryController inventoryController;
     public void InIt()
     {

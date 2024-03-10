@@ -17,7 +17,7 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
         foreach (Resources it in resourceData.ResourcesData){resourceDictionary.Add(it.id, it);};
         BoxItems = JsonUtility.FromJson<BoxItems>(boxItemTextAsset.text);
-        foreach (BoxItem it in BoxItems.BoxItemData){ Debug.Log(it.id); };
+        foreach (BoxItem it in BoxItems.BoxItemData);
     }
 }
 public class BoxItems
