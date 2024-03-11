@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
-public class SurvivalGauge : MonoBehaviour
+public class SurvivalGauge : MonoBehaviour, IHitable
 {
     public static SurvivalGauge Instance { get; private set; }
 
@@ -13,10 +13,10 @@ public class SurvivalGauge : MonoBehaviour
     public int Defense = 0;        // 방어력
 
     // 허기
-    public int PlayerHunger = 100; // 치킨 이미지 @
-    public int Maxhunger = 100;
-    public float HungerTime = 100f;
+    public float PlayerHunger = 100; // 치킨 이미지 @
+    public float Maxhunger = 100;
     public float _hungerTimer = 0f;
+    public float hungerDecayTime = 10f;
 
     // 스태미나
     public float MoveSpeed = 5;
@@ -102,25 +102,25 @@ public class SurvivalGauge : MonoBehaviour
     private void UpdateHunger()
     {
         // Hunger를 _hungerTimer가 증가함에 따라(100까지) 100에서 0이 되도록 하기
-        // && 밥 아이템을 먹으면 Hunger가 늘어나도록
+        // && 밥 아이템을 먹으면 Hunger 수치가 늘어나도록
         // Hunger 값이 0이 되면 -> 스태미나 안차도록
 
         _hungerTimer += Time.deltaTime;
-
-        if (_hungerTimer > HungerTime) 
+        if (_hungerTimer >= hungerDecayTime) // _hungerTimer가 10초 증가함에 따라 허기가 감소하는 코드 
         {
             PlayerHunger = Mathf.Max(0, PlayerHunger - 1); // 허기 감소
-            _hungerTimer = 0; // 타이머 리셋
-
-            if (PlayerHunger <= 0)
-            {
-                _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
-            }
+            _hungerTimer = 0;
         }
+
+        if (PlayerHunger <= 0)
+        {
+                _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
+        }
+        
         // if(소비 아이템을 먹었을 때)
         {
             _isStamina = true;
-            //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 증가
+            //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 채워짐 증가
             //_hungerTimer -= 아이템 성능; // 아이템 성능만큼 허기 타이머 감소
         }
     }
