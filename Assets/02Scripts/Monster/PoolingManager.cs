@@ -25,6 +25,7 @@ public class PoolingManager : Singleton<PoolingManager>
             }
         }
     }
+
     private Monster Get(MonsterType monsterType) // 창고 뒤지기
     {
 
@@ -68,5 +69,11 @@ public class PoolingManager : Singleton<PoolingManager>
         }
     }
 
+    private List<GameObject> unusedMonsters = new List<GameObject>();
+    public void ReturnToPool(GameObject monster)
+    {
+        monster.SetActive(false);
+        unusedMonsters.Add(monster);
+    }
 }
 

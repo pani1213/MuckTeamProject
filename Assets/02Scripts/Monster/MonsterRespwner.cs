@@ -10,7 +10,7 @@ public class MonsterRespawner : MonoBehaviour
     public float maxSpawnDistance = 50f; // 플레이어로부터 최대 소환 거리
     public float yOffset = 1f; // 몬스터가 생성될 높이 조정값
 
-    public Collider[] mapBoundsColliders; // 맵의 경계를 나타내는 Collider 배열
+    public GameObject mapBorder; // 맵 외곽을 나타내는 게임 오브젝트
     void Start()
     {
         // PoolingManager 인스턴스를 가져옴
@@ -45,9 +45,6 @@ public class MonsterRespawner : MonoBehaviour
                 // 몬스터가 생성될 높이 조정
                 spawnPosition.y = yOffset;
 
-                
-
-
                 // 랜덤하게 몬스터 타입 선택
                 MonsterType monsterType = (MonsterType)Random.Range(0, 2);
                 Debug.Log(monsterType);
@@ -62,17 +59,5 @@ public class MonsterRespawner : MonoBehaviour
             yield return new WaitForSeconds(poolingManager.regenDelay);
         }
     }
-    // 맵의 경계 내에 위치하는지 확인하는 함수
-    private bool IsInsideMapBounds(Vector3 position)
-    {
-        foreach (Collider collider in mapBoundsColliders)
-        {
-            if (!collider.bounds.Contains(position))
-            {
-                return false; // 하나라도 경계 밖에 위치하면 false 반환
-            }
-        }
-        return true; // 모든 Collider의 경계 내에 위치하면 true 반환
-    }
-
 }
+

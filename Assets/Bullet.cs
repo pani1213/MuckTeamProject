@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
         {
             other.GetComponent<IHitable>().Hit(info);
 
-            gameObject.SetActive(false);
+            
         }
     }
 

@@ -997,7 +997,7 @@ MonoBehaviour:
   - {fileID: 8520775904152034995, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
   _monsterpool: []
   PoolSize: 20
-  regenDelay: 5
+  regenDelay: 1
   respawnPoint: {fileID: 1538560299}
 --- !u!4 &358717374
 Transform:
@@ -6656,7 +6656,7 @@ MonoBehaviour:
   minSpawnDistance: 30
   maxSpawnDistance: 50
   yOffset: 1
-  mapBoundsColliders: []
+  mapBorder: {fileID: 0}
 --- !u!1001 &1539146357
 PrefabInstance:
   m_ObjectHideFlags: 0
