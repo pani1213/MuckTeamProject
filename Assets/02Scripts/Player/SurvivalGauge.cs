@@ -8,6 +8,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public static SurvivalGauge Instance { get; private set; }
     public static bool IsPlayerDead = false;
     public GameObject mainCamera;
+    public UI_OptionPopup uiOptionPopup;
 
     // 체력
     public int PlayerHealth = 100; // 하트 이미지 S2
@@ -20,7 +21,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public int PlayerHunger = 100; // 치킨 이미지 @
     public int Maxhunger = 100;
     public float _hungerTimer = 0f;
-    public float hungerDecayTime = 10f;
+    public float hungerDecayTime = 5f;
 
     // 스태미나
     public float MoveSpeed = 5;
@@ -50,6 +51,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     {
         _characterController = GetComponent<CharacterController>();
         deathCamera = Camera.main.GetComponent<DeathCamera>();
+        uiOptionPopup = FindObjectOfType<UI_OptionPopup>();
         PlayerHealth = Maxhealth;
         PlayerHunger = Maxhunger;
     }
@@ -69,22 +71,17 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             // 무덤이 만들어지고 / 공중으로 카메라가 가서 위에서 비춤(카메라는 DeathCamera 스크립트에서)
             // GameOver UI 띄우기
             IsPlayerDead = true;
-            SpawnTombstone();
-            deathCamera.target = tombstonePrefab.transform;
+            GameObject tombstoneInstance = Instantiate(tombstonePrefab, transform.position, Quaternion.identity);
+            deathCamera.target = tombstoneInstance.transform;
+
             mainCamera.transform.parent = null;
             deathCamera.OrbitAroundTarget();
-
+            
             gameObject.SetActive(false); // 플레이어 사망
+            uiOptionPopup.ShowGameOver();
         }
     }
-    private void SpawnTombstone()
-    {
-        if (tombstonePrefab != null)
-        {
-            Instantiate(tombstonePrefab, transform.position, Quaternion.identity);
-        }
-
-    }
+    
     // 구현 필요) 점프하면 스태미나 닳고, 스태미나 바닥이면 점프도 안됨
     private void FastMove()
     {
