@@ -26,7 +26,7 @@ public class PlayerRayCast : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Monster"))
                 {
-                    hit.collider.gameObject.GetComponent<IHitable>().Hit(new DamageInfo(DamageType.Normal, 10));
+                  //  hit.collider.gameObject.GetComponent<IHitable>().Hit(new DamageInfo(DamageType.Normal, 10));
                 }
             }
             if (Input.GetKeyDown(KeyCode.E))
@@ -42,7 +42,6 @@ public class PlayerRayCast : MonoBehaviour
                     hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
             }
-
         }
     }
     private void FixedUpdate()

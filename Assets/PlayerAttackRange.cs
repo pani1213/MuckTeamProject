@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class PlayerAttackRange : MonoBehaviour
 {
-     public PlayerAttackAbility PlayerAttackAbility;
+    public PlayerAttackAbility PlayerAttackAbility;
+    public PlayerHand PlayerHand;
+    public PlayerFireAbility PlayerFire;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
+        if (PlayerHand.AttachItem != null && (PlayerHand.AttachItem.category == "tool" || PlayerHand.AttachItem.id == 1002) && other.CompareTag("Monster"))
+        {
+            other.GetComponent<Monster>().Hit(new DamageInfo(DamageType.Normal, (PlayerFire.Damage + PlayerHand.attachmentDamage)));
+        }
+        if (other.CompareTag("Tree"))
+        {
+            other.GetComponent<ResourceObjScript>().Hit(new DamageInfo(DamageType.Normal, PlayerFire.Damage + PlayerHand.attachmentDamage));
+   
+        }
+        if (other.CompareTag("Stone"))
+        {
+            Debug.Log(0);
+        }
     }
 }
