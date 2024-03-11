@@ -12,8 +12,11 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<IHitable>().Hit(info);
-
-            
+            gameObject.SetActive(false); 
+        }
+        else if (other.CompareTag("Ground"))
+        {
+            gameObject.SetActive(false); 
         }
     }
 

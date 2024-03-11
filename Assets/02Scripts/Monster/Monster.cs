@@ -282,7 +282,7 @@ public class Monster : MonoBehaviour, IHitable
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
-        Vector3 bulletDir = _target.position - BulletPoint.position;
+        Vector3 bulletDir = new Vector3(_target.position.x, _target.position.y +1f, _target.position.z) - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
         //Debug.Log(rb.velocity);
 
