@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2893342188718129963}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: MapResource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6451365723667133862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3771234, y: 0.67, z: 5.1655884}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1002
   hp: 0
+  index: 0

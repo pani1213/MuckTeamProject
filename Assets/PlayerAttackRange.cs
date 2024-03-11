@@ -13,14 +13,9 @@ public class PlayerAttackRange : MonoBehaviour
         {
             other.GetComponent<Monster>().Hit(new DamageInfo(DamageType.Normal, (PlayerFire.Damage + PlayerHand.attachmentDamage)));
         }
-        if (other.CompareTag("Tree"))
+        if (other.CompareTag("MapResource"))
         {
             other.GetComponent<ResourceObjScript>().Hit(new DamageInfo(DamageType.Normal, PlayerFire.Damage + PlayerHand.attachmentDamage));
-   
-        }
-        if (other.CompareTag("Stone"))
-        {
-            Debug.Log(0);
-        }
+        }    
     }
 }

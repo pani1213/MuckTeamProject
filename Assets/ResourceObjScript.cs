@@ -6,8 +6,11 @@ public class ResourceObjScript : MonoBehaviour, IHitable
 {
     public int id;
     public int hp;
-    public void InIt()
+    public int index;
+    public void InIt(int _index)
     {
+        //transform.localPosition = Vector3.zero;
+        index = _index;
         hp = JsonParsingManager.instance.resourceDictionary[id].hp;
     }
     public void Hit(DamageInfo damageInfo)
@@ -16,8 +19,9 @@ public class ResourceObjScript : MonoBehaviour, IHitable
         Debug.Log(hp);
         if (hp <= 0)
         {
-            Debug.Log($"drop : {JsonParsingManager.instance.resourceDictionary[id].dropItemId[0]}");
-            gameObject.SetActive(false);
+            Debug.Log($"drop : {JsonParsingManager.instance.resourceDictionary[id].dropItemId.Length}");
+            ResourceSpawnManager.instance.spawns[index].isSpawn = false;
+            Destroy(gameObject);
         }
     }
 }
