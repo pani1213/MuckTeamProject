@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
-public class SurvivalGauge : MonoBehaviour 
+public class SurvivalGauge : MonoBehaviour, IHitable 
 {
     public static SurvivalGauge Instance { get; private set; }
     // 체력
@@ -14,8 +14,8 @@ public class SurvivalGauge : MonoBehaviour
     // 허기
     public int PlayerHunger = 100; // 치킨 이미지 @
     public int Maxhunger = 100;
-    public float HungerTime = 100f;
     public float _hungerTimer = 0f;
+    public float hungerDecayTime = 10f;
 
     // 스태미나
     public float MoveSpeed = 5;
@@ -101,12 +101,12 @@ public class SurvivalGauge : MonoBehaviour
     private void UpdateHunger()
     {
         // Hunger를 _hungerTimer가 증가함에 따라(100까지) 100에서 0이 되도록 하기
-        // && 밥 아이템을 먹으면 Hunger가 늘어나도록
+        // && 밥 아이템을 먹으면 Hunger 수치가 늘어나도록
         // Hunger 값이 0이 되면 -> 스태미나 안차도록
 
         _hungerTimer += Time.deltaTime;
 
-        if (_hungerTimer > HungerTime) 
+        if (_hungerTimer >= hungerDecayTime)
         {
             PlayerHunger = Mathf.Max(0, PlayerHunger - 1); // 허기 감소
             _hungerTimer = 0; // 타이머 리셋
