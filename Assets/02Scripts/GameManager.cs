@@ -8,10 +8,17 @@ using static System.Collections.Specialized.BitVector32;
 public class GameManager : Singleton<GameManager>
 {
     public Action action;
+    public ResourceObjScript ResourceObjScript;
     private void Start()
     {
         JsonParsingManager.instance.InIt();
         ItemInfoManager.instance.InIt();
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+            ResourceObjScript.InIt();
+
     }
 
 }

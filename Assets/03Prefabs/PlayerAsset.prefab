@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 563037175151052149}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -9.046631e-11, w: 1}
-  m_LocalPosition: {x: -0.064, y: -0.344, z: 1.1712}
-  m_LocalScale: {x: 1.7602, y: 0.3681075, z: 1.3749533}
+  m_LocalPosition: {x: -0.064, y: -0.4228, z: 1.1712}
+  m_LocalScale: {x: 1.7602, y: 1.2543952, z: 1.3749533}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5282154207512678546}
@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerAttackAbility: {fileID: 6480056760498599188}
+  PlayerHand: {fileID: 2547788734528100439}
+  PlayerFire: {fileID: 4472668093915354490}
 --- !u!54 &1138033220149310726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,7 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theCamera: {fileID: 6747110857623224491}
-  cameraRotationLimit: 100
+  cameraRotationLimit: 80
   MoveSpeed: 2
   JumpPower: 10
   JumpMaxCount: 1
@@ -324,6 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerHealth: 100
   Maxhealth: 100
+  Defense: 0
   PlayerHunger: 100
   Maxhunger: 100
   HungerTime: 100
@@ -351,6 +354,7 @@ MonoBehaviour:
   SwingPosition: {fileID: 1078264069795815287}
   Damage: 10
   AttackRange: 5
+  AttackSpeed: 1
 --- !u!114 &8329509868974018739
 MonoBehaviour:
   m_ObjectHideFlags: 0

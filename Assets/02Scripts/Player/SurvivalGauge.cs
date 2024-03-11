@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
-public class SurvivalGauge : MonoBehaviour
+public class SurvivalGauge : MonoBehaviour 
 {
     public static SurvivalGauge Instance { get; private set; }
-
     // 체력
     public int PlayerHealth = 100; // 하트 이미지 S2
     public int Maxhealth = 100;

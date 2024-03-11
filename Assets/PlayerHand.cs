@@ -6,9 +6,7 @@ public class PlayerHand : MonoBehaviour
 {
     public GameObject AttachPosition;
     public Item AttachItem = null;
-
-    
-
+    public static int attachmentDamage;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -26,17 +24,25 @@ public class PlayerHand : MonoBehaviour
     }
     public void AttachMentItem(int _itemIndex)
     {
+        if (ItemInfoManager.instance.itemInventory[_itemIndex].item != AttachItem && AttachPosition.transform.childCount > 0)
+            Destroy(AttachPosition.transform.GetChild(0).gameObject);
+
         if (ItemInfoManager.instance.itemInventory[_itemIndex].item != null)
         {
+            AttachItem = ItemInfoManager.instance.itemInventory[_itemIndex].item;
+            attachmentDamage = ItemInfoManager.instance.itemInventory[_itemIndex].item.damage;
             Debug.Log(ItemInfoManager.instance.itemInventory[_itemIndex].item.id);
-            GameObject obj =  Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
+            GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
             Debug.Log(obj.layer);
         }
         else
+        {
+            AttachItem = null;
             Debug.Log("isNull");
+        }
     }
     private GameObject GetItemPrefab(string _id)
     {

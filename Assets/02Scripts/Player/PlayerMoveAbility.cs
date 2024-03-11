@@ -7,7 +7,7 @@ public class PlayerMoveAbility : MonoBehaviour
 {
     public static PlayerMoveAbility Instance { get; private set; }
 
-    public Camera theCamera;
+    public Camera theCamera ;
     private float lookSensitivity = 2f;          // 마우스의 움직임에 따른 회전 민감도
     public float cameraRotationLimit = 35f;
     private float currentCameraRotationX = 0f;
