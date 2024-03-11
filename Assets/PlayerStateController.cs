@@ -8,14 +8,20 @@ public class PlayerStateController : MonoBehaviour
     public Image hp, hungry, stamina;
     public void SetHp()
     {
-        //SurvivalGauge.Instance.PlayerHealth
+        hp.fillAmount = SurvivalGauge.Instance.PlayerHealth * 0.01f;
     }
-    public void SetHungry(float value)
+    public void SetHungry()
     {
-        Debug.Log(value);
+        hungry.fillAmount = SurvivalGauge.Instance.PlayerHunger* 0.01f;
     }
-    public void SetStamina(float value)
+    public void SetStamina()
     {
-        Debug.Log(value);
+        stamina.fillAmount = SurvivalGauge.Instance.Stamina * 0.01f;
+    }
+    private void Update()
+    {
+        SetHp();
+        SetHungry();
+        SetStamina();
     }
 }

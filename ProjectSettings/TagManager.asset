@@ -8,8 +8,8 @@ TagManager:
   - Item
   - BoxItem
   - Box
+  - MapResource
   - Tree
-  - Stone
   layers:
   - Default
   - TransparentFX

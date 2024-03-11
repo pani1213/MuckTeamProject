@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4142229113790885788}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Tree
+  m_TagString: MapResource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,9 +27,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3351727194772668543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.9983091, y: -0.49625778, z: 3.4783266}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.8000396, y: 1.8000396, z: 1.8000396}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4926369397024640857}
@@ -73,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1001
   hp: 0
+  index: 0
 --- !u!65 &4142229113790885788
 BoxCollider:
   m_ObjectHideFlags: 0

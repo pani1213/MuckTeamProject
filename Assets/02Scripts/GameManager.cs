@@ -13,12 +13,6 @@ public class GameManager : Singleton<GameManager>
     {
         JsonParsingManager.instance.InIt();
         ItemInfoManager.instance.InIt();
+        ResourceSpawnManager.instance.InIt();
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-            ResourceObjScript.InIt();
-
-    }
-
 }
