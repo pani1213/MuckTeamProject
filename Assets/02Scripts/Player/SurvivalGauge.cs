@@ -6,10 +6,15 @@ using UnityEngine;
 public class SurvivalGauge : MonoBehaviour, IHitable 
 {
     public static SurvivalGauge Instance { get; private set; }
+    public static bool IsPlayerDead = false;
+    public GameObject mainCamera;
+
     // 체력
     public int PlayerHealth = 100; // 하트 이미지 S2
     public int Maxhealth = 100;
     public int Defense = 0;        // 방어력
+    public GameObject tombstonePrefab;
+    public DeathCamera deathCamera;
 
     // 허기
     public int PlayerHunger = 100; // 치킨 이미지 @
@@ -44,6 +49,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+        deathCamera = Camera.main.GetComponent<DeathCamera>();
         PlayerHealth = Maxhealth;
         PlayerHunger = Maxhunger;
     }
@@ -56,13 +62,29 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     {
         
         PlayerHealth -= damageInfo.Amount - Defense;
+        // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
 
         if (PlayerHealth <= 0)
         {
+            // 무덤이 만들어지고 / 공중으로 카메라가 가서 위에서 비춤(카메라는 DeathCamera 스크립트에서)
+            // GameOver UI 띄우기
+            IsPlayerDead = true;
+            SpawnTombstone();
+            deathCamera.target = tombstonePrefab.transform;
+            mainCamera.transform.parent = null;
+            deathCamera.OrbitAroundTarget();
+
             gameObject.SetActive(false); // 플레이어 사망
         }
     }
+    private void SpawnTombstone()
+    {
+        if (tombstonePrefab != null)
+        {
+            Instantiate(tombstonePrefab, transform.position, Quaternion.identity);
+        }
 
+    }
     // 구현 필요) 점프하면 스태미나 닳고, 스태미나 바닥이면 점프도 안됨
     private void FastMove()
     {

@@ -7,7 +7,7 @@ public class PlayerMoveAbility : MonoBehaviour
 {
     public static PlayerMoveAbility Instance { get; private set; }
 
-    public Camera theCamera ;
+    public Camera theCamera;
     private float lookSensitivity = 2f;          // 마우스의 움직임에 따른 회전 민감도
     public float cameraRotationLimit = 35f;
     private float currentCameraRotationX = 0f;
@@ -23,7 +23,7 @@ public class PlayerMoveAbility : MonoBehaviour
     private bool _isJumping = false;
     // private float _gravity = -5;        // 중력 값
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
-    private const float GravityConstant = -15.81f; // 중력 상수
+    private const float GravityConstant = -20f; // 중력 상수
 
     private void Awake()
     {
@@ -45,12 +45,12 @@ public class PlayerMoveAbility : MonoBehaviour
     }
     private void Update()
     {
-        Move();
-        if (Cursor.lockState == CursorLockMode.Locked)
-        { 
-            CameraRotation();       // 마우스 위아래(Y) 움직임
-            CharacterRotation();   // 마우스 좌우(X) 움직임
-        }
+            Move();
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                CameraRotation();       // 마우스 위아래(Y) 움직임
+                CharacterRotation();   // 마우스 좌우(X) 움직임
+            }
     }
     private void Move()
     {
