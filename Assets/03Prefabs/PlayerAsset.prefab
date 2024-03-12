@@ -306,12 +306,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023a18259ed226a48b002e0a33c4e26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  survivalGauge: {fileID: 0}
   theCamera: {fileID: 6747110857623224491}
   cameraRotationLimit: 80
   MoveSpeed: 2
   JumpPower: 10
   JumpMaxCount: 1
   JumpRemainCount: 0
+  jumpStaminaCost: 10
 --- !u!114 &4195860953808887070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,13 +326,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa7b9fa452365c4fabad46453d60043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  uiOptionPopup: {fileID: 0}
   PlayerHealth: 100
   Maxhealth: 100
   Defense: 0
+  tombstonePrefab: {fileID: 0}
+  deathCamera: {fileID: 0}
   PlayerHunger: 100
   Maxhunger: 100
-  HungerTime: 100
   _hungerTimer: 0
+  hungerDecayTime: 5
   MoveSpeed: 5
   RunSpeed: 30
   Stamina: 100
@@ -508,6 +514,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5583567359917838071}
     m_Modifications:
+    - target: {fileID: 723598234050729780, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -556,9 +566,37 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3721571313622080408, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4540229000190281644, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4630776517431558122, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917701622192142817, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5814845182013857403, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6300130511648840962, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848217695815792445, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943113169050733861, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

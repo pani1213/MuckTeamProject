@@ -82,7 +82,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         }
     }
     
-    // 구현 필요) 점프하면 스태미나 닳고, 스태미나 바닥이면 점프도 안됨
     private void FastMove()
     {
         if (!_characterController) return;
@@ -117,6 +116,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         _characterController.Move(dir * Time.deltaTime);
     }
 
+
     private void UpdateHunger()
     {
         // Hunger를 _hungerTimer가 증가함에 따라(100까지) 100에서 0이 되도록 하기
@@ -130,14 +130,14 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             PlayerHunger = Mathf.Max(0, PlayerHunger - 1); // 허기 감소
             _hungerTimer = 0; // 타이머 리셋
 
-            if (PlayerHunger <= 0)
+            if (PlayerHunger == 0)
             {
                 _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
             }
         }
         // if(소비 아이템을 먹었을 때)
         {
-            _isStamina = true;
+            //_isStamina = true;
             //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 증가
             //_hungerTimer -= 아이템 성능; // 아이템 성능만큼 허기 타이머 감소
         }

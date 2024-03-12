@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMoveAbility : MonoBehaviour
 {
     public static PlayerMoveAbility Instance { get; private set; }
+    public SurvivalGauge survivalGauge;
 
     public Camera theCamera;
     private float lookSensitivity = 2f;          // 마우스의 움직임에 따른 회전 민감도
@@ -14,6 +16,7 @@ public class PlayerMoveAbility : MonoBehaviour
 
     private CharacterController _characterController;
     private Animator _animator;
+
     // wasd: 이동
     public float MoveSpeed = 5;
     // spacebar: 점프
@@ -24,6 +27,7 @@ public class PlayerMoveAbility : MonoBehaviour
     // private float _gravity = -5;        // 중력 값
     private float _yVelocity = 0f;         // 누적할 중력 변수: y축 속도
     private const float GravityConstant = -20f; // 중력 상수
+    public float jumpStaminaCost = 10f;
 
     private void Awake()
     {
@@ -40,6 +44,8 @@ public class PlayerMoveAbility : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
+        survivalGauge = GetComponent<SurvivalGauge>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -84,11 +90,12 @@ public class PlayerMoveAbility : MonoBehaviour
         }
 
         // 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0) 
+        if (Input.GetKeyDown(KeyCode.Space) && JumpRemainCount > 0 && SurvivalGauge.Instance.Stamina >= jumpStaminaCost) 
         {
             _yVelocity = JumpPower; // y축에 점프파워 적용
             _isJumping = true;
             JumpRemainCount--;
+            SurvivalGauge.Instance.Stamina -= jumpStaminaCost; //점프할 때 소모되는 스태미나의 양
         }
 
         // 최종 이동 벡터에 y축 속도를 추가

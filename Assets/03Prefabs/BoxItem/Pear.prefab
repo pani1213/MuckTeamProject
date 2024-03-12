@@ -118,10 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540a877dafd8f5d45a04787925b467ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SurvivalGauge: {fileID: 0}
-  PlayerFireAbility: {fileID: 0}
-  PlayerMoveAbility: {fileID: 0}
-  Monster: {fileID: 0}
-  id: 0
-  type: 
-  value: 0
+  id: 1010
+  type: Lifesteal
+  value: 10
