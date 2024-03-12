@@ -134,8 +134,8 @@ public class PlayerMoveAbility : MonoBehaviour
         Vector3 clampedPosition = transform.position;
 
         // 맵의 경계를 설정합니다. 이 값은 실제 맵의 크기 및 위치에 따라 조정해야 합니다.
-        float mapWidth = 1000f;
-        float mapHeight = 10f;
+        float mapWidth = 300f;
+        float mapHeight = 40f;
 
         // 플레이어가 맵 경계를 벗어나지 않도록 제한합니다.
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, -mapWidth / 2f, mapWidth / 2f);
