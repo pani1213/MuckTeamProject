@@ -14,12 +14,11 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
+        Debug.Log(itemData.ItemData[1].id);
         foreach (Item it in itemData.ItemData) { ItemDic.Add(it.id, it); };
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
         foreach (Resources it in resourceData.ResourcesData)
-        {
             resourceDictionary.Add(it.id, it);
-        };
         BoxItems = JsonUtility.FromJson<BoxItems>(boxItemTextAsset.text);
         foreach (BoxItem it in BoxItems.BoxItemData){ boxItemDic.Add(it.id, it); };
     }
@@ -51,7 +50,7 @@ public class Resources
     public int[] dropItemId;
     public int[] dropItemCountMinRange;
     public int[] dropItemCountMaxRange;
-    public int[] DropPercentage;
+    public int[] dropPercentage;
 }
 [Serializable]
 public class Items

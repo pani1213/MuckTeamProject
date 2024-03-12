@@ -57,6 +57,8 @@ public class PlayerMoveAbility : MonoBehaviour
                 CameraRotation();       // 마우스 위아래(Y) 움직임
                 CharacterRotation();   // 마우스 좌우(X) 움직임
             }
+        ClampPlayerPosition();
+
     }
     private void Move()
     {
@@ -130,5 +132,23 @@ public class PlayerMoveAbility : MonoBehaviour
         float newYRotation = currentRotation.y + _yRotation;
         _characterController.transform.eulerAngles = new Vector3(0, newYRotation, 0);
         
+    }
+
+    // 지우지 마시오!
+    void ClampPlayerPosition()
+    {
+        // 플레이어의 현재 위치를 가져옵니다.
+        Vector3 clampedPosition = transform.position;
+
+        // 맵의 경계를 설정합니다. 이 값은 실제 맵의 크기 및 위치에 따라 조정해야 합니다.
+        float mapWidth = 300f;
+        float mapHeight = 40f;
+
+        // 플레이어가 맵 경계를 벗어나지 않도록 제한합니다.
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -mapWidth / 2f, mapWidth / 2f);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -mapHeight / 2f, mapHeight / 2f);
+
+        // 플레이어의 위치를 업데이트합니다.
+        transform.position = clampedPosition;
     }
 }

@@ -27,7 +27,7 @@ public class ResourceSpawnManager : Singleton<ResourceSpawnManager>
     private void Update()
     {
         spawnTime += Time.deltaTime;
-        if (spawnTime > 3)
+        if (spawnTime > 10)
         {
             spawnTime = 0;
 

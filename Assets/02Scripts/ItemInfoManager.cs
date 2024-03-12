@@ -10,13 +10,16 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public SpriteAtlas itemSpriteAtlas;
     private const int INVENTORY_MAX_COUNT = 24;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
-
+    public Dictionary<int, ItemObjectScript> itemdic = new Dictionary<int, ItemObjectScript>();
     public List<ItemObjectScript> ItemPrefabs;
     public InventoryController inventoryController;
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
             itemInventory.Add(new InvenItem() { item = null, count = 0 });
+        for (int i = 0; ItemPrefabs.Count > i; i++)
+            itemdic.Add(ItemPrefabs[i].id, ItemPrefabs[i]);
+        
     }
     public void Update()
     {
