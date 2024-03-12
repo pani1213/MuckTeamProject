@@ -13,8 +13,14 @@ public class ItemObjectScript : MonoBehaviour
     public int id;
     public int count;
     public ItemType Item_type;
-    public void InIt(int _itemId, int _count)
+    public void InIt(int _itemId, int _count, ItemType _itemType)
     {
+        if (_itemType == ItemType.Item)
+        { 
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<BoxCollider>().isTrigger = false;
+        }
+        Item_type = _itemType;
         id = _itemId;
         count = _count;
     }
