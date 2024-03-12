@@ -9,13 +9,11 @@ public class PlayerAttackRange : MonoBehaviour
     public PlayerFireAbility PlayerFire;
     private void OnTriggerEnter(Collider other)
     {
-        if (PlayerHand.AttachItem != null && (PlayerHand.AttachItem.category == "tool" || PlayerHand.AttachItem.id == 1002) && other.CompareTag("Monster"))
+        if (PlayerHand.AttachItem != null && (PlayerHand.AttachItem.item.category == "tool" || PlayerHand.AttachItem.item.id == 1002) && other.CompareTag("Monster"))
         {
             other.GetComponent<Monster>().Hit(new DamageInfo(DamageType.Normal, (PlayerFire.Damage + PlayerHand.attachmentDamage)));
         }
         if (other.CompareTag("MapResource"))
-        {
             other.GetComponent<ResourceObjScript>().Hit(new DamageInfo(DamageType.Normal, PlayerFire.Damage + PlayerHand.attachmentDamage));
-        }    
     }
 }
