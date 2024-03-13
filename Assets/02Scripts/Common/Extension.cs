@@ -16,4 +16,10 @@ public static class Extension
             a += 1;
         return ((int)a, (int)b);
     }
+    public static bool Between(this float _float, float _min, float _max)
+    {
+        if(_float >= _min && _float <= _max)
+            return true;
+        return false;
+    }
 }

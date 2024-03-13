@@ -79,7 +79,7 @@
       "damage": "0",
       "value": null,
       "imageFileName": "steelBar",
-      "makeResource": null,
+      "makeResource": "1005",
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": "15"
@@ -170,7 +170,7 @@
       "value": [
         10,
         10,
-        0
+        10
       ],
       "imageFileName": "apple",
       "makeResource": null,
@@ -186,7 +186,7 @@
       "value": [
         30,
         30,
-        0
+        10
       ],
       "imageFileName": "meet",
       "makeResource": null,
@@ -202,10 +202,10 @@
       "value": [
         50,
         50,
-        0
+        10
       ],
       "imageFileName": "bakedmeet",
-      "makeResource": null,
+      "makeResource": "1013",
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": "10"
@@ -218,7 +218,7 @@
       "value": [
         0,
         10,
-        0
+        10
       ],
       "imageFileName": "yellowMurshRoom",
       "makeResource": null,
@@ -256,6 +256,26 @@
       "makeResourceCount": [
         50,
         50
+      ],
+      "makeCount": "1",
+      "cookingTime": null
+    },
+    {
+      "id": "1018",
+      "name": "box",
+      "category": "build",
+      "damage": "0",
+      "value": null,
+      "imageFileName": "box",
+      "makeResource": [
+        1001,
+        1006,
+        1010
+      ],
+      "makeResourceCount": [
+        10,
+        2,
+        5
       ],
       "makeCount": "1",
       "cookingTime": null

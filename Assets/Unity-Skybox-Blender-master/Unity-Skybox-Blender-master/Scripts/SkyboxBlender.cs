@@ -197,7 +197,6 @@ public class SkyboxBlender : MonoBehaviour {
                         Graphics.CopyTexture(probeComponent.texture, blendedCubemap as Texture);
                         //Debug.Log("Copying");
                     }
-
                     RenderSettings.customReflection = blendedCubemap;
                 }
 

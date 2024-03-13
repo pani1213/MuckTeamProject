@@ -17,7 +17,8 @@ public class ItemSlot : MonoBehaviour
     {
         if (ItemInfoManager.instance.itemInventory[slotIndex].count <= 0)
         {
-            //ItemInfoManager.instance.itemInventory[slotIndex] = null;
+            ItemInfoManager.instance.itemInventory[slotIndex].item = null;
+            ItemInfoManager.instance.itemInventory[slotIndex].count = 0;
             Empty_UI();
             return;
         }

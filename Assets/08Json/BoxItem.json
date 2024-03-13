@@ -3,72 +3,82 @@
     {
       "id": "1001",
       "name": "redPill",
-      "type": "hp",
+      "type": "maxhp",
       "value": "10",
-      "imageFileName": "apple"
+      "imageFileName": "Avocado",
+      "descript": "hp state {0} up"
     },
     {
       "id": "1002",
       "name": "peanutButter",
       "type": "stamina",
       "value": "10",
-      "imageFileName": "bakedmeet"
+      "imageFileName": "Bread",
+      "descript": "stamina {0} up"
     },
     {
       "id": "1003",
       "name": "dumbbell",
       "type": "power",
       "value": "10",
-      "imageFileName": "bark"
+      "imageFileName": "Carrot",
+      "descript": "power {0} up"
     },
     {
       "id": "1004",
       "name": "brocoli",
       "type": "hp",
       "value": "1",
-      "imageFileName": "coal"
+      "imageFileName": "Broccoli",
+      "descript": "hp {0} regen"
     },
     {
       "id": "1005",
       "name": "sneakers",
       "type": "speed",
       "value": "1",
-      "imageFileName": "empty"
+      "imageFileName": "Banana",
+      "descript": "speed {0} up"
     },
     {
       "id": "1006",
       "name": "orangeJuice",
       "type": "attackSpeed",
       "value": "0.2",
-      "imageFileName": "house"
+      "imageFileName": "Garlic",
+      "descript": "attack speed {0} up"
     },
     {
       "id": "1007",
       "name": "jetPack",
       "type": "jumpPower",
       "value": "1",
-      "imageFileName": "meet"
+      "imageFileName": "Fish",
+      "descript": "jumpPower {0} up"
     },
     {
       "id": "1008",
       "name": "spoooBean",
       "type": "hunger",
       "value": "1",
-      "imageFileName": "redMurshRoom"
+      "imageFileName": "Pumpkin",
+      "descript": "hunger {0} up"
     },
     {
       "id": "1009",
-      "name": "stringBones",
+      "name": "danisMilk",
       "type": "defense",
       "value": "1",
-      "imageFileName": "steelAx"
+      "imageFileName": "Pepper",
+      "descript": "defense {0} up"
     },
     {
       "id": "1010",
       "name": "crimsonDagger",
       "type": "Lifesteal",
       "value": "10",
-      "imageFileName": "steelBar"
+      "imageFileName": "Pear",
+      "descript": "Life steal {10} %"
     }
   ]
 }

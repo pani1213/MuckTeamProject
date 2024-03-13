@@ -14,13 +14,14 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public List<ItemObjectScript> ItemPrefabs;
     public InventoryController inventoryController;
     public ItemSlot[] quickSlots;
+    public Dictionary<int, List<InvenItem>> boxDictionary = new Dictionary<int, List<InvenItem>>();
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
             itemInventory.Add(new InvenItem() { item = null, count = 0 });
         for (int i = 0; ItemPrefabs.Count > i; i++)
             itemdic.Add(ItemPrefabs[i].id, ItemPrefabs[i]);
-        
+
     }
     public void Update()
     {

@@ -6,12 +6,13 @@ public enum ItemType
 {
     None,
     Item,
-    Object_Onley
+    Object_Onley,
+    build
 }
 public class ItemObjectScript : MonoBehaviour 
 {
     public int id;
-    public int count;
+    public int count = 1;
     public ItemType Item_type;
     public void InIt(int _itemId, int _count, ItemType _itemType)
     {

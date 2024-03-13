@@ -8,6 +8,7 @@ using static UnityEditor.PlayerSettings;
 public class PlayerRayCast : MonoBehaviour
 {
     public Text informationText_UI;
+    public PlayerHand PlayerHand;
     RaycastHit hit;
     private void Update()
     {
@@ -41,6 +42,11 @@ public class PlayerRayCast : MonoBehaviour
                     Debug.Log("boxItem get");
                     hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
+            }
+
+            if (PlayerHand.AttachItem != null && PlayerHand.AttachItem.item.category == "build")
+            {
+                Debug.Log(0);
             }
         }
     }

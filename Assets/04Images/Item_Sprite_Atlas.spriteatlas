@@ -56,6 +56,7 @@ SpriteAtlas:
     - 8a777162a1d6ce0469cc3b57ed4709e7: 21300000
     - 15d7c9539eea63442b5d498e3c25d690: 21300000
     - e2f4f6d3e9203874d88f840a0123d6f5: 21300000
+    - 44f199e3a14dcdf4a96c26674f0273c2: 21300000
     - eb44c6d4f44724b4c8a352590724e73b: 21300000
     - ae6221d6166837a49a8842eb2a5b68f9: 21300000
     - 7df696c7e93dc8646bb50be30ca73010: 21300000
@@ -76,6 +77,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8a777162a1d6ce0469cc3b57ed4709e7, type: 3}
   - {fileID: 21300000, guid: 15d7c9539eea63442b5d498e3c25d690, type: 3}
   - {fileID: 21300000, guid: e2f4f6d3e9203874d88f840a0123d6f5, type: 3}
+  - {fileID: 21300000, guid: 44f199e3a14dcdf4a96c26674f0273c2, type: 3}
   - {fileID: 21300000, guid: eb44c6d4f44724b4c8a352590724e73b, type: 3}
   - {fileID: 21300000, guid: ae6221d6166837a49a8842eb2a5b68f9, type: 3}
   - {fileID: 21300000, guid: 7df696c7e93dc8646bb50be30ca73010, type: 3}
@@ -95,13 +97,14 @@ SpriteAtlas:
   - house
   - woodAx
   - yellowMurshRoom
+  - box
   - bakedmeet
   - empty
   - steelPickAx
   - steelSword
   - stone
   - redMurshRoom
-  - WoodPickAx
+  - woodPickAx
   - steelOre
   - coal
   - wood

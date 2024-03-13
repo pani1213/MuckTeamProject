@@ -14,7 +14,6 @@ public class JsonParsingManager : Singleton<JsonParsingManager>
     public void InIt()
     {
         itemData = JsonUtility.FromJson<Items>(itemTextAsset.text);
-        Debug.Log(itemData.ItemData[1].id);
         foreach (Item it in itemData.ItemData) { ItemDic.Add(it.id, it); };
         resourceData = JsonUtility.FromJson<ResourceList>(ResourceTextAsset.text);
         foreach (Resources it in resourceData.ResourcesData)
@@ -35,6 +34,7 @@ public class BoxItem
     public string type;
     public float value;
     public string imageFileName;
+    public string descript;
 }
 [Serializable]
 public class ResourceList
