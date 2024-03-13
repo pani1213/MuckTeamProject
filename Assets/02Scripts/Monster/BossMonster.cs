@@ -144,16 +144,6 @@ public class BossMonster : MonoBehaviour, IHitable
         }
 
     }*/
-    private void SetRandomPatrolPoint()
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * PatrolRadius; // 반경 내에서 무작위 방향 설정
-        randomDirection += transform.position; // 몬스터 위치에 더함
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, PatrolRadius, 1); // 네비메쉬 상에 유효한 위치 찾기
-        _randomPosition = hit.position;
-        _navMeshAgent.SetDestination(_randomPosition); // 몬스터 이동 목표 설정
-    }
-
 
     public void Trace()
     {
@@ -183,21 +173,21 @@ public class BossMonster : MonoBehaviour, IHitable
         }
 
 
-        NavMeshHit hit;
+        // NavMeshHit hit;
 
         // targetPoint 위치에서 Raycast를 수행하여 내비게이션 메쉬 히트 검사
-        if (NavMesh.SamplePosition(_target.transform.position, out hit, 1.0f, NavMesh.AllAreas))
-        {
-            // 히트가 발생했을 경우 내비게이션 메쉬 상에서 이동 가능한 영역임을 나타냄
-            Debug.Log("이동 가능한 지점입니다.");
-        }
-        else
-        {
-            // 히트가 발생하지 않았을 경우 내비게이션 메쉬 상에서 이동 불가능한 영역임을 나타냄
-            Debug.Log("이동 불가능한 지점입니다.");
-            _animator.SetTrigger("TraceToComeback");
-            _currentState = MonsterState.Comeback;
-        }
+        //if (NavMesh.SamplePosition(_target.transform.position, out hit, 1.0f, NavMesh.AllAreas))
+        //{
+        //    // 히트가 발생했을 경우 내비게이션 메쉬 상에서 이동 가능한 영역임을 나타냄
+        //    Debug.Log("이동 가능한 지점입니다.");
+        //}
+        //else
+        //{
+        //    // 히트가 발생하지 않았을 경우 내비게이션 메쉬 상에서 이동 불가능한 영역임을 나타냄
+        //    Debug.Log("이동 불가능한 지점입니다.");
+        //    _animator.SetTrigger("TraceToComeback");
+        //    _currentState = MonsterState.Comeback;
+        //}
 
 
         transform.LookAt(_target);
@@ -260,7 +250,7 @@ public class BossMonster : MonoBehaviour, IHitable
             _animator.SetTrigger("Attack");
             if (_monsterType == MonsterType.Melee)
             {
-                MeleeAttack();
+                //MeleeAttack();
             }
 
             if (_monsterType == MonsterType.LongRange)
@@ -277,6 +267,7 @@ public class BossMonster : MonoBehaviour, IHitable
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null)
         {
+            transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
