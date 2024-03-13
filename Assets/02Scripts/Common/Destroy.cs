@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
-    public GameObject[] DestroyGround; // 맵 외곽의 레이어
+    public GameObject[] DestroyGround; // 게임오브젝트 그라운드
 
     private void OnTriggerEnter(Collider other)
     {

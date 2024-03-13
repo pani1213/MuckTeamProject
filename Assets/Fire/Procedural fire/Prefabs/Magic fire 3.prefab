@@ -4855,7 +4855,7 @@ GameObject:
   - component: {fileID: 199034871832436634}
   - component: {fileID: 1411076355876911925}
   - component: {fileID: 8984031609976029511}
-  - component: {fileID: -8267853992945451887}
+  - component: {fileID: 2121406392397742872}
   m_Layer: 2
   m_Name: Magic fire 3
   m_TagString: Untagged
@@ -9738,7 +9738,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8267853992945451887
+--- !u!114 &2121406392397742872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9747,7 +9747,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1654736843778140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d549390126a7b6468e7f5c3f0120220, type: 3}
+  m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BulletAttackTime: 0

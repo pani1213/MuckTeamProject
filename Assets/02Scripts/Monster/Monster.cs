@@ -228,7 +228,21 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
 
-    private void Attack()
+    private bool IsObstacleBetween()
+    {
+        RaycastHit hit;
+        if (Physics.Linecast(transform.position, _target.position, out hit))
+        {
+            // 장애물이 있으면 true 반환
+            if (hit.collider.CompareTag("Ground"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void Attack()
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
@@ -252,12 +266,22 @@ public class Monster : MonoBehaviour, IHitable
             
             if (_monsterType == MonsterType.LongRange)
             {
-                LongRangeAttack();
+                // 플레이어가 공격 범위 내에 있고 장애물이 없을 때만 공격
+                if (FindDistance <= AttackDistance && !IsObstacleBetween())
+                {
+                    LongRangeAttack();
+                }
+                // 아니면 플레이어를 향해 이동
+                else if (FindDistance <= AttackDistance)
+                {
+                    _navMeshAgent.SetDestination(_target.position);
+                }
             }
             
         }
 
     }
+
 
     public void MeleeAttack()
     {
@@ -273,7 +297,9 @@ public class Monster : MonoBehaviour, IHitable
     }
     
    public void LongRangeAttack()
-    {    
+    {
+
+
         transform.LookAt(_target);
    
         GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation);
@@ -289,6 +315,7 @@ public class Monster : MonoBehaviour, IHitable
         Debug.Log("때렸다!");
 
         _attackTimer = 0f;
+
   
     }
     private void Damaged()
