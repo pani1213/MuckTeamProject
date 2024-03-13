@@ -28,6 +28,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         if (Input.GetKeyDown(KeyCode.I))
             inventoryController.InIt();
     }
+
     public void InsertItemInventory(Item _item,int _count = 1)
     { 
         int emptyIndex = GetEmptyInvenIndex();

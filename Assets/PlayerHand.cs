@@ -9,10 +9,11 @@ public class PlayerHand : MonoBehaviour
     public GameObject AttachPosition;
     public InvenItem AttachItem = null;
 
-    private int currentIndex = 0;
+    public int currentIndex = 0;
     public static int attachmentDamage;
     private Vector3 startPos;
     float coolTime = 0;
+    RaycastHit hit;
     private void Start()
     {
         startPos = AttachPosition.transform.position;
@@ -58,6 +59,54 @@ public class PlayerHand : MonoBehaviour
             }
 
         }
+        if (hit.collider == null)
+        {
+
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (hit.collider.CompareTag("Item"))
+                {
+                    Debug.Log("item get");
+                    hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
+                }
+                if (hit.collider.CompareTag("BoxItem"))
+                {
+                    Debug.Log("boxItem get");
+                    hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
+                }
+            }
+            if (AttachItem != null &&    AttachItem.item.category == "build")
+            {
+                BuildManager.instance.GetObject(AttachItem.item.id);
+                BuildManager.instance.GetObject(AttachItem.item.id).transform.position = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
+                BuildManager.instance.GetObject(AttachItem.item.id).transform.LookAt(transform);
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    GameObject gameobj = Instantiate(ItemInfoManager.instance.itemdic[AttachItem.item.id].gameObject);
+                    gameobj.transform.SetPositionAndRotation(BuildManager.instance.GetObject(AttachItem.item.id).transform.position,
+                        BuildManager.instance.GetObject(AttachItem.item.id).transform.rotation);
+
+                    if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
+                        AttachItem = null;
+
+                    ItemInfoManager.instance.RefreshQuickSlots();
+                    if (AttachPosition.transform.childCount > 0)
+                        Destroy(AttachPosition.transform.GetChild(0).gameObject);
+                    // 상자 생성, 위치 hit.pointer
+                }
+            }
+            if (AttachItem == null || AttachItem.item.category != "build")
+                BuildManager.instance.ReturnObject();
+        }
+    }
+    private void FixedUpdate()
+    {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10, Color.red);
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward * 10, out hit);
     }
     public void FoodActionCoolTime(float _value)
     {
@@ -102,7 +151,6 @@ public class PlayerHand : MonoBehaviour
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
-            Debug.Log(obj.layer);
         }
         else
             Debug.Log("isNull");
