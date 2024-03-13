@@ -85,7 +85,7 @@ public class RandomBoxItem : MonoBehaviour
     private void ApplyHp(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
-        SurvivalGauge.Instance.PlayerHealth += value;
+        SurvivalGauge.Instance.Regen += value; 
     }
 
     private void ApplySpeed(int amount)
@@ -112,7 +112,7 @@ public class RandomBoxItem : MonoBehaviour
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1009].imageFileName);
         SurvivalGauge.Instance.Defense += value;
-    }
+    } 
     private void ApplyLifesteal(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);

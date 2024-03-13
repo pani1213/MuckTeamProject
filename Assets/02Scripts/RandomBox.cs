@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public enum BoxItemType
 {
-    maxhp,
+    maxhp = 1001,
     stamina,
     power,
     hp,
@@ -40,7 +40,18 @@ public class RandomBox : MonoBehaviour
     private bool isPlayerNear = false;
     private bool isOpened = false;
 
+    Monster Monster;
+
     public int id;
+    public string type;
+    public int value;
+
+    public void InIt(int _boxItemId, string _type, int _value)
+    {
+        id = _boxItemId;
+        type = _type;
+        value = _value;
+    }
 
 
     void Update()
@@ -53,6 +64,7 @@ public class RandomBox : MonoBehaviour
                 isOpened = true;
             
                 MakePercent(transform.position);
+                ApplyEffect((BoxItemType)id,(int)JsonParsingManager.instance.boxItemDic[id].value);
                 isOpenChestPlayed = true;
             }
 
@@ -99,35 +111,36 @@ public class RandomBox : MonoBehaviour
     {
         int percentage = UnityEngine.Random.Range(0, 100);
         Debug.Log("Random Percentage: " + percentage);
-        if (percentage <= 10)
-        {
-            Make(BoxItemType.maxhp, position);
-        }
-        else if (percentage <= 20)
-        {
-            Make(BoxItemType.stamina, position);
-        }
-        else if (percentage <= 30)
-        {
-            Make(BoxItemType.power, position);
-        }
-        else if (percentage <= 40)
-        {
-            Make(BoxItemType.hp, position);
-        }
-        else if (percentage <= 50)
-        {
-            Make(BoxItemType.speed, position);
-        }
-        else if (percentage <= 60)
-        {
-            Make(BoxItemType.attackSpeed, position);
-        }
-        else if (percentage <= 70)
-        {
-            Make(BoxItemType.jumpPower, position);
-        }
-        else if (percentage <= 80)
+           if (percentage <= 10)
+          {
+              Make(BoxItemType.maxhp, position);
+          }
+          else if (percentage <= 20)
+          {
+              Make(BoxItemType.stamina, position);
+          }
+          else if (percentage <= 30)
+          {
+              Make(BoxItemType.power, position);
+          }
+          else if (percentage <= 40)
+          {
+              Make(BoxItemType.hp, position);
+          }
+          else if (percentage <= 50)
+          {
+              Make(BoxItemType.speed, position);
+          }
+          else if (percentage <= 60)
+          {
+              Make(BoxItemType.attackSpeed, position);
+          }
+          else if (percentage <= 70)
+          {
+              Make(BoxItemType.jumpPower, position);
+          }
+          else
+        if (percentage <= 80)
         {
             Make(BoxItemType.hunger, position);
         }
@@ -145,58 +158,47 @@ public class RandomBox : MonoBehaviour
     {
         Debug.Log("Creating item of type: " + itemType.ToString());
         GameObject itemToCreate = null;
-
+        id = (int)itemType;
         switch (itemType)
         {
             case BoxItemType.maxhp:
                 itemToCreate = Avocado;
-                id = 1001;
                 break;
 
             case BoxItemType.stamina:
                 itemToCreate = Bread;
-                id = 1002;
                 break;
 
             case BoxItemType.power:
                 itemToCreate = Carrot;
-                id = 1003;
                 break;
 
             case BoxItemType.hp:
                 itemToCreate = Broccoli;
-                id = 1004;
                 break;
 
             case BoxItemType.speed:
                 itemToCreate = Banana;
-                id = 1005;
                 break;
 
             case BoxItemType.attackSpeed:
                 itemToCreate = Garlic;
-                id = 1006;
                 break;
 
             case BoxItemType.jumpPower:
                 itemToCreate = Fish;
-                id = 1007;
                 break;
 
             case BoxItemType.hunger:
                 itemToCreate = Pumpkin;
-                id = 1008;
                 break;
 
             case BoxItemType.defense:
                 itemToCreate = Pepper;
-                id = 1009;
                 break;
 
             case BoxItemType.Lifesteal:
                 itemToCreate = Pear;
-                Debug.Log(itemToCreate.name);
-                id = 1010;
                 break;
                
         }
@@ -206,6 +208,110 @@ public class RandomBox : MonoBehaviour
             Instantiate(itemToCreate, ItemPos.position, Quaternion.identity);
             Debug.Log(itemType.ToString() + "를 얻었습니다.");
             UI_BoxItem.ShowBoxItem(itemType);
+
+            ApplyEffect(itemType, value);
         }
+    }
+    private void ApplyEffect(BoxItemType itemType, int amount)
+    {
+        switch (itemType)
+        {
+            case BoxItemType.maxhp:
+                ApplymaxHp(amount);
+                break;
+
+            case BoxItemType.stamina:
+                ApplyStamina(amount);
+                break;
+
+            case BoxItemType.power:
+                ApplyPower(amount);
+                break;
+
+            case BoxItemType.hp:
+                ApplyHp(amount);
+                break;
+
+            case BoxItemType.speed:
+                ApplySpeed(amount);
+                break;
+
+            case BoxItemType.attackSpeed:
+                ApplyAttackSpeed(amount);
+                break;
+
+            case BoxItemType.jumpPower:
+                ApplyJumpPower(amount);
+                break;
+
+            case BoxItemType.hunger:
+                ApplyHunger(amount);
+                break;
+
+            case BoxItemType.defense:
+                ApplyDefense(amount);
+                break;
+
+            case BoxItemType.Lifesteal:
+                ApplyLifesteal(amount);
+                break;
+        }
+    }
+    private void ApplymaxHp(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1001].imageFileName);
+        SurvivalGauge.Instance.Maxhealth += amount;
+    }
+    private void ApplyStamina(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1002].imageFileName);
+        SurvivalGauge.Instance.Stamina += amount;
+    }
+    private void ApplyPower(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1003].imageFileName);
+        PlayerFireAbility.Instance.Damage += amount;
+    }
+
+    private void ApplyHp(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
+        SurvivalGauge.Instance.Regen += amount;
+    }
+
+    private void ApplySpeed(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1005].imageFileName);
+        PlayerMoveAbility.Instance.MoveSpeed += amount;
+    }
+    private void ApplyAttackSpeed(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1006].imageFileName);
+        PlayerFireAbility.Instance.AttackSpeed += amount;
+    }
+    private void ApplyJumpPower(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1007].imageFileName);
+        PlayerMoveAbility.Instance.JumpPower += amount;
+    }
+    private void ApplyHunger(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1008].imageFileName);
+        SurvivalGauge.Instance.Maxhunger += amount;
+    }
+    private void ApplyDefense(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1009].imageFileName);
+        SurvivalGauge.Instance.Defense += amount;
+    }
+    private void ApplyLifesteal(int amount)
+    {
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
+        if (Monster.Health <= Monster.MaxHealth)
+        {
+            SurvivalGauge.Instance.PlayerHealth += amount;
+            Monster.Health -= amount;
+        }
+
     }
 }

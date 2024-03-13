@@ -60,7 +60,7 @@
       "id": "1008",
       "name": "spoooBean",
       "type": "hunger",
-      "value": "1",
+      "value": "10",
       "imageFileName": "Pumpkin",
       "descript": "hunger {0} up"
     },

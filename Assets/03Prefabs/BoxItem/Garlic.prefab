@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8069657077781477248}
   - component: {fileID: 5195422319005221706}
   - component: {fileID: 5690835605495728809}
-  - component: {fileID: 431249260063802889}
   m_Layer: 0
   m_Name: Garlic
   m_TagString: Untagged
@@ -106,18 +105,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09074277, y: 0.2127786, z: 0.09541248}
   m_Center: {x: -0.00051905215, y: 0.05274951, z: -0.0005626362}
---- !u!114 &431249260063802889
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5987858285101769375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540a877dafd8f5d45a04787925b467ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 1006
-  type: attackSpeed
-  value: 0

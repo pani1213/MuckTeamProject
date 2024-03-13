@@ -129,7 +129,9 @@ public class UI_BoxItem : MonoBehaviour
     public void Refresh_TextUI(int _id)
     {
         SituationText.gameObject.SetActive(true);
-
+        Debug.Log(_id);
+        Debug.Log(JsonParsingManager.instance.boxItemDic[_id].descript);
+        Debug.Log(JsonParsingManager.instance.boxItemDic[_id].value);
         SituationText.text = string.Format(JsonParsingManager.instance.boxItemDic[_id].descript, JsonParsingManager.instance.boxItemDic[_id].value);
     }
 

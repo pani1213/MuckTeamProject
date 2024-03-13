@@ -14,6 +14,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public int PlayerHealth = 100; // 하트 이미지 S2
     public int Maxhealth = 100;
     public int Defense = 0;        // 방어력
+    public int Regen = 0;          // 부활력
     public GameObject tombstonePrefab;
     public DeathCamera deathCamera;
 
@@ -59,12 +60,15 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     {
         FastMove(); // 스태미나
         UpdateHunger();
+
+        PlayerHealth += Regen;
     }
     public void Hit(DamageInfo damageInfo)
     {
         
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
+       
 
         if (PlayerHealth <= 0)
         {
