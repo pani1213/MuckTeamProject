@@ -13,6 +13,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public Dictionary<int, ItemObjectScript> itemdic = new Dictionary<int, ItemObjectScript>();
     public List<ItemObjectScript> ItemPrefabs;
     public InventoryController inventoryController;
+    public ItemSlot[] quickSlots;
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
@@ -42,6 +43,13 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         else
             SetInven(itemIndex, _item, _count);
         
+    }
+    public void RefreshQuickSlots()
+    {
+        for (int i = 0; i < quickSlots.Length; i++)
+        {
+            quickSlots[i].Refresh_SlotUI();
+        }
     }
     // 인벤토리 요소 스왑 (전체스왑)
     public void InvenSwap(int _indexA , int _indexB)

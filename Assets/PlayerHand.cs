@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    public Animation animation;
+    public Animator animator;
     public BoxCollider BoxCollider;
     public GameObject AttachPosition;
     public InvenItem AttachItem = null;
+
+    private int currentIndex = 0;
     public static int attachmentDamage;
     private Vector3 startPos;
+    float coolTime = 0;
     private void Start()
     {
-        startPos = AttachPosition.transform.position; 
+        startPos = AttachPosition.transform.position;
     }
     private void Update()
     {
@@ -28,61 +31,80 @@ public class PlayerHand : MonoBehaviour
         { 
             AttachMentItem(20);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        { 
+            AttachMentItem(21);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        { 
+            AttachMentItem(22);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        { 
+            AttachMentItem(23);
+        }
         if (AttachItem != null)
         {
             if (Input.GetMouseButton(0))
             {
                 if (AttachItem.item.category == "food")
                 {
-                    Debug.Log(AttachItem.item.category);
-                    animation.Play("PlayerEat");
+                    FoodActionCoolTime(1);
                 }
-                if (AttachItem.item.category == "tool")
+                else if (AttachItem.item.category == "tool")
                 {
-                    Debug.Log(AttachItem.item.category);
-                    animation.Play("swingClip");
                     StartCoroutine(Attack_Coroutione());
                 }
             }
-            if (Input.GetMouseButtonUp(0))
-            {
-                if (AttachItem.item.category == "food")
-                {
-                    Debug.Log("GripIdle play");
-                    animation.Play("GripIdle");
-                }
-            }
         }
-
+    }
+    public void FoodActionCoolTime(float _value)
+    {
+        coolTime += Time.deltaTime;
+        if (coolTime > _value)
+        {
+            Debug.Log("Event");
+            SurvivalGauge.Instance.PlayerHealth += ItemInfoManager.instance.itemInventory[currentIndex].item.value[0];
+            SurvivalGauge.Instance.PlayerHunger += ItemInfoManager.instance.itemInventory[currentIndex].item.value[1];
+            SurvivalGauge.Instance.Stamina += ItemInfoManager.instance.itemInventory[currentIndex].item.value[2];
+            
+            if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
+                AttachItem = null;
+            
+            ItemInfoManager.instance.RefreshQuickSlots();
+            if (AttachPosition.transform.childCount > 0)
+                Destroy(AttachPosition.transform.GetChild(0).gameObject);
+            coolTime = 0;
+        }
     }
     IEnumerator Attack_Coroutione()
     {
         BoxCollider.enabled = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(PlayerFireAbility.Instance.AttackSpeed);
         BoxCollider.enabled = false;
     }
     public void AttachMentItem(int _itemIndex)
     {
-        if (ItemInfoManager.instance.itemInventory[_itemIndex] != AttachItem  && AttachPosition.transform.childCount > 0)
+        AttachItem = null;
+        currentIndex = 0;
+        attachmentDamage = 0;
+        if (AttachPosition.transform.childCount > 0)
             Destroy(AttachPosition.transform.GetChild(0).gameObject);
 
         if (ItemInfoManager.instance.itemInventory[_itemIndex].item != null)
-        {
+        { 
             AttachItem = ItemInfoManager.instance.itemInventory[_itemIndex];
             attachmentDamage = ItemInfoManager.instance.itemInventory[_itemIndex].item.damage;
-            Debug.Log(ItemInfoManager.instance.itemInventory[_itemIndex].item.id);
-            GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
-            obj.transform.localPosition = Vector3.zero; 
+            currentIndex = _itemIndex;
+              GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
+            obj.transform.localPosition = Vector3.zero;
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
             Debug.Log(obj.layer);
         }
         else
-        {
-            AttachItem = null;
             Debug.Log("isNull");
-        }
     }
     private GameObject GetItemPrefab(string _id)
     {
