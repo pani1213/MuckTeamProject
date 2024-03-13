@@ -4,16 +4,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_BoxItem : MonoBehaviour
 {
+    public static UI_BoxItem instance;
     public int maxColumns = 2; // 최대 열의 수
     public int maxRows = 5; // 최대 행의 수
 
     // 박스 E키 눌렀을 때, Creating item of type: 'jumpPower'에 따라 UI 생성
     public GameObject backgroundImage;
+    public TextMeshProUGUI SituationText;
 
     public TextMeshProUGUI AvocadoCountText;
     public TextMeshProUGUI BananaCountText;
@@ -44,7 +47,10 @@ public class UI_BoxItem : MonoBehaviour
 
     private void Awake()
     {
+        if(instance == null)
+            instance = this;
         backgroundImage.SetActive(false);
+        SituationText.gameObject.SetActive(false);
 
         gridLayoutGroup = backgroundImage.GetComponent<GridLayoutGroup>();
         if (gridLayoutGroup == null)
@@ -118,6 +124,17 @@ public class UI_BoxItem : MonoBehaviour
         }
         backgroundImage.SetActive(true);
         AdjustBackgroundSize();
+
+       //SituationText.gameObject.SetActive(true);
+       //
+       //SituationText.text = string.Format(JsonParsingManager.instance.boxItemDic[RandomBox.Instance.id].descript,
+       //    JsonParsingManager.instance.boxItemDic[RandomBox.Instance.id].value);
+    }
+    public void Refresh_TextUI(int _id)
+    {
+        SituationText.gameObject.SetActive(true);
+
+        SituationText.text = string.Format(JsonParsingManager.instance.boxItemDic[_id].descript, JsonParsingManager.instance.boxItemDic[_id].value);
     }
 
     // backgroundImage 크기 조절 함수

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomBoxItem : MonoBehaviour
 {
-    //public Monster Monster; <- 싱글톤으로 불러올 수 있는지
+    Monster Monster;
 
     public int id;
     public string type;
@@ -116,11 +116,11 @@ public class RandomBoxItem : MonoBehaviour
     private void ApplyLifesteal(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
-        /*if(Monster.Health <= Monster.MaxHealth) 
+        if(Monster.Health <= Monster.MaxHealth) 
         {
-            SurvivalGauge.PlayerHealth += value;
+            //SurvivalGauge.PlayerHealth += value;
             Monster.Health -= value;
-        }*/
+        }
         
     }
 }
