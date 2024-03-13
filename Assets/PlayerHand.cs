@@ -11,13 +11,9 @@ public class PlayerHand : MonoBehaviour
 
     public int currentIndex = 0;
     public static int attachmentDamage;
-    private Vector3 startPos;
     float coolTime = 0;
     RaycastHit hit;
-    private void Start()
-    {
-        startPos = AttachPosition.transform.position;
-    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -29,7 +25,7 @@ public class PlayerHand : MonoBehaviour
             AttachMentItem(19);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
-        { 
+        {
             AttachMentItem(20);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -57,11 +53,9 @@ public class PlayerHand : MonoBehaviour
                     StartCoroutine(Attack_Coroutione());
                 }
             }
-
         }
         if (hit.collider == null)
         {
-
         }
         else
         {
@@ -78,24 +72,22 @@ public class PlayerHand : MonoBehaviour
                     hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
             }
-            if (AttachItem != null &&    AttachItem.item.category == "build")
+            if (AttachItem != null && AttachItem.item.category == "build")
             {
-                BuildManager.instance.GetObject(AttachItem.item.id);
-                BuildManager.instance.GetObject(AttachItem.item.id).transform.position = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
-                BuildManager.instance.GetObject(AttachItem.item.id).transform.LookAt(transform);
-
+                GameObject buildObj = BuildManager.instance.GetObject(AttachItem.item.id);
+                buildObj.transform.position = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
+                buildObj.transform.LookAt(transform);
                 if (Input.GetMouseButtonDown(0))
                 {
-                    GameObject gameobj = Instantiate(ItemInfoManager.instance.itemdic[AttachItem.item.id].gameObject);
-                    gameobj.transform.SetPositionAndRotation(BuildManager.instance.GetObject(AttachItem.item.id).transform.position,
-                        BuildManager.instance.GetObject(AttachItem.item.id).transform.rotation);
+                    ItemObjectScript itemObj = Instantiate(ItemInfoManager.instance.itemdic[AttachItem.item.id]);
+                    itemObj.InIt(ItemType.box);
+                    itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
 
                     if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                         AttachItem = null;
 
                     ItemInfoManager.instance.RefreshQuickSlots();
-                    if (AttachPosition.transform.childCount > 0)
-                        Destroy(AttachPosition.transform.GetChild(0).gameObject);
+                    DestroyAtchdeObject();
                     // 상자 생성, 위치 hit.pointer
                 }
             }
@@ -114,16 +106,13 @@ public class PlayerHand : MonoBehaviour
         if (coolTime > _value)
         {
             Debug.Log("Event");
-            SurvivalGauge.Instance.PlayerHealth += ItemInfoManager.instance.itemInventory[currentIndex].item.value[0];
-            SurvivalGauge.Instance.PlayerHunger += ItemInfoManager.instance.itemInventory[currentIndex].item.value[1];
-            SurvivalGauge.Instance.Stamina += ItemInfoManager.instance.itemInventory[currentIndex].item.value[2];
-            
+            UseFoodItem();
+
             if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                 AttachItem = null;
             
             ItemInfoManager.instance.RefreshQuickSlots();
-            if (AttachPosition.transform.childCount > 0)
-                Destroy(AttachPosition.transform.GetChild(0).gameObject);
+            DestroyAtchdeObject();
             coolTime = 0;
         }
     }
@@ -138,8 +127,7 @@ public class PlayerHand : MonoBehaviour
         AttachItem = null;
         currentIndex = 0;
         attachmentDamage = 0;
-        if (AttachPosition.transform.childCount > 0)
-            Destroy(AttachPosition.transform.GetChild(0).gameObject);
+        DestroyAtchdeObject();
 
         if (ItemInfoManager.instance.itemInventory[_itemIndex].item != null)
         { 
@@ -154,6 +142,17 @@ public class PlayerHand : MonoBehaviour
         }
         else
             Debug.Log("isNull");
+    }
+    private void UseFoodItem()
+    {
+        SurvivalGauge.Instance.PlayerHealth += ItemInfoManager.instance.itemInventory[currentIndex].item.value[0];
+        SurvivalGauge.Instance.PlayerHunger += ItemInfoManager.instance.itemInventory[currentIndex].item.value[1];
+        SurvivalGauge.Instance.Stamina += ItemInfoManager.instance.itemInventory[currentIndex].item.value[2];
+    }
+    private void DestroyAtchdeObject()
+    {
+        if (AttachPosition.transform.childCount > 0)
+            Destroy(AttachPosition.transform.GetChild(0).gameObject);
     }
     private GameObject GetItemPrefab(string _id)
     {
