@@ -13,6 +13,6 @@ public class GameManager : Singleton<GameManager>
     {
         JsonParsingManager.instance.InIt();
         ItemInfoManager.instance.InIt();
-        ResourceSpawnManager.instance.InIt();
+        //ResourceSpawnManager.instance.InIt();
     }
 }

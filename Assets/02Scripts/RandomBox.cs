@@ -17,6 +17,8 @@ public enum BoxItemType
 }
 public class RandomBox : MonoBehaviour
 {
+    public static RandomBox Instance;
+
     public UI_BoxItem UI_BoxItem;
 
     public Animation animation;
@@ -40,6 +42,21 @@ public class RandomBox : MonoBehaviour
     private bool isPlayerNear = false;
     private bool isOpened = false;
 
+    public int id;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            //Destroy(gameObject);
+        }
+
+    }
+
     void Update()
     {
         if (isPlayerNear && Input.GetKey(KeyCode.E) && !isOpened)
@@ -48,6 +65,7 @@ public class RandomBox : MonoBehaviour
             {
                 animation.Play("OpenChest");
                 isOpened = true;
+            
                 MakePercent(transform.position);
                 isOpenChestPlayed = true;
             }
@@ -97,43 +115,43 @@ public class RandomBox : MonoBehaviour
         Debug.Log("Random Percentage: " + percentage);
         if (percentage <= 10)
         {
-            Make(BoxItemType.maxhp, ItemPos.position);
+            Make(BoxItemType.maxhp, position);
         }
         else if (percentage <= 20)
         {
-            Make(BoxItemType.stamina, ItemPos.position);
+            Make(BoxItemType.stamina, position);
         }
         else if (percentage <= 30)
         {
-            Make(BoxItemType.power, ItemPos.position);
+            Make(BoxItemType.power, position);
         }
         else if (percentage <= 40)
         {
-            Make(BoxItemType.hp, ItemPos.position);
+            Make(BoxItemType.hp, position);
         }
         else if (percentage <= 50)
         {
-            Make(BoxItemType.speed, ItemPos.position);
+            Make(BoxItemType.speed, position);
         }
         else if (percentage <= 60)
         {
-            Make(BoxItemType.attackSpeed, ItemPos.position);
+            Make(BoxItemType.attackSpeed, position);
         }
         else if (percentage <= 70)
         {
-            Make(BoxItemType.jumpPower, ItemPos.position);
+            Make(BoxItemType.jumpPower, position);
         }
         else if (percentage <= 80)
         {
-            Make(BoxItemType.hunger, ItemPos.position);
+            Make(BoxItemType.hunger, position);
         }
         else if (percentage <= 90)
         {
-            Make(BoxItemType.defense, ItemPos.position);
+            Make(BoxItemType.defense, position);
         }
         else if (percentage <= 100)
         {
-            Make(BoxItemType.Lifesteal, ItemPos.position);
+            Make(BoxItemType.Lifesteal, position);
         }
     }
 
@@ -146,46 +164,56 @@ public class RandomBox : MonoBehaviour
         {
             case BoxItemType.maxhp:
                 itemToCreate = Avocado;
+                id = 1001;
                 break;
 
             case BoxItemType.stamina:
                 itemToCreate = Bread;
+                id = 1002;
                 break;
 
             case BoxItemType.power:
                 itemToCreate = Carrot;
+                id = 1003;
                 break;
 
             case BoxItemType.hp:
                 itemToCreate = Broccoli;
+                id = 1004;
                 break;
 
             case BoxItemType.speed:
                 itemToCreate = Banana;
+                id = 1001;
                 break;
 
             case BoxItemType.attackSpeed:
                 itemToCreate = Garlic;
+                id = 1001;
                 break;
 
             case BoxItemType.jumpPower:
                 itemToCreate = Fish;
+                id = 1001;
                 break;
 
             case BoxItemType.hunger:
                 itemToCreate = Pumpkin;
+                id = 1001;
                 break;
 
             case BoxItemType.defense:
                 itemToCreate = Pepper;
+                id = 1001;
                 break;
 
             case BoxItemType.Lifesteal:
                 itemToCreate = Pear;
+                id = 1001;
                 break;
-
+               
         }
-
+        UI_BoxItem.instance.Refresh_TextUI(id);
         if (itemToCreate != null)
         {
             Instantiate(itemToCreate, ItemPos.position, Quaternion.identity);
