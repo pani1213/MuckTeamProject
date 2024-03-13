@@ -17,6 +17,8 @@ public enum BoxItemType
 }
 public class RandomBox : MonoBehaviour
 {
+    public UI_BoxItem UI_BoxItem;
+
     public Animation animation;
     public BoxCollider BoxCollider;
     //public Animator Animator;
@@ -35,14 +37,17 @@ public class RandomBox : MonoBehaviour
 
     private bool isOpenChestPlayed = false;
     private bool isItemCreated = false;
+    private bool isPlayerNear = false;
+    private bool isOpened = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (isPlayerNear && Input.GetKey(KeyCode.E) && !isOpened)
         {
             if (!isOpenChestPlayed) // 열었고
             {
                 animation.Play("OpenChest");
+                isOpened = true;
                 MakePercent(transform.position);
                 isOpenChestPlayed = true;
             }
@@ -52,13 +57,29 @@ public class RandomBox : MonoBehaviour
                 if (!animation.IsPlaying("OpenChest"))
                 {
                     StartCoroutine(Rotate_Coroutine());
+
                     // 스탯 적용되는 UI 입력되면 destroy 되도록 추가 예정
                     isItemCreated = true;
                 }
             }
-                    
+
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player") && !isOpened)
+        {
+            isPlayerNear = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isPlayerNear = false;
+        }
     }
 
     private IEnumerator Rotate_Coroutine()
@@ -68,6 +89,7 @@ public class RandomBox : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
     }
+
 
     public void MakePercent(Vector3 position)
     {
@@ -168,6 +190,7 @@ public class RandomBox : MonoBehaviour
         {
             Instantiate(itemToCreate, ItemPos.position, Quaternion.identity);
             Debug.Log(itemType.ToString() + "를 얻었습니다.");
+            UI_BoxItem.ShowBoxItem(itemType);
         }
     }
 }
