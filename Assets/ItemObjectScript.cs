@@ -7,7 +7,8 @@ public enum ItemType
     None,
     Item,
     Object_Onley,
-    build
+    build,
+    box
 }
 public class ItemObjectScript : MonoBehaviour 
 {
@@ -25,6 +26,21 @@ public class ItemObjectScript : MonoBehaviour
         id = _itemId;
         count = _count;
     }
+    public void InIt(ItemType _itemType)
+    {
+        Item_type = _itemType;
+        if (_itemType == ItemType.Item)
+        {
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<BoxCollider>().isTrigger = false;
+        }
+        if (_itemType == ItemType.box)
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<BoxCollider>().isTrigger = true;
+        }
+
+    }
     public void GetItem()
     {
         if (Item_type == ItemType.Item)
@@ -32,6 +48,8 @@ public class ItemObjectScript : MonoBehaviour
             ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[id], count);
             gameObject.SetActive(false);
         }
+        if (Item_type == ItemType.box)
+            Debug.Log("box");
 
     }
 }
