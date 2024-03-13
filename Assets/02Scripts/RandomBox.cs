@@ -17,8 +17,6 @@ public enum BoxItemType
 }
 public class RandomBox : MonoBehaviour
 {
-    public static RandomBox Instance;
-
     public UI_BoxItem UI_BoxItem;
 
     public Animation animation;
@@ -44,18 +42,6 @@ public class RandomBox : MonoBehaviour
 
     public int id;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            //Destroy(gameObject);
-        }
-
-    }
 
     void Update()
     {
@@ -184,32 +170,33 @@ public class RandomBox : MonoBehaviour
 
             case BoxItemType.speed:
                 itemToCreate = Banana;
-                id = 1001;
+                id = 1005;
                 break;
 
             case BoxItemType.attackSpeed:
                 itemToCreate = Garlic;
-                id = 1001;
+                id = 1006;
                 break;
 
             case BoxItemType.jumpPower:
                 itemToCreate = Fish;
-                id = 1001;
+                id = 1007;
                 break;
 
             case BoxItemType.hunger:
                 itemToCreate = Pumpkin;
-                id = 1001;
+                id = 1008;
                 break;
 
             case BoxItemType.defense:
                 itemToCreate = Pepper;
-                id = 1001;
+                id = 1009;
                 break;
 
             case BoxItemType.Lifesteal:
                 itemToCreate = Pear;
-                id = 1001;
+                Debug.Log(itemToCreate.name);
+                id = 1010;
                 break;
                
         }

@@ -125,10 +125,6 @@ public class UI_BoxItem : MonoBehaviour
         backgroundImage.SetActive(true);
         AdjustBackgroundSize();
 
-       //SituationText.gameObject.SetActive(true);
-       //
-       //SituationText.text = string.Format(JsonParsingManager.instance.boxItemDic[RandomBox.Instance.id].descript,
-       //    JsonParsingManager.instance.boxItemDic[RandomBox.Instance.id].value);
     }
     public void Refresh_TextUI(int _id)
     {

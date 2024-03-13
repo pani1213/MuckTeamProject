@@ -118,7 +118,7 @@ public class RandomBoxItem : MonoBehaviour
         Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
         if(Monster.Health <= Monster.MaxHealth) 
         {
-            //SurvivalGauge.PlayerHealth += value;
+            SurvivalGauge.Instance.PlayerHealth += value;
             Monster.Health -= value;
         }
         

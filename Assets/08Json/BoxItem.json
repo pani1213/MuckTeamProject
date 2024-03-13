@@ -78,7 +78,7 @@
       "type": "Lifesteal",
       "value": "10",
       "imageFileName": "Pear",
-      "descript": "Life steal {10} %"
+      "descript": "Life steal {0}%"
     }
   ]
 }
