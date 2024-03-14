@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class MonsterAttackEvent : MonoBehaviour
 {
-    private Monster _owner;
+    private BossMonster _owner;
+
 
     private void Start()
     {
-        _owner = GetComponentInParent<Monster>();
+        _owner = GetComponentInParent<BossMonster>();
+
     }
 
     public void AttackEvent()
     {
         _owner.Attack();
+
     }
 }

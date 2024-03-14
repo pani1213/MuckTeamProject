@@ -4853,9 +4853,9 @@ GameObject:
   - component: {fileID: 4131437023405378}
   - component: {fileID: 198853902749890928}
   - component: {fileID: 199034871832436634}
-  - component: {fileID: 1411076355876911925}
-  - component: {fileID: 8984031609976029511}
-  - component: {fileID: 2121406392397742872}
+  - component: {fileID: 3292336720004401132}
+  - component: {fileID: 7663761838766885225}
+  - component: {fileID: -4587773948012188493}
   m_Layer: 2
   m_Name: Magic fire 3
   m_TagString: Untagged
@@ -4871,7 +4871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654736843778140}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.002717316, y: -0, z: -0, w: -0.9999963}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4880,7 +4880,7 @@ Transform:
   - {fileID: 4774984165177464}
   - {fileID: 4681315946005572}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 359.689, y: 0, z: 0}
 --- !u!198 &198853902749890928
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9690,7 +9690,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!65 &1411076355876911925
+--- !u!114 &3292336720004401132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654736843778140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletAttackTime: 0
+  BulletDestroy: 3
+--- !u!65 &7663761838766885225
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9711,7 +9725,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8984031609976029511
+--- !u!54 &-4587773948012188493
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9738,20 +9752,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2121406392397742872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654736843778140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletAttackTime: 0
-  BulletDestroy: 3
 --- !u!1 &1675696825032014
 GameObject:
   m_ObjectHideFlags: 0

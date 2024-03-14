@@ -31,16 +31,16 @@ public class BossMonster : MonoBehaviour, IHitable
     public float AttackDistance = 2f;     // 공격범위
     public int Damage = 10;    // 공격력
     private float _attackTimer = 0f;    // 공격타임
-    public  float AttackDelay = 1f;  // 공격딜레이
+    public float AttackDelay = 1f;  // 공격딜레이
     public float HitDistance = 10f;
     private float _bossDestroyTime = 4f;
     public Vector3 FirstPosition;
-    
+
 
     public float PatrolRadius = 10f;
     public float IDLE_DURATION = 1f;
     private float _idleTimer;
-    
+
 
     // 총알
     public GameObject BulletPrefab;
@@ -105,7 +105,7 @@ public class BossMonster : MonoBehaviour, IHitable
                 Die();
                 break;
         }
-        
+
     }
 
     public void Idle()
@@ -134,7 +134,7 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
-            
+
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
@@ -142,7 +142,7 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
-            
+
         }
         transform.LookAt(_target);
 
@@ -194,7 +194,7 @@ public class BossMonster : MonoBehaviour, IHitable
             HealthRegenTime = 0.0f;
         }
     }
-    private void Attack()
+    public void Attack()
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
@@ -210,12 +210,12 @@ public class BossMonster : MonoBehaviour, IHitable
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
         {
-         
-            if(isSetAni)
-            StartCoroutine(setAnimation_Corutine());
+
+            if (isSetAni)
+                StartCoroutine(setAnimation_Corutine());
             if (_monsterType == MonsterType.Melee)
             {
-               
+
             }
 
             if (_monsterType == MonsterType.LongRange)
@@ -226,7 +226,7 @@ public class BossMonster : MonoBehaviour, IHitable
     }
 
     bool isSetAni = true;
- 
+
     IEnumerator setAnimation_Corutine()
     {
         isSetAni = false;
@@ -238,7 +238,7 @@ public class BossMonster : MonoBehaviour, IHitable
             _animator.SetTrigger("Attack2");
         if (a == 0)
             _animator.SetTrigger("Attack3");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
         isSetAni = true;
     }
     public void MeleeAttack()
@@ -266,28 +266,45 @@ public class BossMonster : MonoBehaviour, IHitable
             // 플레이어와의 거리가 공격 범위 안에 있는지 확인
             if (distanceToTarget <= AttackDistance)
             {
-                // 회전 상태로 변경
-                isRotating = true;
-
-                // 플레이어를 정확히 향하도록 방향 보정
-                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
-
-                // 부드러운 회전
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                // 회전이 끝나면 공격 실행
-                if (Quaternion.Angle(transform.rotation, targetRotation) < 1f)
-                {
-                    Attack();
-                }
+                // 공격 범위 내에 있으면 회전 및 이동
+                RotateAndMoveTowardsTarget(directionToTarget);
             }
             else
             {
-                // 공격 범위 밖에 있을 때 회전 상태 해제
-                isRotating = false;
+                // 공격 범위 밖에 있으면 회전만
+                RotateTowardsTarget(directionToTarget);
             }
         }
+    }
+    private void RotateAndMoveTowardsTarget(Vector3 directionToTarget)
+    {
+        // 회전 상태로 변경
+        isRotating = true;
 
+        // 플레이어를 정확히 향하도록 방향 보정
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+
+        // 부드러운 회전
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        // 회전이 끝나면 이동
+        if (Quaternion.Angle(transform.rotation, targetRotation) < 1f)
+        {
+            // 이동
+            transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+        }
+    }
+
+    private void RotateTowardsTarget(Vector3 directionToTarget)
+    {
+        // 회전 상태로 변경
+        isRotating = true;
+
+        // 플레이어를 정확히 향하도록 방향 보정
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+
+        // 부드러운 회전
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
 
@@ -344,12 +361,12 @@ public class BossMonster : MonoBehaviour, IHitable
     }
     public void Die()
     {
-        StartCoroutine(DestroyAfterDeath(_bossDestroyTime)); 
+        StartCoroutine(DestroyAfterDeath(_bossDestroyTime));
     }
 
     IEnumerator DestroyAfterDeath(float delay)
     {
-        yield return new WaitForSeconds(delay); 
+        yield return new WaitForSeconds(delay);
 
         gameObject.SetActive(false);
     }
