@@ -71,6 +71,11 @@ public class PlayerHand : MonoBehaviour
                     Debug.Log("boxItem get");
                     hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
+                if (hit.collider.CompareTag("Box"))
+                {
+                    hit.collider.gameObject.GetComponent<BoxObjectScript>().OpenBoxAction();
+                    Debug.Log("boxItem get");
+                }
             }
             if (AttachItem != null && AttachItem.item.category == "build")
             {
@@ -80,15 +85,19 @@ public class PlayerHand : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     ItemObjectScript itemObj = Instantiate(ItemInfoManager.instance.itemdic[AttachItem.item.id]);
-                    itemObj.InIt(ItemType.box);
-                    itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
 
+                    if (AttachItem.item.id == 1018) // box 일때
+                    { 
+                        itemObj.InIt(ItemType.box);
+                        itemObj.GetComponent<BoxObjectScript>().InIt();
+                    }
+
+                    itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
                     if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                         AttachItem = null;
 
                     ItemInfoManager.instance.RefreshQuickSlots();
-                    DestroyAtchdeObject();
-                    // 상자 생성, 위치 hit.pointer
+                    DestroyAttchdeObject();
                 }
             }
             if (AttachItem == null || AttachItem.item.category != "build")
@@ -112,7 +121,7 @@ public class PlayerHand : MonoBehaviour
                 AttachItem = null;
             
             ItemInfoManager.instance.RefreshQuickSlots();
-            DestroyAtchdeObject();
+            DestroyAttchdeObject();
             coolTime = 0;
         }
     }
@@ -127,8 +136,7 @@ public class PlayerHand : MonoBehaviour
         AttachItem = null;
         currentIndex = 0;
         attachmentDamage = 0;
-        DestroyAtchdeObject();
-
+        DestroyAttchdeObject();
         if (ItemInfoManager.instance.itemInventory[_itemIndex].item != null)
         { 
             AttachItem = ItemInfoManager.instance.itemInventory[_itemIndex];
@@ -149,7 +157,7 @@ public class PlayerHand : MonoBehaviour
         SurvivalGauge.Instance.PlayerHunger += ItemInfoManager.instance.itemInventory[currentIndex].item.value[1];
         SurvivalGauge.Instance.Stamina += ItemInfoManager.instance.itemInventory[currentIndex].item.value[2];
     }
-    private void DestroyAtchdeObject()
+    private void DestroyAttchdeObject()
     {
         if (AttachPosition.transform.childCount > 0)
             Destroy(AttachPosition.transform.GetChild(0).gameObject);

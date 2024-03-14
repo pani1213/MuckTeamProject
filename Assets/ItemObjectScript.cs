@@ -36,6 +36,7 @@ public class ItemObjectScript : MonoBehaviour
         }
         if (_itemType == ItemType.box)
         {
+            gameObject.tag = "Box";
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<BoxCollider>().isTrigger = true;
         }
@@ -48,9 +49,6 @@ public class ItemObjectScript : MonoBehaviour
             ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[id], count);
             gameObject.SetActive(false);
         }
-        if (Item_type == ItemType.box)
-            Debug.Log("box");
-
     }
 }
 

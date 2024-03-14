@@ -12,14 +12,10 @@ public class InventoryController : MonoBehaviour
     public ItemSlot[] itemSlots;
     public GraphicRaycaster mRayCaster;
     public PointerEventData mPointerEventData;
-
     public DragSlot DragSlot;
+    private Slot _currentSeletItemSlot;
+    private Slot _dropItemSlot;
 
-    private ItemSlot _currentSeletItemSlot;
-    private ItemSlot _dropItemSlot;
-    private int halfCount = 0;
-
- 
     public void InIt()
     {
         gameObject.SetActive(!gameObject.activeSelf);
@@ -30,12 +26,34 @@ public class InventoryController : MonoBehaviour
         for (int i = 0; i < itemSlots.Length; i++)
             itemSlots[i].Refresh_SlotUI();
         mPointerEventData = new PointerEventData(null);
-        
+    }
+    public void InIt(bool _isOnUI)
+    {
+        gameObject.SetActive(_isOnUI);
+        UnityEngine.Cursor.visible = _isOnUI;
+        if (UnityEngine.Cursor.visible) UnityEngine.Cursor.lockState = CursorLockMode.None;
+        else UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+        for (int i = 0; i < itemSlots.Length; i++)
+            itemSlots[i].Refresh_SlotUI();
+        mPointerEventData = new PointerEventData(null);
     }
     //event_trigger
-    public void BeginDragAction()
+    public void ButtonAction_MakeWorkBench()
     {
+        for (int i = 0; i < ItemInfoManager.instance.itemInventory.Count; i++)
+        {
+            if (ItemInfoManager.instance.itemInventory[i].item.id == 1001)
+            {
+                ItemInfoManager.instance.GetItemIndex(JsonParsingManager.instance.ItemDic[1001]);
+                
+
+            }
+        }
         
+    }
+    public void BeginDragAction()
+    {   
         mPointerEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         mRayCaster.Raycast(mPointerEventData, results);
@@ -44,10 +62,20 @@ public class InventoryController : MonoBehaviour
             return;
 
         Debug.Log(results[0].gameObject.name);
-        if (results[0].gameObject.TryGetComponent<ItemSlot>(out _currentSeletItemSlot))
+        if (results[0].gameObject.TryGetComponent<Slot>(out _currentSeletItemSlot))
         {
             _currentSeletItemSlot.Empty_UI();
-            DragSlot.dragInven = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
+            if (_currentSeletItemSlot.slotType_UI == SlotType.Item)
+            {
+                _currentSeletItemSlot.InvenItem = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
+                DragSlot.dragInven = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
+            }
+            else if (_currentSeletItemSlot.slotType_UI == SlotType.Box)
+            { 
+                _currentSeletItemSlot.InvenItem = ItemInfoManager.instance.boxDictionary[_currentSeletItemSlot.id][_currentSeletItemSlot.slotIndex];
+                DragSlot.dragInven = ItemInfoManager.instance.boxDictionary[_currentSeletItemSlot.id][_currentSeletItemSlot.slotIndex];
+            }
+
             DragSlot.InIt_DragSlot();
         }
         else
@@ -73,11 +101,17 @@ public class InventoryController : MonoBehaviour
             EndDrag();
             return;
         }
-        if (results[0].gameObject.TryGetComponent<ItemSlot>(out _dropItemSlot))
+        if (results[0].gameObject.TryGetComponent<Slot>(out _dropItemSlot))
         {
+            Debug.Log(results[0].gameObject.name);
             if (DragSlot.dragInven != null)
             {
-                ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.slotIndex, _dropItemSlot.slotIndex);
+                if (_dropItemSlot.slotType_UI == SlotType.Item)
+                    _dropItemSlot.InvenItem = ItemInfoManager.instance.itemInventory[_dropItemSlot.slotIndex];
+                else if (_dropItemSlot.slotType_UI == SlotType.Box)
+                    _dropItemSlot.InvenItem = ItemInfoManager.instance.boxDictionary[_dropItemSlot.id][_dropItemSlot.slotIndex];
+
+                ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
                 if (_currentSeletItemSlot != null)
                     _currentSeletItemSlot.Refresh_SlotUI();
                 _dropItemSlot.Refresh_SlotUI();
@@ -87,7 +121,9 @@ public class InventoryController : MonoBehaviour
     }
     private void EndDrag()
     {
-        _currentSeletItemSlot.Refresh_SlotUI();
+
+        if (_currentSeletItemSlot != null)
+            _currentSeletItemSlot.Refresh_SlotUI();
         _currentSeletItemSlot = null;
         _dropItemSlot = null;
         DragSlot.dragInven = null;

@@ -4,17 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ItemInfoManager : Singleton<ItemInfoManager>
 {
+    public InventoryController inventoryController;
     public SpriteAtlas itemSpriteAtlas;
     private const int INVENTORY_MAX_COUNT = 24;
+    public const int BOX_INVENTORY_MAX_COUNT = 9;
     public List<InvenItem> itemInventory = new List<InvenItem>(INVENTORY_MAX_COUNT);
     public Dictionary<int, ItemObjectScript> itemdic = new Dictionary<int, ItemObjectScript>();
     public List<ItemObjectScript> ItemPrefabs;
-    public InventoryController inventoryController;
     public ItemSlot[] quickSlots;
+
+    //box
+    public BoxUIController boxGameobject;
+    public int currentBoxId = 0;
     public Dictionary<int, List<InvenItem>> boxDictionary = new Dictionary<int, List<InvenItem>>();
+
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)
@@ -44,7 +51,6 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         }
         else
             SetInven(itemIndex, _item, _count);
-        
     }
     public void RefreshQuickSlots()
     {
@@ -54,14 +60,27 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         }
     }
     // 인벤토리 요소 스왑 (전체스왑)
-    public void InvenSwap(int _indexA , int _indexB)
+    public void InvenSwap(InvenItem invenItemA, InvenItem invenItemB)
     {
-        InvenItem tempInve = null;
 
-        tempInve = itemInventory[_indexA];
-        itemInventory[_indexA] = itemInventory[_indexB];
-        itemInventory[_indexB] = tempInve;
-        //Debug.Log(itemInventory[_indexA].);
+        InvenItem tempInve = new InvenItem() { item = null, count = 0};
+        if (invenItemA != null)
+        {
+            tempInve.item = invenItemA.item;
+            tempInve.count = invenItemA.count;
+        }
+        else
+            invenItemA = new InvenItem() { item = null, count = 0 };
+        if (invenItemB != null)
+        {
+            invenItemA.item = invenItemB.item;
+            invenItemA.count = invenItemB.count;
+        }
+        else
+            invenItemB  = new InvenItem() { item = null, count = 0 };
+        invenItemB.item = tempInve.item;
+        invenItemB.count = tempInve.count;
+
     }
     /// <summary>
     /// full item return null
@@ -91,7 +110,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     /// find same item Index if item category is not a "tool" 
     /// </summary>
     /// <returns></returns>
-    private int GetItemIndex(Item _item)
+    public int GetItemIndex(Item _item)
     {
         for (int i = 0; i < itemInventory.Count; i++)
         { 
