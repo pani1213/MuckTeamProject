@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class BossMonster : MonoBehaviour, IHitable
 {
-    public int Health;
-    public int MaxHealth = 100;
+    public float Health;
+    public float MaxHealth = 100;
     public Slider HealthSliderUI;
+    public float HealthRegen = 10f;
+    public float HealthRegenTimeInterval = 1f;
+    public float HealthRegenTime = 0f;
     /********************************************************/
     private Transform _target;            // 플레이
     private Vector3 StartPosition;         // 시작위치
@@ -18,34 +22,34 @@ public class BossMonster : MonoBehaviour, IHitable
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
 
-    public float MoveSpeed = 5;     // 몬스터 속도
-    public float FindDistance = 5f;    // 감지거리
-    public float ComebackDistance = 10f;
-    public float MoveDistance = 40f;   // 움직일 수 있는 거리
+    public float MoveSpeed = 5;           // 몬스터 속도
+    public float FindDistance = 5f;       // 감지거리
+    public float ComeDistance = 5f;       // 감지거리
+    public float MoveDistance = 40f;      // 움직일 수 있는 거리
+    public float _moveDistanceRemaining;  // 맞았을 때 거리 초기화
     public const float TOLERANCE = 0.1f;  // 오차범위
-    public float AttackDistance = 2f;    // 공격범위
+    public float AttackDistance = 2f;     // 공격범위
     public int Damage = 10;    // 공격력
     private float _attackTimer = 0f;    // 공격타임
     public  float AttackDelay = 1f;  // 공격딜레이
+    public float HitDistance = 10f;
+    private float _bossDestroyTime = 4f;
+    public Vector3 FirstPosition;
+    
 
     public float PatrolRadius = 10f;
     public float IDLE_DURATION = 1f;
     private float _idleTimer;
-    private Vector3 _randomPosition;
+    
 
     // 총알
     public GameObject BulletPrefab;
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
 
-    // 넉백 타이머
-    private Vector3 _knockbackStartPosition;
-    private Vector3 _knockbackEndPosition;
-    private const float KNOCKBACK_DURATION = 0.1f;
-    private float _knockbackProgress = 0f;
-    public float KnockbackPower = 1.2f;
 
-    private float _comebackStartTime; // Comeback 상태 진입 시간 저장 변수
+    public float rotationSpeed = 5f; // 회전 속도
+    private bool isRotating = false; // 회전 상태
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
@@ -64,6 +68,7 @@ public class BossMonster : MonoBehaviour, IHitable
         Debug.Log(_target.gameObject.name);
         _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
+        FirstPosition = StartPosition;
 
         Init();
     }
@@ -72,6 +77,7 @@ public class BossMonster : MonoBehaviour, IHitable
     {
         _idleTimer = 0f;
         Health = MaxHealth;
+        _moveDistanceRemaining = MoveDistance;
     }
 
     public void Update()
@@ -83,9 +89,6 @@ public class BossMonster : MonoBehaviour, IHitable
             case MonsterState.Idle:
                 Idle();
                 break;
-            /*            case MonsterState.Patrol:
-                            Patrol();
-                            break;*/
             case MonsterState.Trace:
                 Trace();
                 break;
@@ -95,26 +98,18 @@ public class BossMonster : MonoBehaviour, IHitable
             case MonsterState.Attack:
                 Attack();
                 break;
-            case MonsterState.Damage:
+            case MonsterState.Damaged:
                 Damaged();
                 break;
             case MonsterState.Die:
                 Die();
                 break;
         }
+        
     }
+
     public void Idle()
     {
-/*        _idleTimer += Time.deltaTime;
-        if (_idleTimer >= IDLE_DURATION)
-        {
-            _idleTimer = 0f;
-            //Debug.Log("상태 전환: Idle -> Patrol");
-            _animator.SetTrigger("IdleToPatrol");
-            _currentState = MonsterState.Patrol;
-            SetRandomPatrolPoint();
-        }*/
-
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             //Debug.Log("상태 전환: Idle -> Trace");
@@ -122,38 +117,6 @@ public class BossMonster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
-/*    public void Patrol()
-    {
-        if (_navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-            SetRandomPatrolPoint();
-        }
-
-        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-            // Debug.Log("상태 전환: Patrol -> Comeback");
-            _animator.SetTrigger("PatrolToComeback");
-            _currentState = MonsterState.Comeback;
-        }
-
-        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
-        {
-            // Debug.Log("상태 전환: Patrol -> Trace");
-            _animator.SetTrigger("PatrolToTrace");
-            _currentState = MonsterState.Trace;
-        }
-
-    }*/
-    private void SetRandomPatrolPoint()
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * PatrolRadius; // 반경 내에서 무작위 방향 설정
-        randomDirection += transform.position; // 몬스터 위치에 더함
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, PatrolRadius, 1); // 네비메쉬 상에 유효한 위치 찾기
-        _randomPosition = hit.position;
-        _navMeshAgent.SetDestination(_randomPosition); // 몬스터 이동 목표 설정
-    }
-
 
     public void Trace()
     {
@@ -164,14 +127,14 @@ public class BossMonster : MonoBehaviour, IHitable
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
 
-        Debug.Log(Vector3.Distance(transform.position, _target.transform.position));
+        //Debug.Log(Vector3.Distance(transform.position, _target.transform.position));
 
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
-            return;
+            
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
@@ -179,27 +142,8 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
-            return;
+            
         }
-
-
-        NavMeshHit hit;
-
-        // targetPoint 위치에서 Raycast를 수행하여 내비게이션 메쉬 히트 검사
-        if (NavMesh.SamplePosition(_target.transform.position, out hit, 1.0f, NavMesh.AllAreas))
-        {
-            // 히트가 발생했을 경우 내비게이션 메쉬 상에서 이동 가능한 영역임을 나타냄
-            Debug.Log("이동 가능한 지점입니다.");
-        }
-        else
-        {
-            // 히트가 발생하지 않았을 경우 내비게이션 메쉬 상에서 이동 불가능한 영역임을 나타냄
-            Debug.Log("이동 불가능한 지점입니다.");
-            _animator.SetTrigger("TraceToComeback");
-            _currentState = MonsterState.Comeback;
-        }
-
-
         transform.LookAt(_target);
 
     }
@@ -227,20 +171,29 @@ public class BossMonster : MonoBehaviour, IHitable
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
-        
 
-        if (Vector3.Distance(_target.position, transform.position) <= ComebackDistance)
+        // 공격 가능한 상태이고, 플레이어와의 거리가 공격 가능 범위 내에 있는지 확인
+        if (Vector3.Distance(_target.position, transform.position) <= ComeDistance)
         {
-            
-            // Debug.Log("상태 전환: Comeback -> Trace");
-            _animator.SetTrigger("ComebackToTrace");
-            _currentState = MonsterState.Trace;
-            
+            //Debug.Log("상태 전환: Comeback -> Attack");
+            Debug.Log($"스타트 바뀸{transform.position}");
+            StartPosition = transform.position;
+            _navMeshAgent.destination = StartPosition;
+            _animator.SetTrigger("ComebackToAttack");
+            _currentState = MonsterState.Attack;
         }
 
         transform.LookAt(StartPosition);
-    }
 
+        // 피 회복 타이머 갱신
+        HealthRegenTime += Time.deltaTime;
+        if (HealthRegenTime >= HealthRegenTimeInterval)
+        {
+            // 일정 시간마다 피를 회복
+            Health = Mathf.Min(MaxHealth, Health + HealthRegen);
+            HealthRegenTime = 0.0f;
+        }
+    }
     private void Attack()
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
@@ -257,33 +210,86 @@ public class BossMonster : MonoBehaviour, IHitable
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
         {
-            _animator.SetTrigger("Attack");
+         
+            if(isSetAni)
+            StartCoroutine(setAnimation_Corutine());
             if (_monsterType == MonsterType.Melee)
             {
-                MeleeAttack();
+               
             }
 
             if (_monsterType == MonsterType.LongRange)
             {
                 LongRangeAttack();
             }
-
         }
-
     }
 
+    bool isSetAni = true;
+ 
+    IEnumerator setAnimation_Corutine()
+    {
+        isSetAni = false;
+        int a = Random.Range(0, 3);
+        Debug.Log(a);
+        if (a == 1)
+            _animator.SetTrigger("Attack1");
+        if (a == 2)
+            _animator.SetTrigger("Attack2");
+        if (a == 0)
+            _animator.SetTrigger("Attack3");
+        yield return new WaitForSeconds(1f);
+        isSetAni = true;
+    }
     public void MeleeAttack()
     {
         IHitable playerHitable = _target.GetComponent<IHitable>();
-        if (playerHitable != null)
+        if (playerHitable != null && Vector3.Distance(_target.position, transform.position) < HitDistance)
         {
+            transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
 
+
             Debug.Log("때렸다");
         }
+        // 대상이 있는지 확인
+        if (_target != null)
+        {
+            // 타겟 방향 구하기
+            Vector3 directionToTarget = _target.position - transform.position;
+
+            // 플레이어와 몬스터 사이의 거리 확인
+            float distanceToTarget = directionToTarget.magnitude;
+
+            // 플레이어와의 거리가 공격 범위 안에 있는지 확인
+            if (distanceToTarget <= AttackDistance)
+            {
+                // 회전 상태로 변경
+                isRotating = true;
+
+                // 플레이어를 정확히 향하도록 방향 보정
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+
+                // 부드러운 회전
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                // 회전이 끝나면 공격 실행
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 1f)
+                {
+                    Attack();
+                }
+            }
+            else
+            {
+                // 공격 범위 밖에 있을 때 회전 상태 해제
+                isRotating = false;
+            }
+        }
+
     }
+
 
     public void LongRangeAttack()
     {
@@ -304,40 +310,25 @@ public class BossMonster : MonoBehaviour, IHitable
         _attackTimer = 0f;
 
     }
-    private void Damaged()
+
+    public void Damaged()
     {
-        // 1. Damage 애니메이션 실행(0.5초)
-        // todo: 애니메이션 실행
+        _animator.SetTrigger("DamagedToTrace");
+        _currentState = MonsterState.Trace;
 
-        // 2. 넉백 구현
-        // 2-1. 넉백 시작/최종 위치를 구한다.
-        if (_knockbackProgress == 0)
+        StartCoroutine(AttackAfterDelay(AttackDelay));
+    }
+    private IEnumerator AttackAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // 현재 상태가 트레이스 상태인지 확인하고, 트레이스 상태일 때에만 공격을 수행
+        if (_currentState == MonsterState.Trace)
         {
-            _knockbackStartPosition = transform.position;
-
-            Vector3 dir = transform.position - _target.position;
-            dir.y = 0;
-            dir.Normalize();
-
-            _knockbackEndPosition = transform.position + dir * KnockbackPower;
-        }
-
-        _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
-
-        // 2-2. Lerp를 이용해 넉백하기
-        transform.position = Vector3.Lerp(_knockbackStartPosition, _knockbackEndPosition, _knockbackProgress);
-
-        if (_knockbackProgress > 1)
-        {
-            _knockbackProgress = 0f;
-
-            //Debug.Log("상태 전환: Damaged -> Trace");
-            _animator.SetTrigger("DamagedToTrace");
-            _currentState = MonsterState.Trace;
+            _animator.SetTrigger("TraceToAttack");
+            _currentState = MonsterState.Attack;
         }
     }
-
-
     public void Hit(DamageInfo damage)
     {
         Health -= damage.Amount;
@@ -346,15 +337,20 @@ public class BossMonster : MonoBehaviour, IHitable
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;
         }
-        else
+        if (Vector3.Distance(transform.position, _target.position) >= _moveDistanceRemaining)
         {
-            // 넉백 상태로 전환
-            _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
-            _currentState = MonsterState.Damage;
+            _moveDistanceRemaining = MoveDistance;
         }
     }
     public void Die()
     {
+        StartCoroutine(DestroyAfterDeath(_bossDestroyTime)); 
+    }
+
+    IEnumerator DestroyAfterDeath(float delay)
+    {
+        yield return new WaitForSeconds(delay); 
+
         gameObject.SetActive(false);
     }
 }

@@ -10,7 +10,7 @@ public enum MonsterState
     Trace,
     Comeback,
     Attack,
-    Damage,
+    Damaged,
     Die
 }
 public enum MonsterType
@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour, IHitable
             case MonsterState.Attack:
                 Attack();
                 break;
-            case MonsterState.Damage:
+            case MonsterState.Damaged:
                 Damaged();
                 break;
             case MonsterState.Die:
@@ -118,16 +118,6 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Idle()
     {
-/*        _idleTimer += Time.deltaTime;
-        if (_idleTimer >= IDLE_DURATION)
-        {
-            _idleTimer = 0f;
-            //Debug.Log("상태 전환: Idle -> Patrol");
-            _animator.SetTrigger("IdleToPatrol");
-            _currentState = MonsterState.Patrol;
-            SetRandomPatrolPoint();
-        }*/
-
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             //Debug.Log("상태 전환: Idle -> Trace");
@@ -135,39 +125,6 @@ public class Monster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
-/*    public void Patrol()
-    {
-        if (_navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-            SetRandomPatrolPoint();
-        }
-        
-        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-           // Debug.Log("상태 전환: Patrol -> Comeback");
-            _animator.SetTrigger("PatrolToComeback");
-            _currentState = MonsterState.Comeback;
-        }
-
-        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
-        {
-           // Debug.Log("상태 전환: Patrol -> Trace");
-            _animator.SetTrigger("PatrolToTrace");
-            _currentState = MonsterState.Trace;
-        }
-
-    }*/
-    private void SetRandomPatrolPoint()
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * patrolRadius; // 반경 내에서 무작위 방향 설정
-        randomDirection += transform.position; // 몬스터 위치에 더함
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, 1); // 네비메쉬 상에 유효한 위치 찾기
-        _randomPosition = hit.position;
-        _navMeshAgent.SetDestination(_randomPosition); // 몬스터 이동 목표 설정
-    }
-
-
     public void Trace()
     {
 
@@ -364,7 +321,7 @@ public class Monster : MonoBehaviour, IHitable
         {
             // 넉백 상태로 전환
             _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
-            _currentState = MonsterState.Damage;
+            _currentState = MonsterState.Damaged;
         }
     }
     public void Die()
