@@ -74492,20 +74492,40 @@ PrefabInstance:
       value: 65.05034
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: Damage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: MaxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: MoveSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: AttackDelay
-      value: 1
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: HealthRegen
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: ComeDistance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: FindDistance
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: MoveDistance
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: IDLE_DURATION
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: AttackDistance
@@ -74513,8 +74533,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
       propertyPath: ComebackDistance
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: _moveDistanceRemaining
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: attackClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: HealthRegenTimeInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: attackClips.Array.data[0]
+      value: 
+      objectReference: {fileID: -4722465767704927230, guid: 4988406988758b843b0f0d89fd78ebfc, type: 3}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: attackClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 7610859968613841585, guid: 786582bf61e76c242b37956059d4c209, type: 3}
+    - target: {fileID: 9140522884018988095, guid: 9870cdcff48ce6d42ad31ed8eafcebdc, type: 3}
+      propertyPath: attackClips.Array.data[2]
+      value: 
+      objectReference: {fileID: -6528749351906173395, guid: 168542ff75cc8964fb4e265f66c946cf, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

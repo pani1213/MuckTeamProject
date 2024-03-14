@@ -10,7 +10,7 @@ public enum MonsterState
     Trace,
     Comeback,
     Attack,
-    Damage,
+    Damaged,
     Die
 }
 public enum MonsterType
@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour, IHitable
             case MonsterState.Attack:
                 Attack();
                 break;
-            case MonsterState.Damage:
+            case MonsterState.Damaged:
                 Damaged();
                 break;
             case MonsterState.Die:
@@ -321,7 +321,7 @@ public class Monster : MonoBehaviour, IHitable
         {
             // 넉백 상태로 전환
             _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
-            _currentState = MonsterState.Damage;
+            _currentState = MonsterState.Damaged;
         }
     }
     public void Die()
