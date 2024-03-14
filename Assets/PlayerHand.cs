@@ -119,7 +119,7 @@ public class PlayerHand : MonoBehaviour
     IEnumerator Attack_Coroutione()
     {
         BoxCollider.enabled = true;
-        yield return new WaitForSeconds(PlayerFireAbility.Instance.AttackSpeed);
+        yield return new WaitForSeconds(SurvivalGauge.Instance.AttackSpeed);
         BoxCollider.enabled = false;
     }
     public void AttachMentItem(int _itemIndex)

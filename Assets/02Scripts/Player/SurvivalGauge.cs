@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
@@ -9,12 +10,20 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public static bool IsPlayerDead = false;
     public GameObject mainCamera;
     public UI_OptionPopup uiOptionPopup;
+    public PlayerMoveAbility PlayerMoveAbility;
 
     // 체력
     public int PlayerHealth = 100; // 하트 이미지 S2
     public int Maxhealth = 100;
+    public int Damage = 10;        // 공격력
+    public float AttackSpeed = 1f;
+    public float attackCooldown = 0f;
     public int Defense = 0;        // 방어력
-    public int Regen = 0;          // 부활력
+    public bool hasRegenApplied = false; 
+    public int RegenAmount = 1;
+
+    public bool hasLifesteal = false;
+    public float lifestealPercentage = 0.1f;
     public GameObject tombstonePrefab;
     public DeathCamera deathCamera;
 
@@ -25,10 +34,9 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public float hungerDecayTime = 5f;
 
     // 스태미나
-    public float MoveSpeed = 5;
     public float RunSpeed = 15;
     public float Stamina = 100;             // 스태미나
-    public const float MaxStamina = 100;    
+    public float MaxStamina = 100;    
     public float StaminaConsumeSpeed = 33f; // 초당 스태미나 소모량
     public float StaminaChargeSpeed = 50;  // 초당 스태미나 충전량
     public bool _isStamina = true;
@@ -55,20 +63,39 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         uiOptionPopup = FindObjectOfType<UI_OptionPopup>();
         PlayerHealth = Maxhealth;
         PlayerHunger = Maxhunger;
+        Stamina = MaxStamina;
+        float MoveSpeed = PlayerMoveAbility.MoveSpeed;
+
     }
     void Update()
     {
         FastMove(); // 스태미나
         UpdateHunger();
 
-        PlayerHealth += Regen;
+        if (!hasRegenApplied && RegenAmount > 0)
+        {
+            PlayerHealth += RegenAmount;
+            hasRegenApplied = true; 
+
+            if (PlayerHealth > Maxhealth)
+            {
+                PlayerHealth = Maxhealth;
+            }
+        }
     }
+
+    public void ApplyRegen(int amount)
+    {
+        RegenAmount = amount; // Regen 양 설정
+        hasRegenApplied = false; // 아직 Regen 효과를 적용하지 않았으므로, false로 설정
+    }
+
     public void Hit(DamageInfo damageInfo)
     {
         
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
-       
+
 
         if (PlayerHealth <= 0)
         {
@@ -113,7 +140,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             {
                 Stamina += StaminaChargeSpeed * Time.deltaTime; // 초당 50씩 충전
             }
-            dir *= MoveSpeed;
+            dir *= PlayerMoveAbility.MoveSpeed;
         }
 
         Stamina = Mathf.Clamp(Stamina, 0, MaxStamina); // 값이 넘어가지 않도록

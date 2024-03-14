@@ -44,7 +44,7 @@ public class RandomBox : MonoBehaviour
 
     public int id;
     public string type;
-    public int value;
+    public float value;
 
     public void InIt(int _boxItemId, string _type, int _value)
     {
@@ -109,49 +109,48 @@ public class RandomBox : MonoBehaviour
 
     public void MakePercent(Vector3 position)
     {
-        int percentage = UnityEngine.Random.Range(0, 100);
-        Debug.Log("Random Percentage: " + percentage);
-           if (percentage <= 10)
-          {
-              Make(BoxItemType.maxhp, position);
+         int percentage = UnityEngine.Random.Range(0, 100);
+         Debug.Log("Random Percentage: " + percentage);
+            if (percentage <= 10)
+           {
+               Make(BoxItemType.maxhp, position);
+           }
+           else if (percentage <= 20)
+        {
+            Make(BoxItemType.stamina, position);
           }
-          else if (percentage <= 20)
-          {
-              Make(BoxItemType.stamina, position);
-          }
-          else if (percentage <= 30)
-          {
-              Make(BoxItemType.power, position);
-          }
-          else if (percentage <= 40)
-          {
-              Make(BoxItemType.hp, position);
-          }
-          else if (percentage <= 50)
-          {
-              Make(BoxItemType.speed, position);
-          }
-          else if (percentage <= 60)
-          {
-              Make(BoxItemType.attackSpeed, position);
-          }
-          else if (percentage <= 70)
-          {
-              Make(BoxItemType.jumpPower, position);
-          }
-          else
-        if (percentage <= 80)
+         else if (percentage <= 30)
+        {
+            Make(BoxItemType.power, position);
+         }
+        else if (percentage <= 40)
+        {
+            Make(BoxItemType.hp, position);
+        }
+         else if (percentage <= 50)
+         {
+             Make(BoxItemType.speed, position);
+         }
+         else if (percentage <= 60)
+        {
+            Make(BoxItemType.attackSpeed, position); 
+         }
+        else if (percentage <= 70)
+        {
+            Make(BoxItemType.jumpPower, position);
+        }
+         else if (percentage <= 80)
         {
             Make(BoxItemType.hunger, position);
-        }
+       }
         else if (percentage <= 90)
         {
             Make(BoxItemType.defense, position);
-        }
-        else if (percentage <= 100)
+    }
+    else if (percentage <= 100)
         {
             Make(BoxItemType.Lifesteal, position);
-        }
+    }
     }
 
     public void Make(BoxItemType itemType, Vector3 position)
@@ -209,31 +208,31 @@ public class RandomBox : MonoBehaviour
             Debug.Log(itemType.ToString() + "를 얻었습니다.");
             UI_BoxItem.ShowBoxItem(itemType);
 
-            ApplyEffect(itemType, value);
+            //ApplyEffect(itemType, value);
         }
     }
-    private void ApplyEffect(BoxItemType itemType, int amount)
+    private void ApplyEffect(BoxItemType itemType, float amount)
     {
         switch (itemType)
         {
             case BoxItemType.maxhp:
-                ApplymaxHp(amount);
+                ApplymaxHp((int)amount);
                 break;
 
             case BoxItemType.stamina:
-                ApplyStamina(amount);
+                ApplyStamina((int)amount);
                 break;
 
             case BoxItemType.power:
-                ApplyPower(amount);
+                ApplyPower((int)amount);
                 break;
 
             case BoxItemType.hp:
-                ApplyHp(amount);
+                SurvivalGauge.Instance.ApplyRegen(1);
                 break;
 
             case BoxItemType.speed:
-                ApplySpeed(amount);
+                ApplySpeed((int)amount);
                 break;
 
             case BoxItemType.attackSpeed:
@@ -241,19 +240,19 @@ public class RandomBox : MonoBehaviour
                 break;
 
             case BoxItemType.jumpPower:
-                ApplyJumpPower(amount);
+                ApplyJumpPower((int)amount);
                 break;
 
             case BoxItemType.hunger:
-                ApplyHunger(amount);
+                ApplyHunger((int)amount);
                 break;
 
             case BoxItemType.defense:
-                ApplyDefense(amount);
+                ApplyDefense((int)amount);
                 break;
 
             case BoxItemType.Lifesteal:
-                ApplyLifesteal(amount);
+                ApplyLifesteal((int)amount);
                 break;
         }
     }
@@ -265,18 +264,18 @@ public class RandomBox : MonoBehaviour
     private void ApplyStamina(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1002].imageFileName);
-        SurvivalGauge.Instance.Stamina += amount;
+        SurvivalGauge.Instance.MaxStamina += amount;
     }
     private void ApplyPower(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1003].imageFileName);
-        PlayerFireAbility.Instance.Damage += amount;
+        SurvivalGauge.Instance.Damage += amount;
     }
 
     private void ApplyHp(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
-        SurvivalGauge.Instance.Regen += amount;
+        SurvivalGauge.Instance.RegenAmount += amount;
     }
 
     private void ApplySpeed(int amount)
@@ -284,10 +283,14 @@ public class RandomBox : MonoBehaviour
         Debug.Log(JsonParsingManager.instance.boxItemDic[1005].imageFileName);
         PlayerMoveAbility.Instance.MoveSpeed += amount;
     }
-    private void ApplyAttackSpeed(int amount)
+    private void ApplyAttackSpeed(float amount)
     {
-        Debug.Log(JsonParsingManager.instance.boxItemDic[1006].imageFileName);
-        PlayerFireAbility.Instance.AttackSpeed += amount;
+        Debug.Log(JsonParsingManager.instance.boxItemDic[1006].value);
+        if(SurvivalGauge.Instance.AttackSpeed <= 0.5 ) 
+        {
+            return;
+        }
+        SurvivalGauge.Instance.AttackSpeed -= JsonParsingManager.instance.boxItemDic[1006].value;
     }
     private void ApplyJumpPower(int amount)
     {

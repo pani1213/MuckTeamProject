@@ -79,13 +79,13 @@ public class RandomBoxItem : MonoBehaviour
     private void ApplyPower(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1003].imageFileName);
-        PlayerFireAbility.Instance.Damage += value;
+        SurvivalGauge.Instance.Damage += value;
     }
 
     private void ApplyHp(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1004].imageFileName);
-        SurvivalGauge.Instance.Regen += value; 
+        SurvivalGauge.Instance.RegenAmount += value; 
     }
 
     private void ApplySpeed(int amount)
