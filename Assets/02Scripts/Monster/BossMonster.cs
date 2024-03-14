@@ -27,6 +27,7 @@ public class BossMonster : MonoBehaviour, IHitable
     public int Damage = 10;    // 공격력
     private float _attackTimer = 0f;    // 공격타임
     public  float AttackDelay = 1f;  // 공격딜레이
+    public float HitDistance = 10f;
 
     public float PatrolRadius = 10f;
     public float IDLE_DURATION = 1f;
@@ -38,14 +39,6 @@ public class BossMonster : MonoBehaviour, IHitable
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
 
-    // 넉백 타이머
-    private Vector3 _knockbackStartPosition;
-    private Vector3 _knockbackEndPosition;
-    private const float KNOCKBACK_DURATION = 0.1f;
-    private float _knockbackProgress = 0f;
-    public float KnockbackPower = 1.2f;
-
-    private float _comebackStartTime; // Comeback 상태 진입 시간 저장 변수
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
@@ -83,9 +76,6 @@ public class BossMonster : MonoBehaviour, IHitable
             case MonsterState.Idle:
                 Idle();
                 break;
-            /*            case MonsterState.Patrol:
-                            Patrol();
-                            break;*/
             case MonsterState.Trace:
                 Trace();
                 break;
@@ -95,9 +85,6 @@ public class BossMonster : MonoBehaviour, IHitable
             case MonsterState.Attack:
                 Attack();
                 break;
-            case MonsterState.Damage:
-                Damaged();
-                break;
             case MonsterState.Die:
                 Die();
                 break;
@@ -105,16 +92,6 @@ public class BossMonster : MonoBehaviour, IHitable
     }
     public void Idle()
     {
-/*        _idleTimer += Time.deltaTime;
-        if (_idleTimer >= IDLE_DURATION)
-        {
-            _idleTimer = 0f;
-            //Debug.Log("상태 전환: Idle -> Patrol");
-            _animator.SetTrigger("IdleToPatrol");
-            _currentState = MonsterState.Patrol;
-            SetRandomPatrolPoint();
-        }*/
-
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             //Debug.Log("상태 전환: Idle -> Trace");
@@ -122,28 +99,6 @@ public class BossMonster : MonoBehaviour, IHitable
             _currentState = MonsterState.Trace;
         }
     }
-/*    public void Patrol()
-    {
-        if (_navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-            SetRandomPatrolPoint();
-        }
-
-        if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= TOLERANCE)
-        {
-            // Debug.Log("상태 전환: Patrol -> Comeback");
-            _animator.SetTrigger("PatrolToComeback");
-            _currentState = MonsterState.Comeback;
-        }
-
-        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
-        {
-            // Debug.Log("상태 전환: Patrol -> Trace");
-            _animator.SetTrigger("PatrolToTrace");
-            _currentState = MonsterState.Trace;
-        }
-
-    }*/
 
     public void Trace()
     {
@@ -154,14 +109,14 @@ public class BossMonster : MonoBehaviour, IHitable
         // 내비게이션 목적지를 타겟으로 위치
         _navMeshAgent.destination = _target.position;
 
-        Debug.Log(Vector3.Distance(transform.position, _target.transform.position));
+        //Debug.Log(Vector3.Distance(transform.position, _target.transform.position));
 
         if (Vector3.Distance(transform.position, StartPosition) >= MoveDistance)
         {
             Debug.Log("상태 전환: Trace -> Comeback");
             _animator.SetTrigger("TraceToComeback");
             _currentState = MonsterState.Comeback;
-            return;
+            
         }
 
         if (Vector3.Distance(_target.position, transform.position) <= AttackDistance)
@@ -169,27 +124,8 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
-            return;
+            
         }
-
-
-        // NavMeshHit hit;
-
-        // targetPoint 위치에서 Raycast를 수행하여 내비게이션 메쉬 히트 검사
-        //if (NavMesh.SamplePosition(_target.transform.position, out hit, 1.0f, NavMesh.AllAreas))
-        //{
-        //    // 히트가 발생했을 경우 내비게이션 메쉬 상에서 이동 가능한 영역임을 나타냄
-        //    Debug.Log("이동 가능한 지점입니다.");
-        //}
-        //else
-        //{
-        //    // 히트가 발생하지 않았을 경우 내비게이션 메쉬 상에서 이동 불가능한 영역임을 나타냄
-        //    Debug.Log("이동 불가능한 지점입니다.");
-        //    _animator.SetTrigger("TraceToComeback");
-        //    _currentState = MonsterState.Comeback;
-        //}
-
-
         transform.LookAt(_target);
 
     }
@@ -217,20 +153,9 @@ public class BossMonster : MonoBehaviour, IHitable
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
-        
-
-        if (Vector3.Distance(_target.position, transform.position) <= ComebackDistance)
-        {
-            
-            // Debug.Log("상태 전환: Comeback -> Trace");
-            _animator.SetTrigger("ComebackToTrace");
-            _currentState = MonsterState.Trace;
-            
-        }
-
+       
         transform.LookAt(StartPosition);
     }
-
     private void Attack()
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
@@ -265,7 +190,7 @@ public class BossMonster : MonoBehaviour, IHitable
     public void MeleeAttack()
     {
         IHitable playerHitable = _target.GetComponent<IHitable>();
-        if (playerHitable != null)
+        if (playerHitable != null && Vector3.Distance(_target.position, transform.position) < HitDistance)
         {
             transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
@@ -295,40 +220,6 @@ public class BossMonster : MonoBehaviour, IHitable
         _attackTimer = 0f;
 
     }
-    private void Damaged()
-    {
-        // 1. Damage 애니메이션 실행(0.5초)
-        // todo: 애니메이션 실행
-
-        // 2. 넉백 구현
-        // 2-1. 넉백 시작/최종 위치를 구한다.
-        if (_knockbackProgress == 0)
-        {
-            _knockbackStartPosition = transform.position;
-
-            Vector3 dir = transform.position - _target.position;
-            dir.y = 0;
-            dir.Normalize();
-
-            _knockbackEndPosition = transform.position + dir * KnockbackPower;
-        }
-
-        _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
-
-        // 2-2. Lerp를 이용해 넉백하기
-        transform.position = Vector3.Lerp(_knockbackStartPosition, _knockbackEndPosition, _knockbackProgress);
-
-        if (_knockbackProgress > 1)
-        {
-            _knockbackProgress = 0f;
-
-            //Debug.Log("상태 전환: Damaged -> Trace");
-            _animator.SetTrigger("DamagedToTrace");
-            _currentState = MonsterState.Trace;
-        }
-    }
-
-
     public void Hit(DamageInfo damage)
     {
         Health -= damage.Amount;
@@ -339,9 +230,9 @@ public class BossMonster : MonoBehaviour, IHitable
         }
         else
         {
-            // 넉백 상태로 전환
-            _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
-            _currentState = MonsterState.Damage;
+            // 맞았을 때 다시 추적 상태로 전환
+            _animator.SetTrigger("DamageToTrace");
+            _currentState = MonsterState.Trace;
         }
     }
     public void Die()
