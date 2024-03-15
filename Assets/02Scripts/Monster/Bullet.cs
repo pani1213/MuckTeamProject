@@ -12,11 +12,11 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<IHitable>().Hit(info);
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
         }
         else if (other.CompareTag("Ground") || other.CompareTag("MapResource"))
         {
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
         }
     }
 
@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         BulletAttackTime += Time.deltaTime;
         if (BulletAttackTime >= BulletDestroy)
         {
-           gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

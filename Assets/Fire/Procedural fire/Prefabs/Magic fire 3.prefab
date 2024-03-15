@@ -4856,6 +4856,7 @@ GameObject:
   - component: {fileID: 3292336720004401132}
   - component: {fileID: 7663761838766885225}
   - component: {fileID: -4587773948012188493}
+  - component: {fileID: -2206470443737736452}
   m_Layer: 2
   m_Name: Magic fire 3
   m_TagString: Untagged
@@ -4871,7 +4872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654736843778140}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.002717316, y: -0, z: -0, w: -0.9999963}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4880,7 +4881,7 @@ Transform:
   - {fileID: 4774984165177464}
   - {fileID: 4681315946005572}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 359.689, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &198853902749890928
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9752,6 +9753,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2206470443737736452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654736843778140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1675696825032014
 GameObject:
   m_ObjectHideFlags: 0
