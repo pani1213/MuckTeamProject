@@ -23,9 +23,13 @@ public class InventoryController : MonoBehaviour
         if (UnityEngine.Cursor.visible) UnityEngine.Cursor.lockState = CursorLockMode.None;
         else UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
+        RefreshAllSlot();
+                mPointerEventData = new PointerEventData(null);
+    }
+    public void RefreshAllSlot()
+    {
         for (int i = 0; i < itemSlots.Length; i++)
             itemSlots[i].Refresh_SlotUI();
-        mPointerEventData = new PointerEventData(null);
     }
     public void InIt(bool _isOnUI)
     {
@@ -41,16 +45,11 @@ public class InventoryController : MonoBehaviour
     //event_trigger
     public void ButtonAction_MakeWorkBench()
     {
-        for (int i = 0; i < ItemInfoManager.instance.itemInventory.Count; i++)
-        {
-            if (ItemInfoManager.instance.itemInventory[i].item.id == 1001)
-            {
-                ItemInfoManager.instance.GetItemIndex(JsonParsingManager.instance.ItemDic[1001]);
-                
+        Debug.Log("buttonAction");
+        if (ItemInfoManager.instance.TryRemoveItem(1001, 10))
+            ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[1020], 1);
+        RefreshAllSlot();
 
-            }
-        }
-        
     }
     public void BeginDragAction()
     {   
@@ -82,6 +81,7 @@ public class InventoryController : MonoBehaviour
             Debug.Log("result에서 itemSlot을 찾을수 없음");
 
     }
+
     //event_trigger
     public void DragAction()
     {
