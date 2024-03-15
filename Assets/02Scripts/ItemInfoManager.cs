@@ -118,4 +118,28 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         }
         return -1;
     }
+    // 아이템 사용 스크립트 넣기
+    public bool TryRemoveItem(int _id, int _count = 1)
+    {
+        for (int i = 0; i < itemInventory.Count; i++)
+        {
+            if (itemInventory[i].item == null)
+                continue;
+
+            if (itemInventory[i].item.id == _id)
+            {
+                if (itemInventory[i].count >= _count)
+                {
+                    itemInventory[i].count -= _count;
+                    if (itemInventory[i].count == 0)
+                        itemInventory[i].item = null;
+                    return true;
+                }
+                else
+                    Debug.Log($"item count 부족함 필요: {_count} ,소지: {itemInventory[i].count}");
+            }
+        }
+        Debug.Log("동일한 id item 없음");
+        return false;
+    }
 }
