@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -9.046631e-11, w: 1}
   m_LocalPosition: {x: -0.064, y: -0.4228, z: 0.927}
-  m_LocalScale: {x: 1.7602, y: 1.2543952, z: 1.8633368}
+  m_LocalScale: {x: 4.591834, y: 3.272341, z: 4.8608866}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5282154207512678546}
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerAttackAbility: {fileID: 6480056760498599188}
   PlayerHand: {fileID: 2547788734528100439}
-  PlayerFire: {fileID: 4472668093915354490}
 --- !u!54 &1138033220149310726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -253,14 +252,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4346835253869201888}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0009858743, y: 0.0004395979, z: -0.0027235593, w: 0.9999957}
-  m_LocalPosition: {x: -0.016, y: -1.327, z: -0.006}
+  m_LocalRotation: {x: -0.0026224712, y: 0.70710194, z: 0.0012279532, w: -0.70710576}
+  m_LocalPosition: {x: 4.09, y: 0, z: 1.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5282154207512678546}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.113, y: 0.05, z: -0.312}
+  m_LocalEulerAnglesHint: {x: 0.113, y: 270, z: -0.312}
 --- !u!33 &8058195520830433778
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -307,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023a18259ed226a48b002e0a33c4e26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  survivalGauge: {fileID: 0}
+  survivalGauge: {fileID: 4195860953808887070}
   theCamera: {fileID: 6747110857623224491}
   cameraRotationLimit: 80
   MoveSpeed: 2
@@ -327,20 +326,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa7b9fa452365c4fabad46453d60043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 5175517730374048061}
   uiOptionPopup: {fileID: 0}
+  PlayerMoveAbility: {fileID: 1392870571519566214}
   PlayerHealth: 100
-  Maxhealth: 100
+  Maxhealth: 10000
+  Damage: 10
+  AttackSpeed: 1
+  attackCooldown: 0
   Defense: 0
-  tombstonePrefab: {fileID: 0}
-  deathCamera: {fileID: 0}
+  hasRegenApplied: 0
+  RegenAmount: 1
+  hasLifesteal: 0
+  lifestealPercentage: 0.1
+  tombstonePrefab: {fileID: 1040789871502720, guid: 120be0bd5d559974cb0f19fa90521adf, type: 3}
+  deathCamera: {fileID: 1477994524587031428}
   PlayerHunger: 100
   Maxhunger: 100
   _hungerTimer: 0
   hungerDecayTime: 5
-  MoveSpeed: 5
   RunSpeed: 30
   Stamina: 100
+  MaxStamina: 100
   StaminaConsumeSpeed: 33
   StaminaChargeSpeed: 50
   _isStamina: 1
@@ -375,6 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   informationText_UI: {fileID: 0}
+  PlayerHand: {fileID: 2547788734528100439}
 --- !u!114 &6480056760498599188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +412,7 @@ MonoBehaviour:
   animator: {fileID: 6323374546401193284}
   BoxCollider: {fileID: 1139799562617934153}
   AttachPosition: {fileID: 2470130792854479653}
+  currentIndex: 0
 --- !u!1 &5175517730374048061
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +424,7 @@ GameObject:
   - component: {fileID: 5282154207512678546}
   - component: {fileID: 6747110857623224491}
   - component: {fileID: 7953661708172553264}
+  - component: {fileID: 1477994524587031428}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -498,3 +508,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5175517730374048061}
   m_Enabled: 1
+--- !u!114 &1477994524587031428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5175517730374048061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6706a853045b2814d8d67dcce2762c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 5583567359917838071}
+  orbitDistance: 5
+  orbitHeight: 7
+  orbitSpeed: 5

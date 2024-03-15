@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Boss
   - Tree
+  - Pudu
   layers:
   - Default
   - TransparentFX

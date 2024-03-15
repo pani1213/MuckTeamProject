@@ -118,9 +118,6 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Idle()
     {
-        Debug.Log(FindDistance);
-        Debug.Log(_target.position);
-        Debug.Log(transform.position);
         if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             //Debug.Log("상태 전환: Idle -> Trace");
