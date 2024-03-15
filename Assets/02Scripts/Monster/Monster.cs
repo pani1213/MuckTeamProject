@@ -47,7 +47,7 @@ public class Monster : MonoBehaviour, IHitable
     private float _idleTimer;
     private Vector3 _randomPosition;
 
-    public GameObject BulletPrefab;
+    public GameObject[] BulletPrefab;
     public Transform BulletPoint;
     public float BulletSpeed = 10f;
 
@@ -57,12 +57,22 @@ public class Monster : MonoBehaviour, IHitable
     private float _knockbackProgress = 0f;
     public float KnockbackPower = 1.2f;
 
-
+    public SkinnedMeshRenderer SkinnedMeshRenderer;
+    public MeshRenderer hatRander;
+    public Material[] skins;
+    public Material[] hats;
 
 
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
+
+        if (SkinnedMeshRenderer != null)
+        {
+            SkinnedMeshRenderer.material = skins[Random.Range(0, skins.Length)];
+            hatRander.material = hats[Random.Range(0, hats.Length)];
+
+        }
 
         _characterController = GetComponent<CharacterController>();
         _characterController.isTrigger = false;
@@ -118,10 +128,7 @@ public class Monster : MonoBehaviour, IHitable
     }
     public void Idle()
     {
-        Debug.Log(FindDistance);
-        Debug.Log(_target.position);
-        Debug.Log(transform.position);
-        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
+        if (_target != null && Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
             //Debug.Log("상태 전환: Idle -> Trace");
             _animator.SetTrigger("IdleToTrace");
@@ -153,7 +160,7 @@ public class Monster : MonoBehaviour, IHitable
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
         }
-
+        transform.LookAt(_target);
     }
     public void Comeback()
     {
@@ -252,18 +259,22 @@ public class Monster : MonoBehaviour, IHitable
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
 
+            transform.LookAt(_target);
+
             Debug.Log("때렸다");
         }
     }
     
    public void LongRangeAttack()
     {
-
-
+        Vector3 targetDirection = (_target.position - BulletPoint.position).normalized;
+        Quaternion bulletRotation = Quaternion.LookRotation(targetDirection);
+        bulletRotation *= Quaternion.Euler(-90f, 0f, 0f); // x값을 -90으로 설정
         transform.LookAt(_target);
+        //Quaternion bulletRotation = Quaternion.Euler(-90f, 0, 0f);
 
-        GameObject bullet = Instantiate(BulletPrefab, BulletPoint.position, BulletPoint.rotation );
-
+        int randomIndex = Random.Range(0, BulletPrefab.Length);
+        GameObject bullet = Instantiate(BulletPrefab[randomIndex], BulletPoint.position, bulletRotation);
         Bullet bulletdamage = bullet.GetComponent<Bullet>();
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 

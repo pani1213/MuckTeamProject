@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4874604506026502}
   - component: {fileID: 198338373201264064}
   - component: {fileID: 199440472882509286}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4854,7 +4854,7 @@ GameObject:
   - component: {fileID: 4548966624920746}
   - component: {fileID: 198968408040191748}
   - component: {fileID: 199171352032605508}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9697,7 +9697,7 @@ GameObject:
   - component: {fileID: 4313303731653896}
   - component: {fileID: 198421910201038450}
   - component: {fileID: 199501397985954360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14543,7 +14543,7 @@ GameObject:
   - component: {fileID: -173283366359324063}
   - component: {fileID: 4571262660920293869}
   - component: {fileID: -6783541523794692549}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Magic fire 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19407,7 +19407,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -19435,7 +19435,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
