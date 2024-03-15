@@ -9699,6 +9699,7 @@ GameObject:
   - component: {fileID: 199292984608142242}
   - component: {fileID: 4224241009985147494}
   - component: {fileID: -5988937098605140133}
+  - component: {fileID: -9102328299504908093}
   - component: {fileID: -8266795656503143069}
   m_Layer: 0
   m_Name: Magic fire pro yellow
@@ -14584,6 +14585,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-9102328299504908093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434627103891488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-8266795656503143069
 MonoBehaviour:
   m_ObjectHideFlags: 0

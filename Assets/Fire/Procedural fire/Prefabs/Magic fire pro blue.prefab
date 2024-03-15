@@ -9699,6 +9699,7 @@ GameObject:
   - component: {fileID: 199374976460404498}
   - component: {fileID: 8472690878995286484}
   - component: {fileID: -2998519376369569687}
+  - component: {fileID: -611830234660989497}
   - component: {fileID: 5634543439796140668}
   m_Layer: 0
   m_Name: Magic fire pro blue
@@ -14584,6 +14585,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-611830234660989497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223526616464650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5634543439796140668
 MonoBehaviour:
   m_ObjectHideFlags: 0
