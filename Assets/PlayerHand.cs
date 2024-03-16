@@ -71,7 +71,7 @@ public class PlayerHand : MonoBehaviour
                     Debug.Log("boxItem get");
                     hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
-                if (hit.collider.CompareTag("Box"))
+                if (hit.collider.CompareTag("InvenBox"))
                 {
                     hit.collider.gameObject.GetComponent<BoxObjectScript>().OpenBoxAction();
                     Debug.Log("boxItem get");

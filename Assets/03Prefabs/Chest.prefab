@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 5941120797016895537}
   - component: {fileID: 1890916808295253939}
   - component: {fileID: 7744329309831809010}
+  - component: {fileID: 3924873851395327021}
+  - component: {fileID: 4057289643096613961}
   m_Layer: 0
   m_Name: Chest
-  m_TagString: Untagged
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,12 +67,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2347012968559387543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4920f77650254a48b2d47fea76d6f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Animation: {fileID: 7744329309831809010}
 --- !u!111 &7744329309831809010
 Animation:
   m_ObjectHideFlags: 0
@@ -88,6 +89,56 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &3924873851395327021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2347012968559387543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6104581b62e2bc0489d8ef323ffd20bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_BoxItem: {fileID: 0}
+  animation: {fileID: 7744329309831809010}
+  BoxCollider: {fileID: 0}
+  ItemPos: {fileID: 3807565400712048412}
+  Avocado: {fileID: 4816721914606352166, guid: 1ad5425226b0e204c83207c05eee1753, type: 3}
+  Bread: {fileID: 839233260410868668, guid: f958dd539b4316243b674c5ed113ecb5, type: 3}
+  Carrot: {fileID: 4333536560383591219, guid: dbb73543b897d6e4c8e7f01a048686b4, type: 3}
+  Broccoli: {fileID: 2369809154076360387, guid: 1f0a2de888d5d584b9a0e7886e28b60b, type: 3}
+  Banana: {fileID: 2230530226155236490, guid: 99c55b0bcc38d4849924d333e2da7e68, type: 3}
+  Garlic: {fileID: 5987858285101769375, guid: 8fd0baabab3ee9040b0e9c7ea8a2091d, type: 3}
+  Fish: {fileID: 3828846876288801734, guid: 8649355280d91c74eb43a744738d8a1e, type: 3}
+  Pumpkin: {fileID: 5071555915851589694, guid: d0be86f0d4ab1cb439ff3e170247a63a, type: 3}
+  Pepper: {fileID: 1271865576400040978, guid: 544f8c7aba3c2cc4d839955add3bc0e5, type: 3}
+  Pear: {fileID: 3993196853935147428, guid: 8ae1c667d2afcb5418244c2c550e001c, type: 3}
+  id: 0
+  type: 
+  value: 0
+--- !u!65 &4057289643096613961
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2347012968559387543}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.8671875, y: 1, z: 1.7469721}
+  m_Center: {x: -0.21000671, y: 0, z: -0.16435146}
 --- !u!1 &4306979250057089721
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +182,10 @@ PrefabInstance:
     - target: {fileID: 1648247643251536, guid: f26817945c9b0444c9e1ca42c7c22bcb, type: 3}
       propertyPath: m_Name
       value: Chest_Lid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648247643251536, guid: f26817945c9b0444c9e1ca42c7c22bcb, type: 3}
+      propertyPath: m_TagString
+      value: Box
       objectReference: {fileID: 0}
     - target: {fileID: 4567556764807344, guid: f26817945c9b0444c9e1ca42c7c22bcb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -194,6 +249,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest_Open
       objectReference: {fileID: 0}
+    - target: {fileID: 1007493476577542, guid: 9dbf22de1641237478d0d53762fb1aa9, type: 3}
+      propertyPath: m_TagString
+      value: Box
+      objectReference: {fileID: 0}
     - target: {fileID: 4554988452036568, guid: 9dbf22de1641237478d0d53762fb1aa9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.14348388
@@ -255,6 +314,10 @@ PrefabInstance:
     - target: {fileID: 4816721914606352166, guid: 1ad5425226b0e204c83207c05eee1753, type: 3}
       propertyPath: m_Name
       value: Avocado
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816721914606352166, guid: 1ad5425226b0e204c83207c05eee1753, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301791894072929692, guid: 1ad5425226b0e204c83207c05eee1753, type: 3}
       propertyPath: m_LocalPosition.x

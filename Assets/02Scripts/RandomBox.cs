@@ -310,11 +310,11 @@ public class RandomBox : MonoBehaviour
     private void ApplyLifesteal(int amount)
     {
         Debug.Log(JsonParsingManager.instance.boxItemDic[1010].imageFileName);
-        if (Monster.Health <= Monster.MaxHealth)
-        {
-            SurvivalGauge.Instance.PlayerHealth += amount;
-            Monster.Health -= amount;
-        }
+        //if (Monster.Health <= Monster.MaxHealth)
+        //{
+        //    SurvivalGauge.Instance.PlayerHealth += amount;
+        //    Monster.Health -= amount;
+        //}
 
     }
 }

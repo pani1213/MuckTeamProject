@@ -13,6 +13,7 @@ TagManager:
   - Boss
   - Tree
   - Pudu
+  - InvenBox
   layers:
   - Default
   - TransparentFX

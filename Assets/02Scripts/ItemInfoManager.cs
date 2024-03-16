@@ -22,6 +22,8 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     public int currentBoxId = 0;
     public Dictionary<int, List<InvenItem>> boxDictionary = new Dictionary<int, List<InvenItem>>();
 
+    public BrazierObject currentBrazier;
+
     public void InIt()
     {
         for (int i = 0; i < INVENTORY_MAX_COUNT; i++)

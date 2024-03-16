@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f0b810300a5e64cae4f83ff4d61ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAttackAbility: {fileID: 6480056760498599188}
+  PlayerAttackAbility: {fileID: 0}
   PlayerHand: {fileID: 2547788734528100439}
 --- !u!54 &1138033220149310726
 Rigidbody:
@@ -233,9 +233,6 @@ GameObject:
   - component: {fileID: 7416772228831606999}
   - component: {fileID: 1392870571519566214}
   - component: {fileID: 4195860953808887070}
-  - component: {fileID: 4472668093915354490}
-  - component: {fileID: 8329509868974018739}
-  - component: {fileID: 6480056760498599188}
   - component: {fileID: 2547788734528100439}
   m_Layer: 0
   m_Name: PlayerAsset
@@ -351,52 +348,6 @@ MonoBehaviour:
   StaminaConsumeSpeed: 33
   StaminaChargeSpeed: 50
   _isStamina: 1
---- !u!114 &4472668093915354490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4346835253869201888}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 848519b11631ab545a490b432d27bc90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  EquipmentPrefab: {fileID: 8592404999445290888, guid: ccb8e599b17fd3140a03f221d1b928f5, type: 3}
-  SwingPosition: {fileID: 1078264069795815287}
-  Damage: 10
-  AttackRange: 5
-  AttackSpeed: 1
---- !u!114 &8329509868974018739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4346835253869201888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f059b46a55c0cb242b9e604b4cb39329, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  informationText_UI: {fileID: 0}
-  PlayerHand: {fileID: 2547788734528100439}
---- !u!114 &6480056760498599188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4346835253869201888}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0922db2c45edf5441859380b6c7b58b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animation: {fileID: 4249740224531125737}
-  BoxCollider: {fileID: 1139799562617934153}
 --- !u!114 &2547788734528100439
 MonoBehaviour:
   m_ObjectHideFlags: 0

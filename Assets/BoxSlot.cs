@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BoxSlot : Slot
 {
-    
     //리프레쉬
     public override void Refresh_SlotUI()
     {
