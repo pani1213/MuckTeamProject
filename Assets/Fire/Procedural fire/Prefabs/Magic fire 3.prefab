@@ -4853,11 +4853,10 @@ GameObject:
   - component: {fileID: 4131437023405378}
   - component: {fileID: 198853902749890928}
   - component: {fileID: 199034871832436634}
-  - component: {fileID: 3292336720004401132}
   - component: {fileID: 7663761838766885225}
   - component: {fileID: -4587773948012188493}
-  - component: {fileID: -2206470443737736452}
   - component: {fileID: 4152759342168738604}
+  - component: {fileID: -8585279793719352095}
   m_Layer: 2
   m_Name: Magic fire 3
   m_TagString: Untagged
@@ -9692,20 +9691,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3292336720004401132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654736843778140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BulletAttackTime: 0
-  BulletDestroy: 3
 --- !u!65 &7663761838766885225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9754,20 +9739,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-2206470443737736452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654736843778140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyEffectPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c, type: 3}
-  effectPool: {fileID: 0}
 --- !u!114 &4152759342168738604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9782,6 +9753,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletAttackTime: 0
   BulletDestroy: 3
+  _bulletEffect: {fileID: -8847733360802937871, guid: 08fd1b80cc24cc8439f45fda3c558255, type: 3}
+--- !u!114 &-8585279793719352095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654736843778140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad9c0cee2fb99447bce2042b0649af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletEffectPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c, type: 3}
 --- !u!1 &1675696825032014
 GameObject:
   m_ObjectHideFlags: 0
