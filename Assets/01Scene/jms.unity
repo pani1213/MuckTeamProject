@@ -11018,6 +11018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LowpolyTerrain
       objectReference: {fileID: 0}
+    - target: {fileID: 2477219742316424569, guid: f01337c4b1a6e774cb6a6f4c3dd02910, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 2477219742316589401, guid: f01337c4b1a6e774cb6a6f4c3dd02910, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -21493,7 +21497,7 @@ GameObject:
   - component: {fileID: 663458684}
   m_Layer: 0
   m_Name: Environment (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32417,7 +32421,7 @@ GameObject:
   - component: {fileID: 938006515}
   m_Layer: 0
   m_Name: Environment (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35265,7 +35269,7 @@ GameObject:
   - component: {fileID: 1008899622}
   m_Layer: 0
   m_Name: Environment (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50038,6 +50042,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4373080667063482954, guid: 8205d36f5448674429e263cd4800fd0a, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 4373080667063482959, guid: 8205d36f5448674429e263cd4800fd0a, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -51799,7 +51807,7 @@ GameObject:
   - component: {fileID: 1455662548}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59298,8 +59306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737e847a77e6f3945b4c90d2fb71f2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletDestroyEffectPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c, type: 3}
-  initialPoolSize: 10
 --- !u!1001 &1650474114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72858,7 +72864,7 @@ GameObject:
   - component: {fileID: 2014435874}
   m_Layer: 0
   m_Name: Environment
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74771,6 +74777,7 @@ MonoBehaviour:
   quickSlots: []
   boxGameobject: {fileID: 0}
   currentBoxId: 0
+  currentBrazier: {fileID: 0}
 --- !u!1001 &2072413450
 PrefabInstance:
   m_ObjectHideFlags: 0
