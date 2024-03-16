@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public DamageInfo info;
     public float BulletAttackTime = 0;
     public float BulletDestroy = 3;
+    public GameObject BulletEffect;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -29,7 +30,12 @@ public class Bullet : MonoBehaviour
         BulletAttackTime += Time.deltaTime;
         if (BulletAttackTime >= BulletDestroy)
         {
-            gameObject.SetActive(false);
+            Explode();
         }
+    }
+
+    private void Explode()
+    {
+        gameObject.SetActive(false); // 총알 비활성화
     }
 }

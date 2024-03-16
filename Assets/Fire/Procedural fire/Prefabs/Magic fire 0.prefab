@@ -14544,6 +14544,7 @@ GameObject:
   - component: {fileID: 4571262660920293869}
   - component: {fileID: -6783541523794692549}
   - component: {fileID: -2938576361319387993}
+  - component: {fileID: 7529568896220173712}
   m_Layer: 2
   m_Name: Magic fire 0
   m_TagString: Untagged
@@ -19453,3 +19454,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyEffectPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c, type: 3}
+  effectPool: {fileID: 0}
+--- !u!114 &7529568896220173712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692517446758730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletAttackTime: 0
+  BulletDestroy: 3

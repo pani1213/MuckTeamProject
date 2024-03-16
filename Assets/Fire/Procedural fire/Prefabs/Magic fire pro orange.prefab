@@ -24283,6 +24283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83255427d4a7bc641846f5f85bd29e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyEffectPrefab: {fileID: 1845955007268882, guid: 67a684e320da6e7439421a07e3fa265c, type: 3}
 --- !u!114 &2471356989859178384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24295,5 +24296,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9e3d2cc1ce2b54bae9b484984b1f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletAttackTime: 0
+  explosionEffectPrefab: {fileID: 0}
   BulletDestroy: 3
