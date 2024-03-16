@@ -259,8 +259,6 @@ public class Monster : MonoBehaviour, IHitable
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
 
-            transform.LookAt(_target);
-
             Debug.Log("¶§·È´Ù");
         }
     }
