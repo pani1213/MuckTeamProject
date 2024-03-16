@@ -453,12 +453,12 @@ MonoBehaviour:
   FoodPuduHealth: 0
   MaxHealth: 100
   HealthSliderUI: {fileID: 410111518272153854}
-  _mainCharacter: {fileID: 5583567359917838071, guid: ffce31c9583149f498e7c0e2824a5ce9, type: 3}
+  _mainCharacter: {fileID: 0}
   MoveSpeed: 1
   StartPosition: {x: 0, y: 0, z: 0}
   MoveDistance: 1
   KnockbackPower: 1.2
-  bloodEffectPrefab: {fileID: 1648103508492023112, guid: f33e59b089570b4479cb120009e29004, type: 3}
+  bloodEffectPrefab: {fileID: 5289930627417105305, guid: e5af831e309a2ce4f9e392d5433e4b58, type: 3}
 --- !u!54 &4913484470214572221
 Rigidbody:
   m_ObjectHideFlags: 0
