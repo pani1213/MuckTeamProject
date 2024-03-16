@@ -6,7 +6,7 @@ public class BloodFactory : MonoBehaviour
 {
     public static BloodFactory Instance { get; private set; }
 
-    [Header("ÇÇ È¿°ú ÇÁ¸®ÆÕ")]
+    [Header("ÀÌÆåÆ® ÇÁ¸®ÆÕ")]
     public GameObject BloodPrefab;
 
     private List<GameObject> _pool;
