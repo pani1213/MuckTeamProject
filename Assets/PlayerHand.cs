@@ -91,6 +91,11 @@ public class PlayerHand : MonoBehaviour
                         itemObj.InIt(ItemType.box);
                         itemObj.GetComponent<BoxObjectScript>().InIt();
                     }
+                    if (AttachItem.item.id == 1020)
+                        itemObj.InIt(ItemType.build);
+                    if (AttachItem.item.id == 1019)
+                        itemObj.InIt(ItemType.build);
+                    
 
                     itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
                     if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
@@ -142,11 +147,14 @@ public class PlayerHand : MonoBehaviour
             AttachItem = ItemInfoManager.instance.itemInventory[_itemIndex];
             attachmentDamage = ItemInfoManager.instance.itemInventory[_itemIndex].item.damage;
             currentIndex = _itemIndex;
-              GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
+            if (AttachItem.item.category != "build")
+            { 
+                GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
             obj.transform.localPosition = Vector3.zero;
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
+            }
         }
         else
             Debug.Log("isNull");

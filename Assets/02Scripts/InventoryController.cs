@@ -24,7 +24,7 @@ public class InventoryController : MonoBehaviour
         else UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
         RefreshAllSlot();
-                mPointerEventData = new PointerEventData(null);
+        mPointerEventData = new PointerEventData(null);
     }
     public void RefreshAllSlot()
     {

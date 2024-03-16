@@ -10,7 +10,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1002",
@@ -22,7 +23,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1003",
@@ -33,14 +35,15 @@
       "imageFileName": "woodAx",
       "makeResource": [
         1001,
-        1009
+        1010
       ],
       "makeResourceCount": [
         5,
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1004",
@@ -50,15 +53,16 @@
       "value": null,
       "imageFileName": "woodPickAx",
       "makeResource": [
-        1006,
-        1009
+        1001,
+        1010
       ],
       "makeResourceCount": [
         5,
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1005",
@@ -67,10 +71,11 @@
       "damage": "0",
       "value": null,
       "imageFileName": "steelOre",
-      "makeResource": "1006",
+      "makeResource": null,
       "makeResourceCount": null,
       "makeCount": "1",
-      "cookingTime": "15"
+      "cookingTime": "15",
+      "makeList": null
     },
     {
       "id": "1006",
@@ -82,7 +87,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1007",
@@ -93,14 +99,15 @@
       "imageFileName": "steelAx",
       "makeResource": [
         1006,
-        1009
+        1010
       ],
       "makeResourceCount": [
         5,
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1008",
@@ -111,14 +118,15 @@
       "imageFileName": "steelPickAx",
       "makeResource": [
         1006,
-        1009
+        1010
       ],
       "makeResourceCount": [
         5,
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1009",
@@ -129,14 +137,15 @@
       "imageFileName": "steelSword",
       "makeResource": [
         1006,
-        1009
+        1010
       ],
       "makeResourceCount": [
         5,
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1010",
@@ -154,7 +163,8 @@
         1
       ],
       "makeCount": "5",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1011",
@@ -166,7 +176,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1012",
@@ -182,7 +193,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1013",
@@ -195,10 +207,11 @@
         10
       ],
       "imageFileName": "meet",
-      "makeResource": "1014",
+      "makeResource": null,
       "makeResourceCount": null,
       "makeCount": "1",
-      "cookingTime": "10"
+      "cookingTime": "10",
+      "makeList": null
     },
     {
       "id": "1014",
@@ -214,7 +227,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1015",
@@ -230,7 +244,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1016",
@@ -246,7 +261,8 @@
       "makeResource": null,
       "makeResourceCount": null,
       "makeCount": null,
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1017",
@@ -257,14 +273,15 @@
       "imageFileName": "house",
       "makeResource": [
         1001,
-        1009
+        1010
       ],
       "makeResourceCount": [
         50,
         50
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1018",
@@ -284,7 +301,8 @@
         5
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     },
     {
       "id": "1019",
@@ -302,7 +320,11 @@
         10
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": [
+        1007,
+        1009
+      ]
     },
     {
       "id": "1020",
@@ -314,7 +336,16 @@
       "makeResource": "1001",
       "makeResourceCount": "10",
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": [
+        1003,
+        1004,
+        1010,
+        1017,
+        1018,
+        1019,
+        1021
+      ]
     },
     {
       "id": "1021",
@@ -332,7 +363,8 @@
         10
       ],
       "makeCount": "1",
-      "cookingTime": null
+      "cookingTime": null,
+      "makeList": null
     }
   ]
 }

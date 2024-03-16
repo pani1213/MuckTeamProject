@@ -54,9 +54,9 @@ public class FoodPudu : MonoBehaviour, IHitable
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _rigidbody = GetComponent<Rigidbody>();
+
         _animator = GetComponent<Animator>();
-        _rigidbody.useGravity = true;
+    
         StartPosition = transform.position;
         FoodPuduHealth = MaxHealth;
         targetRotation = transform.rotation; // 초기 회전 값
@@ -65,18 +65,18 @@ public class FoodPudu : MonoBehaviour, IHitable
     private void Update()
     {
         // 지면과의 충돌을 확인
-        _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        _isGrounded = Physics.CheckSphere(groundCheck.position, 0.01f, groundMask);
 
-        Vector3 velocity = new Vector3(0, 0, 0);
-
-        // 지면에 있지 않다면 중력 적용
-        if (!_isGrounded)
-        {
-            velocity.y += gravity * Time.deltaTime;
-        }
-
-        _characterController.Move(velocity * Time.deltaTime);
-
+       Vector3 velocity = new Vector3(0, 0, 0);
+       
+       // 지면에 있지 않다면 중력 적용
+       if (!_isGrounded)
+       {
+           velocity.y += gravity * Time.deltaTime;
+       }
+       
+       _characterController.Move(velocity * Time.deltaTime);
+       
         HealthSliderUI.value = (float)FoodPuduHealth / (float)MaxHealth; // 0 ~ 1
 
         /*if (damagedCooldownTimer > 0)

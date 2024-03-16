@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    public Animation _Animation;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            _Animation.Play("OpenChest");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            _Animation.Play("SpinObj");
-        }
 
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.position = transform.position + Vector3.forward * Time.deltaTime;
+        }
     }
 }

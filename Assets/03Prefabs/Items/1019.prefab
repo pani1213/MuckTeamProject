@@ -54,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.297157, y: 2.094122, z: 1.5604993}
-  m_Center: {x: 0.16454916, y: 3.8455384, z: 0.10676085}
+  m_Size: {x: 4.297157, y: 2.1165667, z: 1.5604993}
+  m_Center: {x: 0.16454916, y: 0.8994651, z: 0.10676085}
 --- !u!54 &-431813816756258939
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 5135388840405902060}
   m_Layer: 0
   m_Name: anvilA1
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,7 @@ Transform:
   m_GameObject: {fileID: 4527287736846103811}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.165823, y: 0, z: 0}
+  m_LocalPosition: {x: 10.165823, y: -2.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

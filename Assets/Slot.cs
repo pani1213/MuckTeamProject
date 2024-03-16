@@ -7,6 +7,7 @@ public enum SlotType
     None,
     Item,
     Box,
+    Brazier
 }
 public class Slot : MonoBehaviour
 {

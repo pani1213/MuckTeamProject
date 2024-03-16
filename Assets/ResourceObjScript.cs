@@ -16,10 +16,9 @@ public class ResourceObjScript : MonoBehaviour, IHitable
     public void Hit(DamageInfo damageInfo)
     {
         hp -= damageInfo.Amount;
-        Debug.Log(hp);
+
         if (hp <= 0)
         {
-            Debug.Log($"drop : {JsonParsingManager.instance.resourceDictionary[id].dropItemId.Length}");
             ResourceSpawnManager.instance.spawns[index].isSpawn = false;
 
             DropItems();
@@ -33,14 +32,13 @@ public class ResourceObjScript : MonoBehaviour, IHitable
         {
             int dropPercent = JsonParsingManager.instance.resourceDictionary[id].dropPercentage[i];
 
-            Debug.Log(dropPercent);
             if (UnityEngine.Random.Range(0, 100) < dropPercent)
             {
                 ItemObjectScript item = Instantiate(ItemInfoManager.instance.itemdic[JsonParsingManager.instance.resourceDictionary[id].dropItemId[i]]);
                 item.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);  
                 item.InIt(JsonParsingManager.instance.resourceDictionary[id].dropItemId[i], UnityEngine.Random.Range(JsonParsingManager.instance.resourceDictionary[id].dropItemCountMinRange[i],
                     JsonParsingManager.instance.resourceDictionary[id].dropItemCountMaxRange[i]),ItemType.Item);
-                Debug.Log(item.count);
+                Debug.Log($"{JsonParsingManager.instance.resourceDictionary[id].dropItemCountMinRange[i]} , {JsonParsingManager.instance.resourceDictionary[id].dropItemCountMaxRange[i]}");
             }
         }
     }

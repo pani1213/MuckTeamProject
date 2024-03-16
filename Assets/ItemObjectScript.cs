@@ -8,7 +8,8 @@ public enum ItemType
     Item,
     Object_Onley,
     build,
-    box
+    box,
+    brazier
 }
 public class ItemObjectScript : MonoBehaviour 
 {
@@ -34,13 +35,15 @@ public class ItemObjectScript : MonoBehaviour
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<BoxCollider>().isTrigger = false;
         }
-        if (_itemType == ItemType.box)
+        if (_itemType == ItemType.build || _itemType == ItemType.brazier || _itemType == ItemType.box)
         {
-            gameObject.tag = "Box";
+            if (_itemType == ItemType.box)
+                gameObject.tag = "Box";
+
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<BoxCollider>().isTrigger = true;
         }
-
+      
     }
     public void GetItem()
     {
@@ -48,6 +51,10 @@ public class ItemObjectScript : MonoBehaviour
         {
             ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[id], count);
             gameObject.SetActive(false);
+        }
+        if (Item_type == ItemType.build)
+        {
+            BuildManager.instance.buildController.InIt(id);
         }
     }
 }

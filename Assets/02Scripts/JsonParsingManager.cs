@@ -69,6 +69,7 @@ public class Item
     public int[] makeResourceCount;
     public int makeCount;
     public int cookingTime;
+    public int[] makeList;
 }
 public class InvenItem
 { 

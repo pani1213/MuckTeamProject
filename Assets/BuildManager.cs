@@ -8,6 +8,8 @@ public class BuildManager : Singleton<BuildManager>
     public GameObject[] buildGameobject;
     Dictionary<int, GameObject> buildDic = new Dictionary<int, GameObject>();
     public GameObject currentObj;
+    public BuildController buildController;
+
     public void InIt()
     {
         for (int i = 0; i < buildGameobject.Length; i++)
