@@ -9,21 +9,13 @@ public enum FoodPuduState
 {
     Idle,       // 대기 (어슬렁/빙글빙글 걷기)
     Damaged,    // 공격 당함 (넉백) + 피효과
-    Die         // 사망 (옆으로 넘어짐)
+    Die         // 사망 (뒤집어짐)
 }
 
 public class FoodPudu : MonoBehaviour, IHitable
 {
     private CharacterController _characterController;
     private Animator _animator;
-    private Rigidbody _rigidbody;
-
-    // 중력 값 설정
-    public float gravity = -9.81f;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
-    private bool _isGrounded;
 
     public int FoodPuduHealth;
     public int MaxHealth = 100;
@@ -51,12 +43,12 @@ public class FoodPudu : MonoBehaviour, IHitable
 
     private FoodPuduState _currentState = FoodPuduState.Idle;
 
+    public GameObject bloodEffectPrefab;
+
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
-
         _animator = GetComponent<Animator>();
-    
         StartPosition = transform.position;
         FoodPuduHealth = MaxHealth;
         targetRotation = transform.rotation; // 초기 회전 값
@@ -64,25 +56,8 @@ public class FoodPudu : MonoBehaviour, IHitable
 
     private void Update()
     {
-        // 지면과의 충돌을 확인
-        _isGrounded = Physics.CheckSphere(groundCheck.position, 0.01f, groundMask);
-
-       Vector3 velocity = new Vector3(0, 0, 0);
-       
-       // 지면에 있지 않다면 중력 적용
-       if (!_isGrounded)
-       {
-           velocity.y += gravity * Time.deltaTime;
-       }
-       
-       _characterController.Move(velocity * Time.deltaTime);
-       
         HealthSliderUI.value = (float)FoodPuduHealth / (float)MaxHealth; // 0 ~ 1
 
-        /*if (damagedCooldownTimer > 0)
-        {
-            damagedCooldownTimer -= Time.deltaTime;
-        }*/
 
         // 상태 패턴
         switch (_currentState)
@@ -100,6 +75,7 @@ public class FoodPudu : MonoBehaviour, IHitable
                 break;
         }
     }
+
 
     private void Idle()
     {
@@ -129,7 +105,8 @@ public class FoodPudu : MonoBehaviour, IHitable
             // 시작 위치로 되돌아가는 로직 추가
             Vector3 returnDirection = (StartPosition - transform.position).normalized;
             
-            _characterController.Move(returnDirection * MoveSpeed * Time.deltaTime);
+           _characterController.Move(returnDirection * MoveSpeed * Time.deltaTime);
+
             }
 
     }
@@ -170,25 +147,26 @@ public class FoodPudu : MonoBehaviour, IHitable
         }
 
         // 데미지 입으면 피흘리기
-        //  BloodFactory.Instance.Make(damage.Position, damage.Normal);
+         BloodFactory.Instance.Make(this.transform.position + Vector3.up, damage.Normal,this.gameObject);
 
         FoodPuduHealth -= damage.Amount;
 
-        if (FoodPuduHealth > 0)
+        if (FoodPuduHealth <= 0)
+        {
+            // 체력이 0 이하가 되면 사망 처리
+            _animator.SetTrigger("IdleToDie"); // Idle에서 Die로 직접 전환
+            _currentState = FoodPuduState.Die;
+        }
+        else
         {
             // 데미지 상태로 전환하고 애니메이션 트리거 설정
             _currentState = FoodPuduState.Damaged;
             _animator.SetTrigger("IdleToDamaged");
         }
-        else
-        {
-            // 체력이 0 이하가 되면 사망 처리
-            _animator.SetTrigger("DamagedToDie");
-            _currentState = FoodPuduState.Die;
-        }
 
         damagedCooldownTimer = damagedCooldownDuration;
     }
+
 
     private Coroutine _dieCoroutine;
 
@@ -202,7 +180,7 @@ public class FoodPudu : MonoBehaviour, IHitable
     private IEnumerator Die_Coroutine()
     {
         HealthSliderUI.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         // 죽을 때 아이템 생성
         //ItemObjectFactory.Instance.Make(transform.position);
