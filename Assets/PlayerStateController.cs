@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerStateController : MonoBehaviour
 {
     public Image hp, hungry, stamina;
-
     public void SetHp()
     {
         float PlayerHealth = SurvivalGauge.Instance.PlayerHealth;

@@ -43,8 +43,6 @@ public class Monster : MonoBehaviour, IHitable
     public  float AttackDelay = 1f;  // 공격딜레이
     public const float _rotationSpeed = 100f;
 
-    public float patrolRadius = 10f;
-    public float IDLE_DURATION = 3f;
     private float _idleTimer;
     private Vector3 _randomPosition;
 
@@ -63,11 +61,12 @@ public class Monster : MonoBehaviour, IHitable
     public Material[] skins;
     public Material[] hats;
 
-
     private MonsterState _currentState = MonsterState.Idle;
+    Rigidbody myRigidbody;
     private void Start()
     {
 
+        myRigidbody = GetComponent<Rigidbody>();
         if (SkinnedMeshRenderer != null)
         {
             SkinnedMeshRenderer.material = skins[Random.Range(0, skins.Length)];
@@ -88,10 +87,13 @@ public class Monster : MonoBehaviour, IHitable
         Debug.Log(_target.gameObject.name);
         _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
-     
+        
         Init();
     }
-
+    public void SetOffRigidbody(bool _onAndOff)
+    {
+        myRigidbody.isKinematic = _onAndOff;
+    }
     public void Init()
     {
         _idleTimer = 0f;
@@ -101,7 +103,7 @@ public class Monster : MonoBehaviour, IHitable
     public void Update()
     {
         HealthSliderUI.value = (float)Health / (float)MaxHealth; // 체력바 0 ~ 1
-
+        
         switch (_currentState)
         {
             case MonsterState.Idle:
@@ -223,6 +225,7 @@ public class Monster : MonoBehaviour, IHitable
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
         {
             _attackTimer = 0f;
+           
             //Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
@@ -236,6 +239,7 @@ public class Monster : MonoBehaviour, IHitable
             if (_monsterType == MonsterType.Melee)
             {
                 //MeleeAttack();
+                SetOffRigidbody(false);
                 _animator.SetTrigger("Attack");
             }
             
@@ -245,7 +249,7 @@ public class Monster : MonoBehaviour, IHitable
                 if (FindDistance <= AttackDistance && !IsObstacleBetween())
                 {
                     LongRangeAttack();
-                    //_animator.SetTrigger("LongAttack");
+                    _animator.SetTrigger("LongAttack");
                 }
                 // 아니면 플레이어를 향해 이동
                 else if (FindDistance <= AttackDistance)
@@ -267,7 +271,7 @@ public class Monster : MonoBehaviour, IHitable
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
-
+            SetOffRigidbody(true);
             Debug.Log("때렸다");
 
             transform.LookAt(_target);

@@ -83,7 +83,7 @@ public class PlayerMoveAbility : MonoBehaviour
         if (isGrounded && _yVelocity < 0)
         {
             _isJumping = false;
-            _yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
+            //_yVelocity = -0.5f; // 접지 상태에서는 약간의 중력을 적용하여 플레이어가 바닥에 밀착되도록 함
             JumpRemainCount = JumpMaxCount;
         }
         else
