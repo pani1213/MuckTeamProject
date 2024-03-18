@@ -131,7 +131,7 @@ public class Monster : MonoBehaviour, IHitable
     {
         if (_target != null && Vector3.Distance(_target.position, transform.position) <= FindDistance)
         {
-            //Debug.Log("상태 전환: Idle -> Trace");
+            Debug.Log("상태 전환: Idle -> Trace");
             _animator.SetTrigger("IdleToTrace");
             _currentState = MonsterState.Trace;
         }
@@ -235,7 +235,7 @@ public class Monster : MonoBehaviour, IHitable
         {            
             if (_monsterType == MonsterType.Melee)
             {
-                MeleeAttack();
+                //MeleeAttack();
                 _animator.SetTrigger("Attack");
             }
             
@@ -245,7 +245,7 @@ public class Monster : MonoBehaviour, IHitable
                 if (FindDistance <= AttackDistance && !IsObstacleBetween())
                 {
                     LongRangeAttack();
-                    _animator.SetTrigger("LongAttack");
+                    //_animator.SetTrigger("LongAttack");
                 }
                 // 아니면 플레이어를 향해 이동
                 else if (FindDistance <= AttackDistance)
@@ -269,6 +269,8 @@ public class Monster : MonoBehaviour, IHitable
             _attackTimer = 0f;
 
             Debug.Log("때렸다");
+
+            transform.LookAt(_target);
         }
     }
     
@@ -286,7 +288,7 @@ public class Monster : MonoBehaviour, IHitable
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
-        Vector3 bulletDir = new Vector3(_target.position.x, _target.position.y +1f, _target.position.z) - BulletPoint.position;
+        Vector3 bulletDir = new Vector3(_target.position.x, _target.position.y +2f, _target.position.z) - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
         //Debug.Log(rb.velocity);
 
