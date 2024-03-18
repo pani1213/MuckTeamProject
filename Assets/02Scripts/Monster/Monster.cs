@@ -40,7 +40,8 @@ public class Monster : MonoBehaviour, IHitable
     public float AttackDistance  = 2f;    // 공격범위
     public int Damage            = 10;    // 공격력
     private float _attackTimer   = 0f;    // 공격타임
-    public const float AttackDelay = 1f;  // 공격딜레이
+    public  float AttackDelay = 1f;  // 공격딜레이
+    public const float _rotationSpeed = 100f;
 
     public float patrolRadius = 10f;
     public float IDLE_DURATION = 3f;
@@ -139,8 +140,15 @@ public class Monster : MonoBehaviour, IHitable
     {
 
         Vector3 dir = _target.transform.position - this.transform.position;
+        dir.y = 0f;
         dir.Normalize();
 
+        // 몬스터가 플레이어를 바라보도록 회전
+        if (dir != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
+        }
         // 내비게이션이 접근하는 최소 거리를 공격 가능 거리로 설정
         _navMeshAgent.stoppingDistance = AttackDistance;
 
@@ -160,7 +168,7 @@ public class Monster : MonoBehaviour, IHitable
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
         }
-        transform.LookAt(_target);
+        
     }
     public void Comeback()
     {
@@ -224,11 +232,11 @@ public class Monster : MonoBehaviour, IHitable
         // Attack 상태일 때 N초에 한 번 때리게 딜레이 주기
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= AttackDelay)
-        {
-            _animator.SetTrigger("Attack");
+        {            
             if (_monsterType == MonsterType.Melee)
             {
                 MeleeAttack();
+                _animator.SetTrigger("Attack");
             }
             
             if (_monsterType == MonsterType.LongRange)
@@ -237,6 +245,7 @@ public class Monster : MonoBehaviour, IHitable
                 if (FindDistance <= AttackDistance && !IsObstacleBetween())
                 {
                     LongRangeAttack();
+                    _animator.SetTrigger("LongAttack");
                 }
                 // 아니면 플레이어를 향해 이동
                 else if (FindDistance <= AttackDistance)

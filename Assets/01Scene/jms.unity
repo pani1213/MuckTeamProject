@@ -59277,7 +59277,7 @@ MonoBehaviour:
   - {fileID: 2676405798556200393}
   _monsterpool: []
   PoolSize: 10
-  regenDelay: 1
+  regenDelay: 20
   respawnPoint: {fileID: 0}
 --- !u!4 &1650353352
 Transform:
@@ -76553,11 +76553,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5328378728513587635, guid: 093bb0100bd303d4c95d82b79e45d088, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8878524059375172472, guid: 093bb0100bd303d4c95d82b79e45d088, type: 3}
       propertyPath: m_Name
       value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878524059375172472, guid: 093bb0100bd303d4c95d82b79e45d088, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -76586,9 +76590,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: LongMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 4501678009062745593, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6222032533708879469, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8905544448393455423, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
       propertyPath: m_LocalPosition.x
