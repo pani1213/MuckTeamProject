@@ -19,12 +19,22 @@ public class PlayerStateController : MonoBehaviour
 
     public void SetHungry()
     {
-        hungry.fillAmount = SurvivalGauge.Instance.PlayerHunger * 0.01f;
+        float PlayerHunger = SurvivalGauge.Instance.PlayerHunger;
+        float maxHunger = SurvivalGauge.Instance.Maxhunger;
+
+        float normalizedHunger= Mathf.Clamp(PlayerHunger / maxHunger, 0f, 1f);
+
+        hungry.fillAmount = normalizedHunger;
     }
 
     public void SetStamina()
     {
-        stamina.fillAmount = SurvivalGauge.Instance.Stamina * 0.01f;
+        float PlayerStamina = SurvivalGauge.Instance.Stamina;
+        float maxStamina = SurvivalGauge.Instance.MaxStamina;
+
+        float normalizedStamina = Mathf.Clamp(PlayerStamina / maxStamina, 0f, 1f);
+
+        stamina.fillAmount = normalizedStamina;
     }
 
     private void Update()
