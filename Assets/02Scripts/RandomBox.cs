@@ -20,9 +20,9 @@ public class RandomBox : MonoBehaviour
 {
     public UI_BoxItem UI_BoxItem;
 
-    public Animation animation;
+    public Animation animations;
     public BoxCollider BoxCollider;
-    //public Animator Animator;
+    public Animator _animator;
     public Transform ItemPos;
 
     public GameObject Avocado;
@@ -59,27 +59,26 @@ public class RandomBox : MonoBehaviour
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !isOpened)
         {
-            if (!isOpenChestPlayed) // 열었고
-            {
-                Debug.Log(0);
-                animation.Play("OpenChest");
-                isOpened = true;
-            
-                MakePercent(transform.position);
-                ApplyEffect((BoxItemType)id,(int)JsonParsingManager.instance.boxItemDic[id].value);
-                isOpenChestPlayed = true;
-            }
+            StartCoroutine(PlayAnimationsInOrder());
 
-            else if (isOpenChestPlayed && !animation.isPlaying && !isItemCreated) // 스탯 적용시
-            {
-                if (!animation.IsPlaying("OpenChest"))
-                {
-                    StartCoroutine(Rotate_Coroutine());
+             if (!isOpenChestPlayed) // 열었고
+             {
+                 Debug.Log(0);
+                 //animations.Play("OpenChest");
+                 isOpened = true;
 
-                    // 스탯 적용되는 UI 입력되면 destroy 되도록 추가 예정
-                    isItemCreated = true;
-                }
-            }
+                 MakePercent(transform.position);
+                 ApplyEffect((BoxItemType)id, (int)JsonParsingManager.instance.boxItemDic[id].value);
+                 isOpenChestPlayed = true;
+             }
+
+             else if (isOpenChestPlayed && !animations.isPlaying && !isItemCreated) // 스탯 적용시
+             {
+                 if (!animations.IsPlaying("OpenChest") && !isItemCreated)
+                 {
+                     isItemCreated = true;
+                 }
+             }
 
             RandomBoxRespawn randomBoxRespawn = GetComponentInParent<RandomBoxRespawn>();
             if (randomBoxRespawn != null)
@@ -87,6 +86,20 @@ public class RandomBox : MonoBehaviour
                 randomBoxRespawn.OnBoxDead(); // 사망 알림
             }
         }
+    }
+
+    IEnumerator PlayAnimationsInOrder()
+    {
+        // "OpenChest" 애니메이션 재생
+        animations.Play("OpenChest");
+        // 첫 번째 애니메이션의 길이만큼 대기
+        yield return new WaitForSeconds(animations["OpenChest"].length);
+
+        // "SpinObj" 애니메이션 재생
+        animations.Play("SpinObj");
+        // 필요한 경우 두 번째 애니메이션의 길이만큼 추가로 대기할 수 있습니다.
+         yield return new WaitForSeconds(animations["SpinObj"].length);
+
     }
 
     public void Reinitialize()
@@ -98,13 +111,13 @@ public class RandomBox : MonoBehaviour
         }
 
         // 애니메이션 초기화
-        AnimationState state = animation["OpenChest"];
+        AnimationState state = animations["OpenChest"];
         if (state != null)
         {
             state.time = 0; // 첫 프레임으로 시간을 설정
-            animation.Play("OpenChest"); // 애니메이션을 재생 - 이 때 첫 프레임에서 시작
-            animation.Sample(); // 현재 애니메이션 상태를 적용
-            animation.Stop(); // 애니메이션을 즉시 정지시켜 첫 프레임에서 멈춤
+            animations.Play("OpenChest"); // 애니메이션을 재생 - 이 때 첫 프레임에서 시작
+            animations.Sample(); // 현재 애니메이션 상태를 적용
+            animations.Stop(); // 애니메이션을 즉시 정지시켜 첫 프레임에서 멈춤
         }
 
         // 초기화 후 상태 설정
@@ -130,15 +143,6 @@ public class RandomBox : MonoBehaviour
             isPlayerNear = false;
         }
     }
-
-    private IEnumerator Rotate_Coroutine()
-    {
-        // todo. 스핀 애니메이션 동작하게끔
-        animation.Play("SpinObj");
-        yield return new WaitForSeconds(2f);
-
-    }
-
 
     public void MakePercent(Vector3 position)
     {
