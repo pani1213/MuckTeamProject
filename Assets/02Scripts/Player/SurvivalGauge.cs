@@ -166,9 +166,11 @@ public class SurvivalGauge : MonoBehaviour, IHitable
                 _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
             }
         }
-        // if(소비 아이템을 먹었을 때)
+        // if(소비 아이템을 먹었을 때) // **수정해야할 점 (배고픔 0 되었다가 다시 차도 속도느려진다함 코드수정필요)
         {
             //_isStamina = true;
+
+            // 여긴 이미 구현완료
             //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 증가
             //_hungerTimer -= 아이템 성능; // 아이템 성능만큼 허기 타이머 감소
         }
