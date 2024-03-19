@@ -2,12 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CreateButtonSlot : MonoBehaviour
 {
     public int makeId;
     List<int> indexs;
     public Image images;
+    public GameObject TextBubble;
+    public Text itemCountText;
+
+    [SerializeField]
+    ContentSizeFitter csf;
+    public void PointerEnter()
+    {
+        itemCountText.text = GetItemCountText();
+        TextBubble.SetActive(true);
+        TextBubble.transform.position = new Vector3(gameObject.transform.position.x-150, gameObject.transform.position.y-150, gameObject.transform.position.z);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)csf.transform);
+    }
+    public void PointerExit()
+    {
+        TextBubble.SetActive(false);
+    }
     public void ButtonAction_CreateButtonSlot()
     {
         indexs= new List<int>();
@@ -36,5 +54,18 @@ public class CreateButtonSlot : MonoBehaviour
         }
         else
             Debug.Log("개수부족");
+    }
+    private string GetItemCountText()
+    {
+        string temp = "";
+        Item item = JsonParsingManager.instance.ItemDic[makeId];
+        for (int i = 0; i < item.makeResource.Length; i++)
+        {
+
+            temp += $"{JsonParsingManager.instance.ItemDic[item.makeResource[i]].name} : {item.makeResourceCount[i]}";
+            if(i+1 <= item.makeResource.Length-1)
+            temp += "\n";
+        }
+        return temp;
     }
 }

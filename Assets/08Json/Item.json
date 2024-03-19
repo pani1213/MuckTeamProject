@@ -12,7 +12,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": "15"
+      "fireTime": "15",
+      "type": null
     },
     {
       "id": "1002",
@@ -26,7 +27,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "3"
     },
     {
       "id": "1003",
@@ -46,7 +48,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "0"
     },
     {
       "id": "1004",
@@ -66,7 +69,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "1"
     },
     {
       "id": "1005",
@@ -80,7 +84,8 @@
       "makeCount": "1",
       "cookingTime": "15",
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1006",
@@ -94,7 +99,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1007",
@@ -114,7 +120,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "0"
     },
     {
       "id": "1008",
@@ -134,7 +141,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "1"
     },
     {
       "id": "1009",
@@ -154,7 +162,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": "2"
     },
     {
       "id": "1010",
@@ -174,7 +183,8 @@
       "makeCount": "5",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1011",
@@ -188,7 +198,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": "60"
+      "fireTime": "60",
+      "type": null
     },
     {
       "id": "1012",
@@ -206,7 +217,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1013",
@@ -224,7 +236,8 @@
       "makeCount": "1",
       "cookingTime": "10",
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1014",
@@ -242,7 +255,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1015",
@@ -260,7 +274,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1016",
@@ -278,7 +293,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1017",
@@ -298,7 +314,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1018",
@@ -320,7 +337,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1019",
@@ -343,7 +361,8 @@
         1007,
         1009
       ],
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1020",
@@ -365,7 +384,8 @@
         1019,
         1021
       ],
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1021",
@@ -385,7 +405,8 @@
       "makeCount": "1",
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1022",
@@ -399,7 +420,8 @@
       "makeCount": null,
       "cookingTime": null,
       "makeList": null,
-      "fireTime": null
+      "fireTime": null,
+      "type": null
     }
   ]
 }
