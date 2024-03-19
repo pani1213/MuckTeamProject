@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerHand : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class PlayerHand : MonoBehaviour
                 if (hit.collider.CompareTag("BoxItem"))
                 {
                     Debug.Log("boxItem get");
-                    hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
+                    //hit.collider.gameObject.GetComponent<RandomBox>().GetItem();
                 }
                 if (hit.collider.CompareTag("InvenBox"))
                 {

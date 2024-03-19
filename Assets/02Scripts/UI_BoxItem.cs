@@ -18,6 +18,10 @@ public class UI_BoxItem : MonoBehaviour
     public GameObject backgroundImage;
     public TextMeshProUGUI SituationText;
 
+    private float textVisibleDuration = 3f; // 텍스트가 보여질 시간
+    private float textVisibleTimer = 0; // 타이머
+    private bool isTextVisible = false; // 텍스트가 현재 보이는지 여부
+
     public TextMeshProUGUI AvocadoCountText;
     public TextMeshProUGUI BananaCountText;
     public TextMeshProUGUI BreadCountText;
@@ -81,7 +85,20 @@ public class UI_BoxItem : MonoBehaviour
             image.SetActive(false);
         }
     }
-   
+
+    void Update()
+    {
+        if (isTextVisible)
+        {
+            textVisibleTimer += Time.deltaTime;
+            if (textVisibleTimer >= textVisibleDuration)
+            {
+                SituationText.gameObject.SetActive(false);
+                isTextVisible = false;
+                textVisibleTimer = 0; // 타이머 리셋
+            }
+        }
+    }
     public void ShowBoxItem(BoxItemType itemType)
     {
         // 아이템 개수 업데이트
@@ -128,12 +145,16 @@ public class UI_BoxItem : MonoBehaviour
     }
     public void Refresh_TextUI(int _id)
     {
-        SituationText.gameObject.SetActive(true);
-        Debug.Log(_id);
-        Debug.Log(JsonParsingManager.instance.boxItemDic[_id].descript);
-        Debug.Log(JsonParsingManager.instance.boxItemDic[_id].value);
+        // Debug.Log(_id);
+        //Debug.Log(JsonParsingManager.instance.boxItemDic[_id].descript);
+        //Debug.Log(JsonParsingManager.instance.boxItemDic[_id].value);
         SituationText.text = string.Format(JsonParsingManager.instance.boxItemDic[_id].descript, JsonParsingManager.instance.boxItemDic[_id].value);
+        SituationText.gameObject.SetActive(true);
+        isTextVisible = true;
+        textVisibleTimer = 0; // 타이머 시작
     }
+
+   
 
     // backgroundImage 크기 조절 함수
     private void AdjustBackgroundSize()

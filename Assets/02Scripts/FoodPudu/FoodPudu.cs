@@ -54,6 +54,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         StartPosition = transform.position;
         FoodPuduHealth = MaxHealth;
         targetRotation = transform.rotation; // 초기 회전 값
+
     }
 
 
@@ -217,7 +218,6 @@ public class FoodPudu : MonoBehaviour, IHitable
         gameObject.SetActive(true); // Pudu 활성화
 
         HealthSliderUI.gameObject.SetActive(true); // HealthSliderUI를 활성화
-
 
     }
 

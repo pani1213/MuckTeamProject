@@ -24,7 +24,7 @@ public class PuduGroup : MonoBehaviour
         deadPuduCount++;
         if (deadPuduCount >= pudus.Length) // 모든 Pudu가 죽었는지 확인
         {
-            StartCoroutine(RespawnPudusAfterDelay(3)); 
+            StartCoroutine(RespawnPudusAfterDelay(10)); 
         }
     }
     public IEnumerator RespawnPudusAfterDelay(float delay)
