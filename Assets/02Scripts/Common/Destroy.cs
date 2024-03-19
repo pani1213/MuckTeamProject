@@ -8,6 +8,7 @@ public class Destroy : MonoBehaviour
         {
             PoolingManager.instance.ReturnToPool(other.gameObject);
         }
+       
     }
 
 }

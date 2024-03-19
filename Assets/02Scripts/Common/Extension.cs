@@ -22,4 +22,15 @@ public static class Extension
             return true;
         return false;
     }
+    /// <summary>
+    /// Return the values of two integers from 0 to 1
+    /// </summary>
+    /// <param name="_min"></param>
+    /// <param name="_max"></param>
+    /// <returns></returns>
+    public static float ReverseMapRange(int _min, int _max,int _targetVal)
+    {
+        float ratio = (float)(_targetVal - _min) / (_max - _min);
+        return ratio;
+    }
 }

@@ -11,17 +11,28 @@ public class GameTimeManager : Singleton<GameTimeManager>
     public Material[] skyBox;
     bool isBlanderAction = false;
     int skyBoxType = 0;
+    public static bool isNight = false;
 
     private void Update()
     {
         if (!isBlanderAction)
         {
             isBlanderAction = true;
-            StartCoroutine(BlanderChange_Coroutine(skyBox[skyBoxType+0], skyBox[skyBoxType+1],5));
+            StartCoroutine(BlanderChange_Coroutine(skyBox[skyBoxType+0], skyBox[skyBoxType+1]));
         }
     }
-    IEnumerator BlanderChange_Coroutine(Material _one, Material _two, float _second)
+    IEnumerator BlanderChange_Coroutine(Material _one, Material _two)
     {
+        if (skyBoxType == 0)
+            yield return new WaitForSeconds(50);
+        if (skyBoxType == 1) 
+            yield return new WaitForSeconds(10);
+        if (skyBoxType == 2)
+        { 
+            isNight = true;
+            yield return new WaitForSeconds(50);
+            isNight = false;
+        }
         Blender.skyBox1 = _one;
         Blender.skyBox2 = _two;
         Blender.BindTextures();
@@ -31,7 +42,6 @@ public class GameTimeManager : Singleton<GameTimeManager>
             Blender.blend += Time.deltaTime * 0.3f;
             yield return null;
         }
-        yield return new WaitForSeconds(_second);
         if (skyBoxType == 2) skyBoxType = 0;
         else skyBoxType++;
         isBlanderAction = false;

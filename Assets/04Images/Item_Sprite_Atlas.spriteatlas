@@ -66,6 +66,7 @@ SpriteAtlas:
     - 8678e1f9f238b3142a6d192c7affcc71: 21300000
     - 9de5736a92c34f1409a62eb25b14435d: 21300000
     - b655f93c2a62a444e967009d5ba21c6a: 21300000
+    - 3a412bdc98277ba46aeda017645aa94c: 21300000
     - 88fb6ead0cb622f42802996cc45ec039: 21300000
     - ef9cdafdacef475419ebae1ee648adf6: 21300000
     - 9462d30ef1dcb93429bdf1cc75cb0a8a: 21300000
@@ -90,6 +91,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8678e1f9f238b3142a6d192c7affcc71, type: 3}
   - {fileID: 21300000, guid: 9de5736a92c34f1409a62eb25b14435d, type: 3}
   - {fileID: 21300000, guid: b655f93c2a62a444e967009d5ba21c6a, type: 3}
+  - {fileID: 21300000, guid: 3a412bdc98277ba46aeda017645aa94c, type: 3}
   - {fileID: 21300000, guid: 88fb6ead0cb622f42802996cc45ec039, type: 3}
   - {fileID: 21300000, guid: ef9cdafdacef475419ebae1ee648adf6, type: 3}
   - {fileID: 21300000, guid: 9462d30ef1dcb93429bdf1cc75cb0a8a, type: 3}
@@ -111,8 +113,9 @@ SpriteAtlas:
   - steelSword
   - stone
   - redMurshRoom
-  - WoodPickAx
+  - woodPickAx
   - steelOre
+  - coin
   - coal
   - wood
   - steelBar

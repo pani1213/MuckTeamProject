@@ -70,6 +70,7 @@ public class Item
     public int makeCount;
     public int cookingTime;
     public int[] makeList;
+    public int fireTime;
 }
 public class InvenItem
 { 
