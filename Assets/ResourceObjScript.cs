@@ -16,7 +16,7 @@ public class ResourceObjScript : MonoBehaviour, IHitable
     public void Hit(DamageInfo damageInfo)
     {
         hp -= damageInfo.Amount;
-
+        Debug.Log(hp);
         if (hp <= 0)
         {
             ResourceSpawnManager.instance.spawns[index].isSpawn = false;
@@ -38,7 +38,6 @@ public class ResourceObjScript : MonoBehaviour, IHitable
                 item.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);  
                 item.InIt(JsonParsingManager.instance.resourceDictionary[id].dropItemId[i], UnityEngine.Random.Range(JsonParsingManager.instance.resourceDictionary[id].dropItemCountMinRange[i],
                     JsonParsingManager.instance.resourceDictionary[id].dropItemCountMaxRange[i]),ItemType.Item);
-                Debug.Log($"{JsonParsingManager.instance.resourceDictionary[id].dropItemCountMinRange[i]} , {JsonParsingManager.instance.resourceDictionary[id].dropItemCountMaxRange[i]}");
             }
         }
     }

@@ -14,10 +14,11 @@ public class BuildController : MonoBehaviour
     private int id;
     public void InIt(int _id)
     {
+        id = _id;
         gameObject.SetActive(true);
+        titleText_UI.text = JsonParsingManager.instance.ItemDic[id].name;
         ItemInfoManager.instance.inventoryController.InIt();
         buttonSlots = new List<CreateButtonSlot>();
-        id = _id;
         for (int i = 0; i < gridObject.transform.childCount; i++)
             Destroy(gridObject.transform.GetChild(i).gameObject);
         

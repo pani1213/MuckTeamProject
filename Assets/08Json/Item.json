@@ -11,7 +11,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": "15",
+      "type": null
     },
     {
       "id": "1002",
@@ -24,7 +26,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "3"
     },
     {
       "id": "1003",
@@ -43,7 +47,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "0"
     },
     {
       "id": "1004",
@@ -62,7 +68,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "1"
     },
     {
       "id": "1005",
@@ -75,7 +83,9 @@
       "makeResourceCount": null,
       "makeCount": "1",
       "cookingTime": "15",
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1006",
@@ -88,7 +98,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1007",
@@ -107,7 +119,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "0"
     },
     {
       "id": "1008",
@@ -126,7 +140,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "1"
     },
     {
       "id": "1009",
@@ -145,7 +161,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": "2"
     },
     {
       "id": "1010",
@@ -164,7 +182,9 @@
       ],
       "makeCount": "5",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1011",
@@ -177,7 +197,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": "60",
+      "type": null
     },
     {
       "id": "1012",
@@ -194,7 +216,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1013",
@@ -211,7 +235,9 @@
       "makeResourceCount": null,
       "makeCount": "1",
       "cookingTime": "10",
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1014",
@@ -228,7 +254,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1015",
@@ -245,7 +273,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1016",
@@ -262,7 +292,9 @@
       "makeResourceCount": null,
       "makeCount": null,
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1017",
@@ -281,7 +313,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1018",
@@ -302,7 +336,9 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1019",
@@ -324,7 +360,9 @@
       "makeList": [
         1007,
         1009
-      ]
+      ],
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1020",
@@ -345,7 +383,9 @@
         1018,
         1019,
         1021
-      ]
+      ],
+      "fireTime": null,
+      "type": null
     },
     {
       "id": "1021",
@@ -364,7 +404,24 @@
       ],
       "makeCount": "1",
       "cookingTime": null,
-      "makeList": null
+      "makeList": null,
+      "fireTime": null,
+      "type": null
+    },
+    {
+      "id": "1022",
+      "name": "coin",
+      "category": "gold",
+      "damage": "0",
+      "value": null,
+      "imageFileName": "coin",
+      "makeResource": null,
+      "makeResourceCount": null,
+      "makeCount": null,
+      "cookingTime": null,
+      "makeList": null,
+      "fireTime": null,
+      "type": null
     }
   ]
 }

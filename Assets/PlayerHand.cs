@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerHand : MonoBehaviour
 {
+    public Text informationText_UI;
     public Animator animator;
     public BoxCollider BoxCollider;
     public GameObject AttachPosition;
@@ -49,7 +50,7 @@ public class PlayerHand : MonoBehaviour
                 {
                     FoodActionCoolTime(1);
                 }
-                else if (AttachItem.item.category == "tool")
+                else if (AttachItem.item.category == "tool" || AttachItem.item.type == 3)
                 {
                     StartCoroutine(Attack_Coroutione());
                 }
@@ -57,20 +58,26 @@ public class PlayerHand : MonoBehaviour
         }
         if (hit.collider == null)
         {
+            informationText_UI.text = "";
         }
         else
         {
+            if (hit.collider.CompareTag("Item"))
+                informationText_UI.text = "Prees 'E' key Get Item";
+            else if (hit.collider.CompareTag("InvenBox"))
+                informationText_UI.text = "Prees 'E' key Open the Box";
+            else
+                informationText_UI.text = "";
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (hit.collider.CompareTag("Item"))
                 {
-                    Debug.Log("item get");
                     hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
                 }
                 if (hit.collider.CompareTag("BoxItem"))
                 {
                     Debug.Log("boxItem get");
-                    //hit.collider.gameObject.GetComponent<RandomBox>().GetItem();
+                    hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
                 }
                 if (hit.collider.CompareTag("InvenBox"))
                 {
@@ -92,11 +99,13 @@ public class PlayerHand : MonoBehaviour
                         itemObj.InIt(ItemType.box);
                         itemObj.GetComponent<BoxObjectScript>().InIt();
                     }
-                    if (AttachItem.item.id == 1020)
+                    if (AttachItem.item.id == 1020 || AttachItem.item.id == 1019)
                         itemObj.InIt(ItemType.build);
-                    if (AttachItem.item.id == 1019)
-                        itemObj.InIt(ItemType.build);
-                    
+                    if (AttachItem.item.id == 1021)
+                    { 
+                        itemObj.InIt(ItemType.brazier);
+                        itemObj.GetComponent<BrazierObject>().InIt();
+                    }
 
                     itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
                     if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
@@ -155,6 +164,8 @@ public class PlayerHand : MonoBehaviour
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
+
+           
             }
         }
         else

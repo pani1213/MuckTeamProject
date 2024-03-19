@@ -59,8 +59,7 @@ public class InventoryController : MonoBehaviour
 
         if (results.Count <= 0)
             return;
-
-        Debug.Log(results[0].gameObject.name);
+      //  Debug.Log($" start : {results[0].gameObject.name}");
         if (results[0].gameObject.TryGetComponent<Slot>(out _currentSeletItemSlot))
         {
             _currentSeletItemSlot.Empty_UI();
@@ -70,16 +69,20 @@ public class InventoryController : MonoBehaviour
                 DragSlot.dragInven = ItemInfoManager.instance.itemInventory[_currentSeletItemSlot.slotIndex];
             }
             else if (_currentSeletItemSlot.slotType_UI == SlotType.Box)
-            { 
+            {
                 _currentSeletItemSlot.InvenItem = ItemInfoManager.instance.boxDictionary[_currentSeletItemSlot.id][_currentSeletItemSlot.slotIndex];
                 DragSlot.dragInven = ItemInfoManager.instance.boxDictionary[_currentSeletItemSlot.id][_currentSeletItemSlot.slotIndex];
             }
-
+            else if (_currentSeletItemSlot.slotType_UI == SlotType.Brazier)
+            {
+                _currentSeletItemSlot.InvenItem = BrazierManager.instance.GetBrazierDic()[_currentSeletItemSlot.slotIndex];
+                DragSlot.dragInven = BrazierManager.instance.GetBrazierDic()[_currentSeletItemSlot.slotIndex];
+            }
             DragSlot.InIt_DragSlot();
         }
         else
             Debug.Log("result에서 itemSlot을 찾을수 없음");
-
+        
     }
 
     //event_trigger
@@ -103,15 +106,30 @@ public class InventoryController : MonoBehaviour
         }
         if (results[0].gameObject.TryGetComponent<Slot>(out _dropItemSlot))
         {
-            Debug.Log(results[0].gameObject.name);
+           // Debug.Log($" end : {results[0].gameObject.name}");
+      
+            
             if (DragSlot.dragInven != null)
             {
                 if (_dropItemSlot.slotType_UI == SlotType.Item)
                     _dropItemSlot.InvenItem = ItemInfoManager.instance.itemInventory[_dropItemSlot.slotIndex];
                 else if (_dropItemSlot.slotType_UI == SlotType.Box)
                     _dropItemSlot.InvenItem = ItemInfoManager.instance.boxDictionary[_dropItemSlot.id][_dropItemSlot.slotIndex];
+                else if (_dropItemSlot.slotType_UI == SlotType.Brazier)
+                    _dropItemSlot.InvenItem = BrazierManager.instance.GetBrazierDic()[_dropItemSlot.slotIndex];
 
-                ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
+
+                if (_currentSeletItemSlot.InvenItem.item != null && _dropItemSlot.InvenItem.item != null &&
+                    _currentSeletItemSlot.InvenItem.item.id == _dropItemSlot.InvenItem.item.id)
+                {
+                    Debug.Log("합침");
+                    ItemInfoManager.instance.ItemMerge(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
+                }
+                else
+                { 
+                    Debug.Log("바꿈");
+                    ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
+                }
                 if (_currentSeletItemSlot != null)
                     _currentSeletItemSlot.Refresh_SlotUI();
                 _dropItemSlot.Refresh_SlotUI();

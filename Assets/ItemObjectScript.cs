@@ -38,12 +38,11 @@ public class ItemObjectScript : MonoBehaviour
         if (_itemType == ItemType.build || _itemType == ItemType.brazier || _itemType == ItemType.box)
         {
             if (_itemType == ItemType.box)
-                gameObject.tag = "Box";
+                gameObject.tag = "InvenBox";
 
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<BoxCollider>().isTrigger = true;
         }
-      
     }
     public void GetItem()
     {
@@ -55,6 +54,10 @@ public class ItemObjectScript : MonoBehaviour
         if (Item_type == ItemType.build)
         {
             BuildManager.instance.buildController.InIt(id);
+        }
+        if (Item_type == ItemType.brazier)
+        {
+            GetComponent<BrazierObject>().OpenBrazierUI();
         }
     }
 }

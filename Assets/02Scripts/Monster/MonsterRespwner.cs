@@ -10,7 +10,6 @@ public class MonsterRespawner : MonoBehaviour
     public float maxSpawnDistance = 50f; // 플레이어로부터 최대 소환 거리
     public float yOffset = 1f; // 몬스터가 생성될 높이 조정값
 
-    public GameObject mapBorder; // 맵 외곽을 나타내는 게임 오브젝트
     void Start()
     {
         // PoolingManager 인스턴스를 가져옴
@@ -29,9 +28,11 @@ public class MonsterRespawner : MonoBehaviour
 
     IEnumerator SpawnMonstersRoutine()
     {
+        Debug.Log("반복문 시작");
         // 무한 반복하면서 몬스터 소환
         while (true)
         {
+        Debug.Log("반복문 돌아가는중");
             // 플레이어 위치가 설정되어 있을 때만 몬스터를 생성함
             if (playerTransform != null)
             {
@@ -47,17 +48,32 @@ public class MonsterRespawner : MonoBehaviour
 
                 // 랜덤하게 몬스터 타입 선택
                 MonsterType monsterType = (MonsterType)Random.Range(0, 2);
-                Debug.Log(monsterType);
+                //Debug.Log(monsterType);
 
                 // Make 메서드를 호출하여 몬스터 생성
                 poolingManager.Make(monsterType, spawnPosition);
-
-
             }
 
             // 적절한 딜레이 후에 다음 몬스터 소환
             yield return new WaitForSeconds(poolingManager.regenDelay);
         }
+    }
+    // 몬스터가 죽었을 때 호출되는 함수
+    public void OnMonsterDeath()
+    {
+        // 몬스터가 죽으면 일정 시간 후에 다시 소환되도록 코루틴 호출
+        StartCoroutine(RespawnAfterDelay());
+    }
+
+    IEnumerator RespawnAfterDelay()
+    {
+        Debug.Log("5초 시작");
+        // 죽은 몬스터를 다시 소환하는 딜레이 설정
+        yield return new WaitForSeconds(5f); // 예: 5초 후에 다시 소환
+        Debug.Log("5초 끝");
+
+        // 다시 소환하기 위해 몬스터를 생성하는 함수 호출
+        StartCoroutine(SpawnMonstersRoutine());
     }
 }
 

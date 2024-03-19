@@ -61,11 +61,13 @@ public class Monster : MonoBehaviour, IHitable
     public Material[] skins;
     public Material[] hats;
 
+    public MonsterRespawner monsterRespawner;
+
     private MonsterState _currentState = MonsterState.Idle;
     Rigidbody myRigidbody;
     private void Start()
     {
-
+        
         myRigidbody = GetComponent<Rigidbody>();
         if (SkinnedMeshRenderer != null)
         {
@@ -89,10 +91,6 @@ public class Monster : MonoBehaviour, IHitable
         StartPosition = transform.position;
         
         Init();
-    }
-    public void SetOffRigidbody(bool _onAndOff)
-    {
-        myRigidbody.isKinematic = _onAndOff;
     }
     public void Init()
     {
@@ -239,7 +237,6 @@ public class Monster : MonoBehaviour, IHitable
             if (_monsterType == MonsterType.Melee)
             {
                 //MeleeAttack();
-                SetOffRigidbody(false);
                 _animator.SetTrigger("Attack");
             }
             
@@ -271,7 +268,6 @@ public class Monster : MonoBehaviour, IHitable
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
-            SetOffRigidbody(true);
             Debug.Log("때렸다");
 
             transform.LookAt(_target);
@@ -342,18 +338,20 @@ public class Monster : MonoBehaviour, IHitable
         if (Health <= 0)
         {
             _animator.SetTrigger("Die");
-            _currentState = MonsterState.Die;            
+            _currentState = MonsterState.Die;
+           // monsterRespawner.OnMonsterDeath();
         }
         else
         {
             // 넉백 상태로 전환
-            _animator.SetTrigger("Damage"); // 넉백 애니메이션 실행
+            _animator.SetTrigger("Damaged"); // 넉백 애니메이션 실행
             _currentState = MonsterState.Damaged;
         }
     }
     public void Die()
     { 
         gameObject.SetActive(false);
+        PoolingManager.instance.ReturnToPool(gameObject);
     }
 
 

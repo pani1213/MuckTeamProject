@@ -64,7 +64,6 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
     // 인벤토리 요소 스왑 (전체스왑)
     public void InvenSwap(InvenItem invenItemA, InvenItem invenItemB)
     {
-
         InvenItem tempInve = new InvenItem() { item = null, count = 0};
         if (invenItemA != null)
         {
@@ -83,6 +82,19 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         invenItemB.item = tempInve.item;
         invenItemB.count = tempInve.count;
 
+    }
+    public void ItemMerge(InvenItem startInven, InvenItem dropInven)
+    {
+    
+            if (startInven.item.id == dropInven.item.id)
+            { 
+                dropInven.count += startInven.count;
+
+                startInven.item = null;
+                startInven.count = 0;
+                startInven = null;
+            }
+      
     }
     /// <summary>
     /// full item return null
