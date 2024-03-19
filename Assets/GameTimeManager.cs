@@ -12,7 +12,8 @@ public class GameTimeManager : Singleton<GameTimeManager>
     bool isBlanderAction = false;
     int skyBoxType = 0;
     public static bool isNight = false;
-
+    public float morning;
+    public float sunsset;
     private void Update()
     {
         if (!isBlanderAction)
@@ -24,13 +25,13 @@ public class GameTimeManager : Singleton<GameTimeManager>
     IEnumerator BlanderChange_Coroutine(Material _one, Material _two)
     {
         if (skyBoxType == 0)
-            yield return new WaitForSeconds(50);
+            yield return new WaitForSeconds(morning);
         if (skyBoxType == 1) 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(sunsset);
         if (skyBoxType == 2)
         { 
             isNight = true;
-            yield return new WaitForSeconds(50);
+            yield return new WaitForSeconds(morning);
             isNight = false;
         }
         Blender.skyBox1 = _one;
