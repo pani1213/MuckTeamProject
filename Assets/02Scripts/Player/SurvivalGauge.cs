@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
 public class SurvivalGauge : MonoBehaviour, IHitable 
@@ -21,6 +22,9 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public int Defense = 0;        // 방어력
     public bool hasRegenApplied = false; 
     public int RegenAmount = 1;
+    public Image damageEffectUI; // Inspector에서 할당
+    public float damageEffectDuration = 1.0f; // 데미지 효과 지속 시간
+    public CameraShake cameraShake;
 
     public bool hasLifesteal = false;
     public float lifestealPercentage = 0.1f;
@@ -66,6 +70,13 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         Stamina = MaxStamina;
         float MoveSpeed = PlayerMoveAbility.MoveSpeed;
 
+        damageEffectUI.enabled = false;
+        GameObject cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+        if (cameraObject != null)
+        {
+            cameraShake = cameraObject.GetComponent<CameraShake>();
+        }
+
     }
     void Update()
     {
@@ -95,6 +106,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
+        StartCoroutine(DamageEffectCoroutine());
 
 
         if (PlayerHealth <= 0)
@@ -112,7 +124,35 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             uiOptionPopup.ShowGameOver();
         }
     }
-    
+
+    private IEnumerator DamageEffectCoroutine()
+    {
+        float time = 0;
+        float maxAlpha = 0.4f;
+        damageEffectUI.enabled = true;
+
+        while (time < damageEffectDuration)
+        {
+            // 데미지 효과 중 알파 값을 점점 증가시킴
+            float alpha = Mathf.Lerp(0, maxAlpha, time / damageEffectDuration);
+            damageEffectUI.color = new Color(1, 0, 0, alpha);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 카메라 흔들림 시작
+        if (cameraShake != null)
+        {
+            cameraShake.Shake();
+        }
+
+
+        // 데미지 효과 종료 후 알파 값을 다시 0으로 설정
+        damageEffectUI.color = new Color(1, 0, 0, 0);
+        damageEffectUI.enabled = false;
+
+    }
+
     private void FastMove()
     {
         if (!_characterController) return;

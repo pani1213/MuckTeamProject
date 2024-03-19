@@ -334,6 +334,9 @@ MonoBehaviour:
   Defense: 0
   hasRegenApplied: 0
   RegenAmount: 1
+  damageEffectUI: {fileID: 0}
+  damageEffectDuration: 1
+  cameraShake: {fileID: 0}
   hasLifesteal: 0
   lifestealPercentage: 0.1
   tombstonePrefab: {fileID: 1040789871502720, guid: 120be0bd5d559974cb0f19fa90521adf, type: 3}
@@ -360,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27a1fb83411ff34aaa836f5d969a03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  informationText_UI: {fileID: 0}
   animator: {fileID: 6323374546401193284}
   BoxCollider: {fileID: 1139799562617934153}
   AttachPosition: {fileID: 2470130792854479653}
@@ -392,7 +396,7 @@ Transform:
   m_GameObject: {fileID: 5175517730374048061}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.71, z: 0}
+  m_LocalPosition: {x: 0, y: 1.7099999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
