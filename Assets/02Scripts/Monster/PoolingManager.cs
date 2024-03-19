@@ -21,7 +21,9 @@ public class PoolingManager : Singleton<PoolingManager>
             {
                 GameObject monsters = Instantiate(prefab);
                 monsters.SetActive(false);
+                Monster monsterComponent = monsters.GetComponent<Monster>();
                 _monsterpool.Add(monsters.GetComponent<Monster>());
+
             }
         }
     }
@@ -49,7 +51,7 @@ public class PoolingManager : Singleton<PoolingManager>
             monster.transform.position = position;
             monster.Init();
             monster.gameObject.SetActive(true);
-           
+           // Debug.Log(monster.name);
 
         }
         else
@@ -59,11 +61,13 @@ public class PoolingManager : Singleton<PoolingManager>
             {
                 obj = Instantiate(MonsterPrefab[0]);
                 obj.transform.position = position;
+                obj.SetActive(true);
             }
             else
             {
                 obj = Instantiate(MonsterPrefab[1]);
                 obj.transform.position = position;
+                obj.SetActive(true);
             }
             _monsterpool.Add(obj.GetComponent<Monster>());
         }

@@ -10,7 +10,15 @@ public class PlayerAttackRange : MonoBehaviour
     {
         if (PlayerHand.AttachItem != null && (PlayerHand.AttachItem.item.category == "tool" || PlayerHand.AttachItem.item.id == 1002) && other.CompareTag("Monster"))
         {
-            other.GetComponent<Monster>().Hit(new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage)));
+            Monster monster = null;
+            if (other.TryGetComponent<Monster>(out monster))
+            { 
+                monster.Hit(new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage)));
+            }
+            else
+            {
+                monster.transform.parent.GetComponent<Monster>().Hit(new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage)));
+            }
             SurvivalGauge.Instance.PlayerHealth += (int)((SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage) * SurvivalGauge.Instance.lifestealPercentage);
         }
         if (other.CompareTag("Boss"))
