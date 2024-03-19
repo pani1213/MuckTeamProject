@@ -50,7 +50,7 @@ public class PlayerHand : MonoBehaviour
                 {
                     FoodActionCoolTime(1);
                 }
-                else if (AttachItem.item.category == "tool")
+                else if (AttachItem.item.category == "tool" || AttachItem.item.type == 3)
                 {
                     StartCoroutine(Attack_Coroutione());
                 }
@@ -164,6 +164,8 @@ public class PlayerHand : MonoBehaviour
             obj.GetComponent<Rigidbody>().useGravity = false;
             obj.GetComponent<BoxCollider>().isTrigger = true;
             obj.layer = 2;
+
+           
             }
         }
         else

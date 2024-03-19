@@ -50,6 +50,7 @@ public class Resources
     public int[] dropItemCountMinRange;
     public int[] dropItemCountMaxRange;
     public int[] dropPercentage;
+    public int type;
 }
 [Serializable]
 public class Items
@@ -71,6 +72,7 @@ public class Item
     public int cookingTime;
     public int[] makeList;
     public int fireTime;
+    public int type;
 }
 public class InvenItem
 { 
