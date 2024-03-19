@@ -349,7 +349,12 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
     public void Die()
-    { 
+    {
+        // iteminstance
+        ItemObjectScript item = Instantiate(ItemInfoManager.instance.itemdic[1022]);
+        item.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+        item.InIt(1022,UnityEngine.Random.Range(1,5),ItemType.Item);
+
         gameObject.SetActive(false);
         PoolingManager.instance.ReturnToPool(gameObject);
     }

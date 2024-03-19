@@ -132,6 +132,22 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
         }
         return -1;
     }
+    public int GetCoinCount()
+    {
+        for (int i = 0; i < itemInventory.Count; i++)
+        {
+            if (itemInventory[i].item != null && itemInventory[i].item.id == 1022)
+                return itemInventory[i].count;    
+        }
+        return -1;
+    }
+    public void SetCoin(int _count)
+    {
+        itemInventory[GetItemIndex(JsonParsingManager.instance.ItemDic[1022])].count += _count;
+
+        if (itemInventory[GetItemIndex(JsonParsingManager.instance.ItemDic[1022])].count <= 0)
+            itemInventory[GetItemIndex(JsonParsingManager.instance.ItemDic[1022])].item = null;
+    }
     // 아이템 사용 스크립트 넣기
     public bool TryRemoveItem(int _id, int _count = 1)
     {

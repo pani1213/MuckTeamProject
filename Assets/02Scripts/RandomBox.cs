@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Android;
@@ -21,7 +22,6 @@ public class RandomBox : MonoBehaviour
     public UI_BoxItem UI_BoxItem;
 
     public Animation animations;
-    public BoxCollider BoxCollider;
     public Animator _animator;
     public Transform ItemPos;
 
@@ -47,18 +47,38 @@ public class RandomBox : MonoBehaviour
     public string type;
     public float value;
 
+    public BoxCollider myCollider;
+    public Rigidbody myRigidbody;
     public void InIt(int _boxItemId, string _type, int _value)
     {
         id = _boxItemId;
         type = _type;
         value = _value;
     }
-
-
+    public void SetKinematic(bool _bool)
+    {
+        myRigidbody.isKinematic = _bool;
+    }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("아이템 생성");
+            ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[1022]);
+        }
+
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !isOpened)
         {
+
+
+            if (25 > ItemInfoManager.instance.GetCoinCount())
+            {
+                Debug.Log("돈없음");
+                return;
+            }
+            else
+                ItemInfoManager.instance.SetCoin(-25);
+
             StartCoroutine(PlayAnimationsInOrder());
 
              if (!isOpenChestPlayed) // 열었고
@@ -125,6 +145,7 @@ public class RandomBox : MonoBehaviour
         isItemCreated = false;
         isPlayerNear = false;
         isOpened = false;
+        SetKinematic(true);
         gameObject.SetActive(true); // RandomBox 활성화
 
     }
