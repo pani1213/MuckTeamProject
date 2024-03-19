@@ -24,7 +24,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
     public int RegenAmount = 1;
     public Image damageEffectUI; // Inspector에서 할당
     public float damageEffectDuration = 1.0f; // 데미지 효과 지속 시간
-    public CameraShake cameraShake;
 
     public bool hasLifesteal = false;
     public float lifestealPercentage = 0.1f;
@@ -71,12 +70,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         float MoveSpeed = PlayerMoveAbility.MoveSpeed;
 
         damageEffectUI.enabled = false;
-        GameObject cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
-        if (cameraObject != null)
-        {
-            cameraShake = cameraObject.GetComponent<CameraShake>();
-        }
-
+        
     }
     void Update()
     {
@@ -107,7 +101,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
         StartCoroutine(DamageEffectCoroutine());
-
+        Camera.main.GetComponent<CameraShake>().Shake();
 
         if (PlayerHealth <= 0)
         {
@@ -138,12 +132,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             damageEffectUI.color = new Color(1, 0, 0, alpha);
             time += Time.deltaTime;
             yield return null;
-        }
-
-        // 카메라 흔들림 시작
-        if (cameraShake != null)
-        {
-            cameraShake.Shake();
         }
 
 

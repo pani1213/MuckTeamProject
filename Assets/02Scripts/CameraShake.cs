@@ -4,47 +4,43 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    // 목표: 카메라를 일정 시간동안 랜덤하게 흔들고 싶다.
-    // 필요 속성:
-    // - 쉐이킹 시간
-    public float ShakingDuration = 0.2f;
-    // - 쉐이킹 누적 시간
-    private float _shakingTimer = 0f;
-    // - 쉐이킹 파워
-    public float ShakingPower = 0.025f;
-    // - 쉐이킹 중이냐?
-    private bool _isShaking = false;
+    public float shakeDuration = 0.5f; // 흔들림 지속 시간
+    public float shakeMagnitude = 0.1f; // 흔들림의 강도
 
-    // 구현 순서:
-    // 1. 시간이 흐른다.
-    // 2. 랜덤하게 흔든다.
-    // 3. 일정 시간이 지나면 초기화 
+    private Vector3 originalPos; // 흔들림 시작 전의 원래 위치
+
+    private void Awake()
+    {
+        // 카메라의 원래 로컬 위치를 저장합니다.
+        originalPos = transform.localPosition;
+    }
 
     public void Shake()
     {
-        _shakingTimer = 0f;
-        _isShaking = true;
+        // 흔들림 효과를 시작합니다.
+        StartCoroutine(ShakeCoroutine());
     }
 
-    private void Update()
+    private IEnumerator ShakeCoroutine()
     {
-        if (!_isShaking)
+        float elapsed = 0.0f;
+
+        while (elapsed < shakeDuration)
         {
-            return;
+
+            // 임의의 방향으로 카메라를 조금 움직입니다.
+            Vector3 randomPoint = originalPos + Random.insideUnitSphere * shakeMagnitude;
+
+            // Z축은 변경하지 않습니다(일반적으로 카메라의 앞뒤 이동을 방지하기 위함).
+            randomPoint.z = originalPos.z;
+
+            transform.localPosition = randomPoint;
+
+            elapsed += Time.deltaTime;
+            yield return null; // 다음 프레임까지 기다립니다.
         }
 
-        // 구현 순서:
-        // 1. 시간이 흐른다.
-        _shakingTimer += Time.deltaTime;
-
-        // 2. 랜덤하게 흔든다.
-        transform.position = Vector3.zero + Random.insideUnitSphere * ShakingPower; //insideUnitSphere: 반경이 1인 구 내부의 임의의 점을 반환
-
-        // 3. 일정 시간이 지나면 초기화 
-        if (_shakingTimer >= ShakingDuration)
-        {
-            _isShaking = false;
-            transform.position = Vector3.zero;
-        }
+        // 흔들림이 끝나면 카메라의 위치를 원래대로 복원합니다.
+        transform.localPosition = originalPos;
     }
 }
