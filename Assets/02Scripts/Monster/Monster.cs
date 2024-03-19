@@ -65,9 +65,12 @@ public class Monster : MonoBehaviour, IHitable
 
     private MonsterState _currentState = MonsterState.Idle;
     Rigidbody myRigidbody;
+
     private void Start()
     {
+
         
+
         myRigidbody = GetComponent<Rigidbody>();
         if (SkinnedMeshRenderer != null)
         {
@@ -287,6 +290,9 @@ public class Monster : MonoBehaviour, IHitable
         Bullet bulletdamage = bullet.GetComponent<Bullet>();
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
+        Debug.Log(0);
+        SoundManager.instance.PlayAudio(0);
+
         bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
         Vector3 bulletDir = new Vector3(_target.position.x, _target.position.y +2f, _target.position.z) - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
@@ -349,7 +355,8 @@ public class Monster : MonoBehaviour, IHitable
         }
     }
     public void Die()
-    { 
+    {
+        SoundManager.instance.PlayAudio(2);
         gameObject.SetActive(false);
         PoolingManager.instance.ReturnToPool(gameObject);
     }
