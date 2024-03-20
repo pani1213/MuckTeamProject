@@ -196,13 +196,6 @@ public class Monster : MonoBehaviour, IHitable
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
-
-        if (Vector3.Distance(_target.position, transform.position) <= FindDistance)
-        {
-           // Debug.Log("상태 전환: Comeback -> Trace");
-            _animator.SetTrigger("ComebackToTrace");
-            _currentState = MonsterState.Trace;
-        }
     }
 
     private bool IsObstacleBetween()
