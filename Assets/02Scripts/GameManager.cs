@@ -17,5 +17,6 @@ public class GameManager : Singleton<GameManager>
 
 
         ItemInfoManager.instance.itemInventory[18] = new InvenItem() { item = JsonParsingManager.instance.ItemDic[1002], count = 1 };
+        ItemInfoManager.instance.RefreshQuickSlots();
     }
 }
