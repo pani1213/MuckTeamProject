@@ -85,8 +85,9 @@ public class RandomBox : MonoBehaviour
              if (!isOpenChestPlayed) // ¿­¾ú°í
              {
                  Debug.Log(0);
-                 //animations.Play("OpenChest");
-                 isOpened = true;
+                //animations.Play("OpenChest");
+                SoundManager.instance.PlayAudio("MagicBox");
+                isOpened = true;
 
                  MakePercent(transform.position);
                  ApplyEffect((BoxItemType)id, (int)JsonParsingManager.instance.boxItemDic[id].value);

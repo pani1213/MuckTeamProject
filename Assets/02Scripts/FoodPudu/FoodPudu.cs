@@ -159,7 +159,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             return;
         }
-        //SoundManager.instance.PlayAudio(3);
+        SoundManager.instance.PlayAudio("Blood1");
         // 데미지 입으면 피흘리기
          BloodFactory.Instance.Make(this.transform.position + Vector3.up, damage.Normal,this.gameObject);
 
