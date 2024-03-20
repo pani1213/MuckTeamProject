@@ -13,7 +13,7 @@ public class PlayerHand : MonoBehaviour
 
     public int currentIndex = 0;
     public static int attachmentDamage;
-    float coolTime = 0;
+    float foodCoolTime = 0;
     RaycastHit hit;
 
     private void Update()
@@ -46,14 +46,23 @@ public class PlayerHand : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
+
                 if (AttachItem.item.category == "food")
                 {
-                    FoodActionCoolTime(1);
+                    animator.SetBool("IsEat", true);
+                    FoodActionCoolTime(1.5f);
                 }
                 else if (AttachItem.item.category == "tool" || AttachItem.item.type == 3)
                 {
+                    animator.SetBool("isSwing", true);
                     StartCoroutine(Attack_Coroutione());
                 }
+            }
+            else
+            {
+                animator.SetBool("IsEat", false);
+                animator.SetBool("isSwing", false);
+                foodCoolTime = 0;
             }
         }
         if (hit.collider == null)
@@ -126,18 +135,19 @@ public class PlayerHand : MonoBehaviour
     }
     public void FoodActionCoolTime(float _value)
     {
-        coolTime += Time.deltaTime;
-        if (coolTime > _value)
+        foodCoolTime += Time.deltaTime;
+        if (foodCoolTime > _value)
         {
             Debug.Log("Event");
             UseFoodItem();
 
             if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
+            { 
                 AttachItem = null;
-            
+                DestroyAttchdeObject();
+            }
             ItemInfoManager.instance.RefreshQuickSlots();
-            DestroyAttchdeObject();
-            coolTime = 0;
+            foodCoolTime = 0;
         }
     }
     IEnumerator Attack_Coroutione()
