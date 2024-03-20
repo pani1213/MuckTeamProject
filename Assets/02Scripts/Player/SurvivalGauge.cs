@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
 public class SurvivalGauge : MonoBehaviour, IHitable 
@@ -87,6 +88,11 @@ public class SurvivalGauge : MonoBehaviour, IHitable
                 PlayerHealth = Maxhealth;
             }
         }
+
+        if (IsPlayerDead && Input.anyKey)
+        {
+            SceneManager.LoadScene("StartScene"); // "StartScene"은 이동하려는 씬
+        }
     }
 
     public void ApplyRegen(int amount)
@@ -100,6 +106,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
+        
         StartCoroutine(DamageEffectCoroutine());
         Camera.main.GetComponent<CameraShake>().Shake();
 
@@ -116,6 +123,10 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             
             gameObject.SetActive(false); // 플레이어 사망
             uiOptionPopup.ShowGameOver();
+             /*if (Input.anyKey)
+             {
+                 SceneManager.LoadScene("StartScene");
+             }*/
         }
     }
 
@@ -186,8 +197,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
         if (_hungerTimer >= hungerDecayTime)
         {
-            int previousHunger = PlayerHunger;
-
             PlayerHunger = Mathf.Max(0, PlayerHunger - 1); // 허기 감소
             _hungerTimer = 0; // 타이머 리셋
 
@@ -195,18 +204,11 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             {
                 _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
             }
-            else if (previousHunger == 0 && PlayerHunger > 0)
+            else 
             {
                 _isStamina = true;
             }
         }
-        //if(소비 아이템을 먹었을 때) // **수정해야할 점 (배고픔 0 되었다가 다시 차도 속도느려진다함 코드수정필요)
-        {
-            //_isStamina = true;
-
-            // 여긴 이미 구현완료
-            //PlayerHunger += 아이템 성능; // 아이템 성능만큼 허기 증가
-            //_hungerTimer -= 아이템 성능; // 아이템 성능만큼 허기 타이머 감소
-        }
+        
     }
 }
