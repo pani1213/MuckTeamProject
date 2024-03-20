@@ -186,6 +186,8 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
         if (_hungerTimer >= hungerDecayTime)
         {
+            int previousHunger = PlayerHunger;
+
             PlayerHunger = Mathf.Max(0, PlayerHunger - 1); // 허기 감소
             _hungerTimer = 0; // 타이머 리셋
 
@@ -193,8 +195,12 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             {
                 _isStamina = false; // 허기가 0이 되면 스태미나 회복 비활성화
             }
+            else if (previousHunger == 0 && PlayerHunger > 0)
+            {
+                _isStamina = true;
+            }
         }
-        // if(소비 아이템을 먹었을 때) // **수정해야할 점 (배고픔 0 되었다가 다시 차도 속도느려진다함 코드수정필요)
+        //if(소비 아이템을 먹었을 때) // **수정해야할 점 (배고픔 0 되었다가 다시 차도 속도느려진다함 코드수정필요)
         {
             //_isStamina = true;
 
