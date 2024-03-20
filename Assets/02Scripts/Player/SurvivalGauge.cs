@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 // 플레이어 생존 게이지: 플레이어의 체력,허기, 스태미나
 public class SurvivalGauge : MonoBehaviour, IHitable 
@@ -89,10 +88,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             }
         }
 
-        if (IsPlayerDead && Input.anyKey)
-        {
-            SceneManager.LoadScene("StartScene"); // "StartScene"은 이동하려는 씬
-        }
     }
 
     public void ApplyRegen(int amount)
@@ -120,13 +115,9 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
             mainCamera.transform.parent = null;
             deathCamera.OrbitAroundTarget();
-            
+
             gameObject.SetActive(false); // 플레이어 사망
             uiOptionPopup.ShowGameOver();
-             /*if (Input.anyKey)
-             {
-                 SceneManager.LoadScene("StartScene");
-             }*/
         }
     }
 
