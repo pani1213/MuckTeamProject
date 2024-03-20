@@ -354,8 +354,12 @@ public class Monster : MonoBehaviour, IHitable
         item.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
         item.InIt(1022,UnityEngine.Random.Range(1,5),ItemType.Item);
 
+        
+
         gameObject.SetActive(false);
         PoolingManager.instance.ReturnToPool(gameObject);
+
+        SoundManager.instance.PlayAudio(2);
     }
 
 
