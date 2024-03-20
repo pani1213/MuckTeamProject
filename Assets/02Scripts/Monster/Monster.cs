@@ -196,6 +196,7 @@ public class Monster : MonoBehaviour, IHitable
             _animator.SetTrigger("ComebackToIdle");
             _currentState = MonsterState.Idle;
         }
+        transform.LookAt(StartPosition);
     }
 
     private bool IsObstacleBetween()
@@ -277,7 +278,7 @@ public class Monster : MonoBehaviour, IHitable
         transform.LookAt(_target);
         //Quaternion bulletRotation = Quaternion.Euler(-90f, 0, 0f);
         
-        SoundManager.instance.PlayAudio(0);
+        SoundManager.instance.PlayAudio("Fire");
 
         int randomIndex = Random.Range(0, BulletPrefab.Length);
         GameObject bullet = Instantiate(BulletPrefab[randomIndex], BulletPoint.position, bulletRotation);
@@ -338,7 +339,8 @@ public class Monster : MonoBehaviour, IHitable
         {
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;
-           // monsterRespawner.OnMonsterDeath();
+            SoundManager.instance.PlayAudio("Die");
+            // monsterRespawner.OnMonsterDeath();
         }
         else
         {
@@ -359,7 +361,7 @@ public class Monster : MonoBehaviour, IHitable
         gameObject.SetActive(false);
         PoolingManager.instance.ReturnToPool(gameObject);
 
-        SoundManager.instance.PlayAudio(2);
+        
     }
 
 

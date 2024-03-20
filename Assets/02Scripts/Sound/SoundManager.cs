@@ -29,23 +29,32 @@ public class SoundManager : MonoBehaviour
         bgmSource = bgmObject.AddComponent<AudioSource>();
         bgmSource.loop = true;
         bgmSource.clip = bgmClip;
-        bgmSource.Play();
+       // bgmSource.Play();
 
         // 풀링을 위한 부모 GameObject 생성
         soundPoolParent = new GameObject("SoundPool");
     }
 
-    public void PlayAudio(int index)
+    private AudioClip GetAudioClip(string clipname)
     {
-        if (index < audioClips.Length)
+        for (int i = 0; i < audioClips.Length; i++)
         {
-            GameObject soundObject = GetPooledSoundObject(); // 풀에서 오디오 소스를 가져옴
-            AudioSource audioSource = soundObject.GetComponent<AudioSource>(); // AudioSource 가져옴
-            audioSource.clip = audioClips[index];
-            audioSource.Play();
-
-            StartCoroutine(ReturnToPoolWithDelay(soundObject, audioClips[index].length)); // 재생 후 풀에 반환
+            if (audioClips[i].name == clipname)
+                return audioClips[i];
         }
+        return null;
+    }
+    public void PlayAudio(string clipName)
+    {
+        GameObject soundObject = GetPooledSoundObject(); // 풀에서 오디오 소스를 가져옴
+        AudioSource audioSource = soundObject.GetComponent<AudioSource>(); // AudioSource 가져옴
+        AudioClip newClip = GetAudioClip(clipName);
+        audioSource.clip = newClip;
+
+        audioSource.Play();
+
+        StartCoroutine(ReturnToPoolWithDelay(soundObject, newClip.length)); // 재생 후 풀에 반환
+
     }
 
     private GameObject GetPooledSoundObject()

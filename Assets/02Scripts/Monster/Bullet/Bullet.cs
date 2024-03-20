@@ -15,13 +15,13 @@ public class Bullet : MonoBehaviour
             other.GetComponent<IHitable>().Hit(info);
             _bulletEffect.CreateBulletEffect(transform.position);
             gameObject.SetActive(false);
-            SoundManager.instance.PlayAudio(1);
+            SoundManager.instance.PlayAudio("EffectDestroy");
         }
         else if (other.CompareTag("Ground") || other.CompareTag("MapResource"))
         {
             _bulletEffect.CreateBulletEffect(transform.position);
             gameObject.SetActive(false);
-            SoundManager.instance.PlayAudio(1);
+            SoundManager.instance.PlayAudio("EffectDestroy");
         }
     }
 

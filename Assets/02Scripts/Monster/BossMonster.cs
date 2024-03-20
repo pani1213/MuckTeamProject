@@ -226,54 +226,67 @@ public class BossMonster : MonoBehaviour, IHitable
     }
 
     bool isSetAni = true;
-
+    int a;
     IEnumerator setAnimation_Corutine()
     {
         isSetAni = false;
-        int a = Random.Range(0, 3);
-        Debug.Log(a);
+        a = Random.Range(1, 4);
         if (a == 1)
+        {
             _animator.SetTrigger("Attack1");
+         // Attack1에 대한 사운드 재생
+        }
         if (a == 2)
+        {
             _animator.SetTrigger("Attack2");
+           // Attack2에 대한 사운드 재생
+        }
         if (a == 0)
+        {
             _animator.SetTrigger("Attack3");
+          // Attack3에 대한 사운드 재생
+        }
+
         yield return new WaitForSeconds(1.2f);
         isSetAni = true;
     }
+
+    void PlayAttackSound(int attackIndex)
+    {
+        Debug.Log(attackIndex);
+        switch (attackIndex)
+        {
+            case 1:
+                
+        Debug.Log(1);
+                SoundManager.instance.PlayAudio("Attack1"); // Attack1에 대한 사운드 재생
+                break;
+            case 2:
+        Debug.Log(1);
+                SoundManager.instance.PlayAudio("Attack2"); // Attack2에 대한 사운드 재생
+                break;
+            case 3:
+        Debug.Log(1);
+                SoundManager.instance.PlayAudio("Attack3"); // Attack3에 대한 사운드 재생
+                break;
+        }
+    }
+
     public void MeleeAttack()
     {
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null && Vector3.Distance(_target.position, transform.position) < HitDistance)
         {
+       
+            PlayAttackSound(a);
+            
             transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
+
             _attackTimer = 0f;
 
-
             Debug.Log("때렸다");
-        }
-        // 대상이 있는지 확인
-        if (_target != null)
-        {
-            // 타겟 방향 구하기
-            Vector3 directionToTarget = _target.position - transform.position;
-
-            // 플레이어와 몬스터 사이의 거리 확인
-            float distanceToTarget = directionToTarget.magnitude;
-
-            // 플레이어와의 거리가 공격 범위 안에 있는지 확인
-            if (distanceToTarget <= AttackDistance)
-            {
-                // 공격 범위 내에 있으면 회전 및 이동
-                RotateAndMoveTowardsTarget(directionToTarget);
-            }
-            else
-            {
-                // 공격 범위 밖에 있으면 회전만
-                RotateTowardsTarget(directionToTarget);
-            }
         }
     }
     private void RotateAndMoveTowardsTarget(Vector3 directionToTarget)

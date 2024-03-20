@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/01Scene/JHS_new/NavMesh-Stage.asset.meta
+guid: e21529bc9a65b094c9412c3428152410
+========
+guid: cdb912be851df2d408a30540d0d409ee
+>>>>>>>> c914340f8ca15fd47bf4647886b8a340a8006801:Assets/01Scene/SampleScene_New/NavMesh-Stage.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

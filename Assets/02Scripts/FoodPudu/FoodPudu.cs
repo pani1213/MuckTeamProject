@@ -148,7 +148,7 @@ public class FoodPudu : MonoBehaviour, IHitable
             _knockbackProgress = 0f;
             _currentState = FoodPuduState.Idle; // 상태를 Idle로 변경
             _animator.SetTrigger("DamagedToIdle"); // Idle 애니메이션으로 전환
-           // _animator.Play("Idle", 1);
+            _animator.Play("Idle", 1);
             damagedCooldownTimer = 0f; // 대기 시간 초기화
         }
     }
@@ -159,7 +159,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             return;
         }
-
+        //SoundManager.instance.PlayAudio(3);
         // 데미지 입으면 피흘리기
          BloodFactory.Instance.Make(this.transform.position + Vector3.up, damage.Normal,this.gameObject);
 
@@ -183,11 +183,11 @@ public class FoodPudu : MonoBehaviour, IHitable
             _currentState = FoodPuduState.Damaged;
             _animator.SetTrigger("IdleToDamaged");
             _animator.Play("Damaged", 1);
+            _animator.SetFloat("AnimationSpeed", 0.1f);
         }
 
         damagedCooldownTimer = damagedCooldownDuration;
     }
-
 
     private Coroutine _dieCoroutine;
 
