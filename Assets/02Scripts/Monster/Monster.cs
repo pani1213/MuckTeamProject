@@ -65,9 +65,11 @@ public class Monster : MonoBehaviour, IHitable
 
     private MonsterState _currentState = MonsterState.Idle;
     Rigidbody myRigidbody;
+
+    
     private void Start()
     {
-        
+
         myRigidbody = GetComponent<Rigidbody>();
         if (SkinnedMeshRenderer != null)
         {
@@ -281,6 +283,8 @@ public class Monster : MonoBehaviour, IHitable
         bulletRotation *= Quaternion.Euler(-90f, 0f, 0f); // x값을 -90으로 설정
         transform.LookAt(_target);
         //Quaternion bulletRotation = Quaternion.Euler(-90f, 0, 0f);
+        
+        SoundManager.instance.PlayAudio(0);
 
         int randomIndex = Random.Range(0, BulletPrefab.Length);
         GameObject bullet = Instantiate(BulletPrefab[randomIndex], BulletPoint.position, bulletRotation);
@@ -290,6 +294,8 @@ public class Monster : MonoBehaviour, IHitable
         bulletdamage.info = new DamageInfo(DamageType.Normal, Damage);
         Vector3 bulletDir = new Vector3(_target.position.x, _target.position.y +2f, _target.position.z) - BulletPoint.position;
         rb.velocity = bulletDir.normalized * BulletSpeed;
+
+        
         //Debug.Log(rb.velocity);
 
         Debug.Log("때렸다!");

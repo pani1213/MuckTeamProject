@@ -857,7 +857,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: b2f196a250004594698c3f5091240172, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f8723207e6be1b848ab58ef44dcfb57c, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &20805396
 Transform:
@@ -77913,7 +77913,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 727804720669223391, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
       propertyPath: _monsterType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 727804720669223391, guid: 054340cff533f124bae91e56c74b5aa8, type: 3}
       propertyPath: monsterRespawner
