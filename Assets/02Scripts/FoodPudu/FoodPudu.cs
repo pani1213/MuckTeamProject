@@ -148,7 +148,7 @@ public class FoodPudu : MonoBehaviour, IHitable
             _knockbackProgress = 0f;
             _currentState = FoodPuduState.Idle; // 상태를 Idle로 변경
             _animator.SetTrigger("DamagedToIdle"); // Idle 애니메이션으로 전환
-           // _animator.Play("Idle", 1);
+            _animator.Play("Idle", 1);
             damagedCooldownTimer = 0f; // 대기 시간 초기화
         }
     }
@@ -159,7 +159,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             return;
         }
-
+        //SoundManager.instance.PlayAudio(3);
         // 데미지 입으면 피흘리기
          BloodFactory.Instance.Make(this.transform.position + Vector3.up, damage.Normal,this.gameObject);
 
@@ -167,10 +167,6 @@ public class FoodPudu : MonoBehaviour, IHitable
 
         if (FoodPuduHealth <= 0)
         {
-            ItemObjectScript item = Instantiate(ItemInfoManager.instance.itemdic[1013]);
-            item.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
-            item.InIt(1022, UnityEngine.Random.Range(1, 5), ItemType.Item);
-
             // 체력이 0 이하가 되면 사망 처리
             _animator.SetTrigger("IdleToDie"); // Idle에서 Die로 직접 전환
             _animator.Play("Die", 1);
@@ -181,13 +177,12 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             // 데미지 상태로 전환하고 애니메이션 트리거 설정
             _currentState = FoodPuduState.Damaged;
-            _animator.SetTrigger("IdleToDamaged");
             _animator.Play("Damaged", 1);
+            _animator.SetTrigger("IdleToDamaged");
         }
 
         damagedCooldownTimer = damagedCooldownDuration;
     }
-
 
     private Coroutine _dieCoroutine;
 
@@ -225,7 +220,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         gameObject.SetActive(true); // Pudu 활성화
 
         HealthSliderUI.gameObject.SetActive(true); // HealthSliderUI를 활성화
-
+        _animator.Play("Idle", 1);
     }
 
 }

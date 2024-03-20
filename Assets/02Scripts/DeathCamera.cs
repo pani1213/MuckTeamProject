@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathCamera : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class DeathCamera : MonoBehaviour
         {
             // 카메라를 대상 주위로 회전시키기
             OrbitAroundTarget();
+
+            if (Input.anyKey)
+            {
+                SceneManager.LoadScene("StartScene");
+            }
         }
     }
 

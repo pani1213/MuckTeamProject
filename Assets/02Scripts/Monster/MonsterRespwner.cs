@@ -31,6 +31,11 @@ public class MonsterRespawner : MonoBehaviour
         // 무한 반복하면서 몬스터 소환
         while (true)
         {
+            if (!GameTimeManager.isNight)
+            { 
+                yield return null;
+                continue;
+            }
             // 플레이어 위치가 설정되어 있을 때만 몬스터를 생성함
             if (playerTransform != null)
             {
