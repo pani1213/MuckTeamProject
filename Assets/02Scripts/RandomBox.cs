@@ -59,6 +59,7 @@ public class RandomBox : MonoBehaviour
     {
         myRigidbody.isKinematic = _bool;
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))

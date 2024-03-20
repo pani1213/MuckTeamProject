@@ -148,6 +148,7 @@ public class FoodPudu : MonoBehaviour, IHitable
             _knockbackProgress = 0f;
             _currentState = FoodPuduState.Idle; // 상태를 Idle로 변경
             _animator.SetTrigger("DamagedToIdle"); // Idle 애니메이션으로 전환
+           // _animator.Play("Idle", 1);
             damagedCooldownTimer = 0f; // 대기 시간 초기화
         }
     }
@@ -168,6 +169,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             // 체력이 0 이하가 되면 사망 처리
             _animator.SetTrigger("IdleToDie"); // Idle에서 Die로 직접 전환
+            _animator.Play("Die", 1);
             isDead = true;
             _currentState = FoodPuduState.Die;
         }
@@ -176,6 +178,7 @@ public class FoodPudu : MonoBehaviour, IHitable
             // 데미지 상태로 전환하고 애니메이션 트리거 설정
             _currentState = FoodPuduState.Damaged;
             _animator.SetTrigger("IdleToDamaged");
+            _animator.Play("Damaged", 1);
         }
 
         damagedCooldownTimer = damagedCooldownDuration;
