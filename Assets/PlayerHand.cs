@@ -16,6 +16,7 @@ public class PlayerHand : MonoBehaviour
     float foodCoolTime = 0;
     RaycastHit hit;
 
+    public bool isAttackDiley = true;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -54,6 +55,7 @@ public class PlayerHand : MonoBehaviour
                 else if (AttachItem.item.category == "tool" || AttachItem.item.type == 3)
                 {
                     animator.SetBool("IsSwing", true);
+                    if(isAttackDiley)
                     StartCoroutine(Attack_Coroutione());
                 }
             }
@@ -150,9 +152,13 @@ public class PlayerHand : MonoBehaviour
     }
     IEnumerator Attack_Coroutione()
     {
+        isAttackDiley = false;
+        Debug.Log(1);
         BoxCollider.enabled = true;
-        yield return new WaitForSeconds(SurvivalGauge.Instance.AttackSpeed);
+        yield return new WaitForFixedUpdate();
         BoxCollider.enabled = false;
+        yield return new WaitForSeconds(SurvivalGauge.Instance.AttackSpeed);
+        isAttackDiley = true;
     }
     public void AttachMentItem(int _itemIndex)
     {
