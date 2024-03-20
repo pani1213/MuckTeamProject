@@ -43,8 +43,12 @@ public class PlayerAttackRange : MonoBehaviour
                 if (JsonParsingManager.instance.resourceDictionary[obj.id].type == PlayerHand.AttachItem.item.type)
                     obj.Hit(new DamageInfo(DamageType.Normal, SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage));
 
+                Debug.Log(PlayerHand.AttachItem.item.type);
+                Debug.Log(obj.id);
                 if ((obj.id == 1001 || obj.id == 1002) && PlayerHand.AttachItem.item.type == 3)
                     obj.Hit(new DamageInfo(DamageType.Normal, SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage));
+
+                
             }
         }
     }
