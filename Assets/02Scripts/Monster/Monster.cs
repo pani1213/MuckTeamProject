@@ -265,6 +265,7 @@ public class Monster : MonoBehaviour, IHitable
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
             Debug.Log("¶§·È´Ù");
+            SoundManager.instance.PlayAudio("MeleeAttack");
 
             transform.LookAt(_target);
         }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public enum SecneNames
 {
     Lobby,  // 0
-    Main    // 1
+    Main,   // 1
 }
 public class LobbyScene : MonoBehaviour
 {

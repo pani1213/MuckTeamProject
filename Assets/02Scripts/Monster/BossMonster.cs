@@ -51,6 +51,8 @@ public class BossMonster : MonoBehaviour, IHitable
     public float rotationSpeed = 5f; // 회전 속도
     private bool isRotating = false; // 회전 상태
 
+    public EndingScene _endingScene;
+
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
@@ -69,6 +71,8 @@ public class BossMonster : MonoBehaviour, IHitable
         _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
         FirstPosition = StartPosition;
+
+
 
         Init();
     }
@@ -234,20 +238,20 @@ public class BossMonster : MonoBehaviour, IHitable
         if (a == 1)
         {
             _animator.SetTrigger("Attack1");
-         // Attack1에 대한 사운드 재생
+
         }
         if (a == 2)
         {
             _animator.SetTrigger("Attack2");
-           // Attack2에 대한 사운드 재생
+
         }
-        if (a == 0)
+        if (a == 3)
         {
             _animator.SetTrigger("Attack3");
-          // Attack3에 대한 사운드 재생
+
         }
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.5f);
         isSetAni = true;
     }
 
@@ -257,16 +261,16 @@ public class BossMonster : MonoBehaviour, IHitable
         switch (attackIndex)
         {
             case 1:
-                
-        Debug.Log(1);
+
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack1"); // Attack1에 대한 사운드 재생
                 break;
             case 2:
-        Debug.Log(1);
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack2"); // Attack2에 대한 사운드 재생
                 break;
             case 3:
-        Debug.Log(1);
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack3"); // Attack3에 대한 사운드 재생
                 break;
         }
@@ -277,9 +281,9 @@ public class BossMonster : MonoBehaviour, IHitable
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null && Vector3.Distance(_target.position, transform.position) < HitDistance)
         {
-       
+
             PlayAttackSound(a);
-            
+
             transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
@@ -366,15 +370,32 @@ public class BossMonster : MonoBehaviour, IHitable
         {
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;
+
+
+                Debug.Log(_endingScene != null);
+            // _endingScene 변수가 null이 아닌 경우에만 OnBossDeath 메서드를 호출합니다.
+            if (_endingScene != null)
+            {
+                Debug.Log("ending start");
+                _endingScene.OnBossDeath();
+            }
+            else
+            {
+                Debug.LogError("EndingScene 스크립트가 초기화되지 않았습니다!");
+            }
+
+
         }
         if (Vector3.Distance(transform.position, _target.position) >= _moveDistanceRemaining)
         {
             _moveDistanceRemaining = MoveDistance;
         }
     }
+
     public void Die()
     {
         StartCoroutine(DestroyAfterDeath(_bossDestroyTime));
+
     }
 
     IEnumerator DestroyAfterDeath(float delay)
@@ -383,4 +404,5 @@ public class BossMonster : MonoBehaviour, IHitable
 
         gameObject.SetActive(false);
     }
+
 }
