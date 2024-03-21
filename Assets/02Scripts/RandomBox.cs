@@ -24,6 +24,7 @@ public class RandomBox : MonoBehaviour
     public Animation animations;
     public Animator _animator;
     public Transform ItemPos;
+    public GameObject spheresExplodePrefab;
 
     public GameObject Avocado;
     public GameObject Bread;
@@ -80,16 +81,22 @@ public class RandomBox : MonoBehaviour
             else
                 ItemInfoManager.instance.SetCoin(-25);
 
+            // 상자 열림 이펙트 생성
+            if (spheresExplodePrefab != null)
+            {
+                Instantiate(spheresExplodePrefab, transform.position, Quaternion.identity);
+            }
+
             StartCoroutine(PlayAnimationsInOrder());
 
              if (!isOpenChestPlayed) // 열었고
              {
                  Debug.Log(0);
-                 //animations.Play("OpenChest");
-                 isOpened = true;
-                SoundManager.instance.PlayAudio("BoxOpen");
+                //animations.Play("OpenChest");
+                SoundManager.instance.PlayAudio("MagicBox");
+                isOpened = true;
 
-                MakePercent(transform.position);
+                 MakePercent(transform.position);
                  ApplyEffect((BoxItemType)id, (int)JsonParsingManager.instance.boxItemDic[id].value);
                  isOpenChestPlayed = true;
              }
@@ -111,7 +118,7 @@ public class RandomBox : MonoBehaviour
     }
 
     IEnumerator PlayAnimationsInOrder()
-    {
+    {        
         // "OpenChest" 애니메이션 재생
         animations.Play("OpenChest");
         // 첫 번째 애니메이션의 길이만큼 대기
