@@ -121,7 +121,6 @@ public class FoodPudu : MonoBehaviour, IHitable
            _characterController.Move(returnDirection * MoveSpeed * Time.deltaTime);
 
             }
-
     }
 
     private void Damaged()
@@ -177,8 +176,9 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             // 데미지 상태로 전환하고 애니메이션 트리거 설정
             _currentState = FoodPuduState.Damaged;
-            _animator.Play("Damaged", 1);
             _animator.SetTrigger("IdleToDamaged");
+            _animator.Play("Damaged", 1);
+            
         }
 
         damagedCooldownTimer = damagedCooldownDuration;
@@ -220,7 +220,6 @@ public class FoodPudu : MonoBehaviour, IHitable
         gameObject.SetActive(true); // Pudu 활성화
 
         HealthSliderUI.gameObject.SetActive(true); // HealthSliderUI를 활성화
-        _animator.Play("Idle", 1);
     }
 
 }
