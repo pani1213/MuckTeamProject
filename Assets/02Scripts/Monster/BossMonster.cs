@@ -382,8 +382,10 @@ public class BossMonster : MonoBehaviour, IHitable
         if (_isDead) // 보스가 죽으면 더이상 딜이 들어가지 않음
             return;
 
-        Vector3 monsterblood = new Vector3(0f, 5f, 0f);
-        BloodFactory.Instance.Make(this.transform.position + monsterblood, damage.Normal, this.gameObject);
+        Vector3 heightOffset = new Vector3(0f, 5f, 0f);
+        
+        BloodFactory.Instance.Make(damage.Position, damage.Normal, this.gameObject);
+        
         Health -= damage.Amount;
         SoundManager.instance.PlayAudio("BearHit2");
         if (Health <= 0)
