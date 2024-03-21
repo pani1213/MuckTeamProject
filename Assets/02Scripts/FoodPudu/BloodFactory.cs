@@ -33,7 +33,7 @@ public class BloodFactory : MonoBehaviour
             if (bloodObject.activeInHierarchy == false)
             {
                 //bloodObject.GetComponent<DestroyTime>()?.Init();
-                bloodObject.transform.position = bloodyAnimal.transform.position + Vector3.up;
+                bloodObject.transform.position = position;
                 bloodObject.transform.forward = normal;
                 bloodObject.SetActive(true);
                 StartCoroutine(Wait1second(0.5f, bloodObject));

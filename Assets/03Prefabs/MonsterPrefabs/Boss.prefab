@@ -146,6 +146,8 @@ MonoBehaviour:
   BulletSpeed: 10
   rotationSpeed: 5
   _endingScene: {fileID: 0}
+  _isDead: 0
+  bloodEffectPrefab: {fileID: 1088890643411381280, guid: f82cabe39bddc0e4f9ff28e26fb33961, type: 3}
 --- !u!111 &8739840807330972418
 Animation:
   m_ObjectHideFlags: 0
