@@ -728,7 +728,7 @@ MonoBehaviour:
   MoveDistance: 40
   AttackDistance: 30
   Damage: 20
-  AttackDelay: 1
+  AttackDelay: 3
   BulletPrefab:
   - {fileID: 1692517446758730, guid: 08fd1b80cc24cc8439f45fda3c558255, type: 3}
   - {fileID: 1537593200154216, guid: 25093a0593dc83043a7bc17ebba0e95d, type: 3}
