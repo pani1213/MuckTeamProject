@@ -109,7 +109,8 @@ public class FoodPudu : MonoBehaviour, IHitable
 
         // 전방으로만 이동
         Vector3 move = transform.forward * MoveSpeed * Time.deltaTime;
-            
+        move.y = 0;
+
             _characterController.Move(move); // 이동
 
             // 시작 위치로부터 일정 거리 이상 멀어지면 원래 위치로 돌아가기
@@ -117,7 +118,8 @@ public class FoodPudu : MonoBehaviour, IHitable
             {
             // 시작 위치로 되돌아가는 로직 추가
             Vector3 returnDirection = (StartPosition - transform.position).normalized;
-            
+            returnDirection.y = 0;
+
            _characterController.Move(returnDirection * MoveSpeed * Time.deltaTime);
 
             }
