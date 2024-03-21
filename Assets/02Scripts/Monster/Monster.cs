@@ -11,7 +11,8 @@ public enum MonsterState
     Comeback,
     Attack,
     Damaged,
-    Die
+    Die,
+    Dead
 }
 public enum MonsterType
 {

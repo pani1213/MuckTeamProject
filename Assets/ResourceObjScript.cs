@@ -17,12 +17,12 @@ public class ResourceObjScript : MonoBehaviour, IHitable
     {
         hp -= damageInfo.Amount;
         Debug.Log(hp);
+        SoundManager.instance.PlayAudio("TreeHit");
         if (hp <= 0)
         {
             ResourceSpawnManager.instance.spawns[index].isSpawn = false;
 
-            DropItems();
-
+            DropItems();        
             Destroy(gameObject);
         }
     }

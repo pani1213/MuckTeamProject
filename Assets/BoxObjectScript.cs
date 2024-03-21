@@ -17,6 +17,7 @@ public class BoxObjectScript : MonoBehaviour
 
             for (int i = 0; i < 9; i++)
                 ItemInfoManager.instance.boxDictionary[id].Add(new InvenItem());
+
         }
     }
     public void OpenBoxAction()
@@ -24,6 +25,7 @@ public class BoxObjectScript : MonoBehaviour
         ItemInfoManager.instance.currentBoxId = id;
         ItemInfoManager.instance.boxGameobject.InIt();
         ItemInfoManager.instance.inventoryController.InIt(true);
+        SoundManager.instance.PlayAudio("BoxOpen");
 
     }
 

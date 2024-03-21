@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
             SoundManager.instance.PlayAudio("EffectDestroy");
         }
-        else if (other.CompareTag("Ground") || other.CompareTag("MapResource"))
+        else if (other.CompareTag("Ground"))
         {
             _bulletEffect.CreateBulletEffect(transform.position);
             gameObject.SetActive(false);

@@ -53,6 +53,8 @@ public class BossMonster : MonoBehaviour, IHitable
 
     public EndingScene _endingScene;
 
+    public bool _isDead = false;
+
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
@@ -365,26 +367,25 @@ public class BossMonster : MonoBehaviour, IHitable
     }
     public void Hit(DamageInfo damage)
     {
+        if (_isDead) // 보스가 죽으면 더이상 딜이 들어가지 않음
+            return;
         Health -= damage.Amount;
         if (Health <= 0)
         {
+            _isDead = true;
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;
 
+            SoundManager.instance.PlayAudio("BearDie");
 
-                Debug.Log(_endingScene != null);
-            // _endingScene 변수가 null이 아닌 경우에만 OnBossDeath 메서드를 호출합니다.
             if (_endingScene != null)
             {
-                Debug.Log("ending start");
                 _endingScene.OnBossDeath();
             }
             else
             {
                 Debug.LogError("EndingScene 스크립트가 초기화되지 않았습니다!");
             }
-
-
         }
         if (Vector3.Distance(transform.position, _target.position) >= _moveDistanceRemaining)
         {

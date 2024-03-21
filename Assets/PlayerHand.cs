@@ -20,11 +20,11 @@ public class PlayerHand : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
-        { 
+        {
             AttachMentItem(18);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
-        { 
+        {
             AttachMentItem(19);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -32,15 +32,15 @@ public class PlayerHand : MonoBehaviour
             AttachMentItem(20);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
-        { 
+        {
             AttachMentItem(21);
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
-        { 
+        {
             AttachMentItem(22);
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
-        { 
+        {
             AttachMentItem(23);
         }
         if (AttachItem != null)
@@ -55,8 +55,8 @@ public class PlayerHand : MonoBehaviour
                 else if (AttachItem.item.category == "tool" || AttachItem.item.type == 3)
                 {
                     animator.SetBool("IsSwing", true);
-                    if(isAttackDiley)
-                    StartCoroutine(Attack_Coroutione());
+                    if (isAttackDiley)
+                        StartCoroutine(Attack_Coroutione());
                 }
             }
             else
@@ -83,14 +83,17 @@ public class PlayerHand : MonoBehaviour
                 if (hit.collider.CompareTag("Item"))
                 {
                     hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
+                    SoundManager.instance.PlayAudio("ItemDrop");
                 }
                 if (hit.collider.CompareTag("BoxItem"))
                 {
                     Debug.Log("boxItem get");
                     //hit.collider.gameObject.GetComponent<RandomBoxItem>().GetItem();
+                    
                 }
                 if (hit.collider.CompareTag("InvenBox"))
                 {
+                    SoundManager.instance.PlayAudio("BoxOpen");
                     hit.collider.gameObject.GetComponent<BoxObjectScript>().OpenBoxAction();
                     Debug.Log("boxItem get");
                 }
@@ -105,19 +108,19 @@ public class PlayerHand : MonoBehaviour
                     ItemObjectScript itemObj = Instantiate(ItemInfoManager.instance.itemdic[AttachItem.item.id]);
 
                     if (AttachItem.item.id == 1018) // box ¿œ∂ß
-                    { 
+                    {
                         itemObj.InIt(ItemType.box);
                         itemObj.GetComponent<BoxObjectScript>().InIt();
                     }
                     if (AttachItem.item.id == 1020 || AttachItem.item.id == 1019)
                         itemObj.InIt(ItemType.build);
                     if (AttachItem.item.id == 1021)
-                    { 
+                    {
                         itemObj.InIt(ItemType.brazier);
                         itemObj.GetComponent<BrazierObject>().InIt();
                     }
 
-                    itemObj.transform.SetPositionAndRotation(buildObj.transform.position,buildObj.transform.rotation);
+                    itemObj.transform.SetPositionAndRotation(buildObj.transform.position, buildObj.transform.rotation);
                     if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                         AttachItem = null;
 
@@ -144,7 +147,7 @@ public class PlayerHand : MonoBehaviour
 
             if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                 AttachItem = null;
-            
+
             ItemInfoManager.instance.RefreshQuickSlots();
             DestroyAttchdeObject();
             foodCoolTime = 0;
@@ -154,6 +157,7 @@ public class PlayerHand : MonoBehaviour
     {
         isAttackDiley = false;
         Debug.Log(1);
+        SoundManager.instance.PlayAudio("Swing");
         BoxCollider.enabled = true;
         yield return new WaitForFixedUpdate();
         BoxCollider.enabled = false;
@@ -167,19 +171,18 @@ public class PlayerHand : MonoBehaviour
         attachmentDamage = 0;
         DestroyAttchdeObject();
         if (ItemInfoManager.instance.itemInventory[_itemIndex].item != null)
-        { 
+        {
             AttachItem = ItemInfoManager.instance.itemInventory[_itemIndex];
             attachmentDamage = ItemInfoManager.instance.itemInventory[_itemIndex].item.damage;
             currentIndex = _itemIndex;
             if (AttachItem.item.category != "build")
-            { 
+            {
                 GameObject obj = Instantiate(GetItemPrefab(ItemInfoManager.instance.itemInventory[_itemIndex].item.id.ToString()), AttachPosition.transform);
-            obj.transform.localPosition = Vector3.zero;
-            obj.GetComponent<Rigidbody>().useGravity = false;
-            obj.GetComponent<BoxCollider>().isTrigger = true;
-            obj.layer = 2;
+                obj.transform.localPosition = Vector3.zero;
+                obj.GetComponent<Rigidbody>().useGravity = false;
+                obj.GetComponent<BoxCollider>().isTrigger = true;
+                obj.layer = 2;
 
-           
             }
         }
         else
@@ -198,7 +201,7 @@ public class PlayerHand : MonoBehaviour
     }
     private GameObject GetItemPrefab(string _id)
     {
-        for (int i = 0;i < ItemInfoManager.instance.ItemPrefabs.Count; i++)
+        for (int i = 0; i < ItemInfoManager.instance.ItemPrefabs.Count; i++)
         {
             if (ItemInfoManager.instance.ItemPrefabs[i].name == _id)
                 return ItemInfoManager.instance.ItemPrefabs[i].gameObject;
