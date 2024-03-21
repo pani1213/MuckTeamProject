@@ -111,7 +111,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         Vector3 move = transform.forward * MoveSpeed * Time.deltaTime;
         move.y = 0;
 
-            _characterController.Move(move); // 이동
+        _characterController.Move(move); // 이동
 
             // 시작 위치로부터 일정 거리 이상 멀어지면 원래 위치로 돌아가기
             if (Vector3.Distance(transform.position, StartPosition) > MoveDistance)
@@ -136,7 +136,6 @@ public class FoodPudu : MonoBehaviour, IHitable
             Vector3 dir = transform.position - _mainCharacter.position; // dir: 방향
             dir.y = 0;
             dir.Normalize();
-
             _knockbackEndPosition = transform.position + dir * KnockbackPower; // 넉백 됐을 때 위치
         }
         _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
