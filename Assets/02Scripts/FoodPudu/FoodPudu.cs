@@ -42,7 +42,7 @@ public class FoodPudu : MonoBehaviour, IHitable
     private Vector3 _knockbackEndPosition;
     private const float KNOCKBACK_DURATION = 0.2f;
     private float _knockbackProgress = 0f;
-    public float KnockbackPower = 1.2f;
+    public float KnockbackPower = 0.8f;
 
     private FoodPuduState _currentState = FoodPuduState.Idle;
     public GameObject bloodEffectPrefab;
