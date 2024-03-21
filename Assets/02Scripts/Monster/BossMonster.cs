@@ -55,6 +55,8 @@ public class BossMonster : MonoBehaviour, IHitable
 
     public bool _isDead = false;
 
+    public GameObject bloodEffectPrefab; //피 프리팹
+
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
@@ -121,6 +123,16 @@ public class BossMonster : MonoBehaviour, IHitable
             //Debug.Log("상태 전환: Idle -> Trace");
             _animator.SetTrigger("IdleToTrace");
             _currentState = MonsterState.Trace;
+            StartCoroutine(PlayTraceSound());
+        }
+    }
+    IEnumerator PlayTraceSound()
+    {
+        Debug.Log(00);
+        while (_currentState == MonsterState.Trace)
+        {
+            SoundManager.instance.PlayAudio("BearTrace");
+            yield return new WaitForSeconds(3);
         }
     }
 
@@ -148,7 +160,7 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
-
+            
         }
         transform.LookAt(_target);
 
@@ -204,7 +216,7 @@ public class BossMonster : MonoBehaviour, IHitable
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
-        {
+        { 
             _attackTimer = 0f;
             //Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
@@ -221,7 +233,7 @@ public class BossMonster : MonoBehaviour, IHitable
                 StartCoroutine(setAnimation_Corutine());
             if (_monsterType == MonsterType.Melee)
             {
-
+                
             }
 
             if (_monsterType == MonsterType.LongRange)
@@ -369,7 +381,11 @@ public class BossMonster : MonoBehaviour, IHitable
     {
         if (_isDead) // 보스가 죽으면 더이상 딜이 들어가지 않음
             return;
+
+        Vector3 monsterblood = new Vector3(0f, 5f, 0f);
+        BloodFactory.Instance.Make(this.transform.position + monsterblood, damage.Normal, this.gameObject);
         Health -= damage.Amount;
+        SoundManager.instance.PlayAudio("BearHit2");
         if (Health <= 0)
         {
             _isDead = true;
