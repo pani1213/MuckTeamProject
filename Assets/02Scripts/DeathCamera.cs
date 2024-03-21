@@ -19,10 +19,7 @@ public class DeathCamera : MonoBehaviour
             // 카메라를 대상 주위로 회전시키기
             OrbitAroundTarget();
 
-            if (Input.anyKey)
-            {
-                SceneManager.LoadScene("StartScene");
-            }
+            StartCoroutine(End_Coroutine());
         }
     }
 
@@ -44,4 +41,14 @@ public class DeathCamera : MonoBehaviour
         // 카메라가 무덤을 바라보도록 설정
         transform.LookAt(target.position);
     }
+
+    private IEnumerator End_Coroutine()
+    {
+        yield return new WaitForSeconds(2);
+
+        if (Input.anyKey)
+        {
+            SceneManager.LoadScene("StartScene");
+        }
+    } 
 }
