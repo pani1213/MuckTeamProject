@@ -280,7 +280,7 @@ public class Monster : MonoBehaviour, IHitable
         transform.LookAt(_target);
         //Quaternion bulletRotation = Quaternion.Euler(-90f, 0, 0f);
         
-        SoundManager.instance.PlayAudio("fire");
+        SoundManager.instance.PlayAudio("Fire");
 
         int randomIndex = Random.Range(0, BulletPrefab.Length);
         GameObject bullet = Instantiate(BulletPrefab[randomIndex], BulletPoint.position, bulletRotation);
