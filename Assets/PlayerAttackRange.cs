@@ -8,14 +8,8 @@ public class PlayerAttackRange : MonoBehaviour
     public PlayerHand PlayerHand;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(333);
-
         if (PlayerHand.AttachItem != null && (PlayerHand.AttachItem.item.category == "tool" || PlayerHand.AttachItem.item.id == 1002))
         {
-            Debug.Log(222);
-            Debug.Log(other.tag);
-            Debug.Log(other.name);
-            
             if (other.CompareTag("Monster"))
             {
                 Monster monster = null;
@@ -36,9 +30,8 @@ public class PlayerAttackRange : MonoBehaviour
                 damageInfo.Position = (other.transform.position + transform.position) / 2f;
                 other.gameObject.transform.parent.GetComponent<BossMonster>().Hit(damageInfo);
                 SurvivalGauge.Instance.PlayerHealth += (int)((SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage) * SurvivalGauge.Instance.lifestealPercentage);
-
             }
-            if (other.CompareTag("Pudu"))
+                if (other.CompareTag("Pudu"))
             {
                 Debug.Log("Pudu");
                 other.gameObject.transform.GetComponent<FoodPudu>().Hit(new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage)));

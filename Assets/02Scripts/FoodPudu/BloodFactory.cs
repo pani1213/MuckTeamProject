@@ -42,7 +42,7 @@ public class BloodFactory : MonoBehaviour
             }
         }
     }
-    public IEnumerator Wait1second(float delay,GameObject hurtobject)
+    public IEnumerator Wait1second(float delay, GameObject hurtobject)
     {
         yield return new WaitForSeconds(delay);
         hurtobject.SetActive(false);
