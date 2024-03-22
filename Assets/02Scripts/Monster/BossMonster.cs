@@ -132,7 +132,7 @@ public class BossMonster : MonoBehaviour, IHitable
         while (_currentState == MonsterState.Trace)
         {
             SoundManager.instance.PlayAudio("BearTrace");
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(4);
         }
     }
 
@@ -221,6 +221,7 @@ public class BossMonster : MonoBehaviour, IHitable
             //Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
             _currentState = MonsterState.Trace;
+            SoundManager.instance.PlayAudio("BaerAttackToTrace");
             return;
         }
 
@@ -363,8 +364,8 @@ public class BossMonster : MonoBehaviour, IHitable
     {
         _animator.SetTrigger("DamagedToTrace");
         _currentState = MonsterState.Trace;
-
         StartCoroutine(AttackAfterDelay(AttackDelay));
+        
     }
     private IEnumerator AttackAfterDelay(float delay)
     {
@@ -375,6 +376,7 @@ public class BossMonster : MonoBehaviour, IHitable
         {
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
+            
         }
     }
     public void Hit(DamageInfo damage)
