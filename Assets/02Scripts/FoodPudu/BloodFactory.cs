@@ -33,7 +33,7 @@ public class BloodFactory : MonoBehaviour
             if (bloodObject.activeInHierarchy == false)
             {
                 //bloodObject.GetComponent<DestroyTime>()?.Init();
-                bloodObject.transform.position = bloodyAnimal.transform.position + Vector3.up;
+                bloodObject.transform.position = position;
                 bloodObject.transform.forward = normal;
                 bloodObject.SetActive(true);
                 StartCoroutine(Wait1second(0.5f, bloodObject));
@@ -42,7 +42,7 @@ public class BloodFactory : MonoBehaviour
             }
         }
     }
-    public IEnumerator Wait1second(float delay,GameObject hurtobject)
+    public IEnumerator Wait1second(float delay, GameObject hurtobject)
     {
         yield return new WaitForSeconds(delay);
         hurtobject.SetActive(false);

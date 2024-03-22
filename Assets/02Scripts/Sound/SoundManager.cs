@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
         bgmSource = bgmObject.AddComponent<AudioSource>();
         bgmSource.loop = true;
         bgmSource.clip = bgmClip;
-       // bgmSource.Play();
+        bgmSource.Play();
 
         // 풀링을 위한 부모 GameObject 생성
         soundPoolParent = new GameObject("SoundPool");

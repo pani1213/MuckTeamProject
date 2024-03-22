@@ -51,6 +51,12 @@ public class BossMonster : MonoBehaviour, IHitable
     public float rotationSpeed = 5f; // 회전 속도
     private bool isRotating = false; // 회전 상태
 
+    public EndingScene _endingScene;
+
+    public bool _isDead = false;
+
+    public GameObject bloodEffectPrefab; //피 프리팹
+
     private MonsterState _currentState = MonsterState.Idle;
     private void Start()
     {
@@ -69,6 +75,8 @@ public class BossMonster : MonoBehaviour, IHitable
         _navMeshAgent.updateRotation = false;
         StartPosition = transform.position;
         FirstPosition = StartPosition;
+
+
 
         Init();
     }
@@ -115,6 +123,16 @@ public class BossMonster : MonoBehaviour, IHitable
             //Debug.Log("상태 전환: Idle -> Trace");
             _animator.SetTrigger("IdleToTrace");
             _currentState = MonsterState.Trace;
+            StartCoroutine(PlayTraceSound());
+        }
+    }
+    IEnumerator PlayTraceSound()
+    {
+        Debug.Log(00);
+        while (_currentState == MonsterState.Trace)
+        {
+            SoundManager.instance.PlayAudio("BearTrace");
+            yield return new WaitForSeconds(3);
         }
     }
 
@@ -142,7 +160,7 @@ public class BossMonster : MonoBehaviour, IHitable
             Debug.Log("상태 전환: Trace -> Attack");
             _animator.SetTrigger("TraceToAttack");
             _currentState = MonsterState.Attack;
-
+            
         }
         transform.LookAt(_target);
 
@@ -198,7 +216,7 @@ public class BossMonster : MonoBehaviour, IHitable
     {
         // 전이 사건: 플레이어와 거리가 공격 범위보다 멀어지면 다시 Trace
         if (Vector3.Distance(_target.position, transform.position) > AttackDistance)
-        {
+        { 
             _attackTimer = 0f;
             //Debug.Log("상태 전환: Attack -> Trace");
             _animator.SetTrigger("AttackToTrace");
@@ -215,7 +233,7 @@ public class BossMonster : MonoBehaviour, IHitable
                 StartCoroutine(setAnimation_Corutine());
             if (_monsterType == MonsterType.Melee)
             {
-
+                
             }
 
             if (_monsterType == MonsterType.LongRange)
@@ -234,20 +252,20 @@ public class BossMonster : MonoBehaviour, IHitable
         if (a == 1)
         {
             _animator.SetTrigger("Attack1");
-         // Attack1에 대한 사운드 재생
+
         }
         if (a == 2)
         {
             _animator.SetTrigger("Attack2");
-           // Attack2에 대한 사운드 재생
+
         }
-        if (a == 0)
+        if (a == 3)
         {
             _animator.SetTrigger("Attack3");
-          // Attack3에 대한 사운드 재생
+
         }
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.5f);
         isSetAni = true;
     }
 
@@ -257,16 +275,16 @@ public class BossMonster : MonoBehaviour, IHitable
         switch (attackIndex)
         {
             case 1:
-                
-        Debug.Log(1);
+
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack1"); // Attack1에 대한 사운드 재생
                 break;
             case 2:
-        Debug.Log(1);
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack2"); // Attack2에 대한 사운드 재생
                 break;
             case 3:
-        Debug.Log(1);
+                Debug.Log(1);
                 SoundManager.instance.PlayAudio("Attack3"); // Attack3에 대한 사운드 재생
                 break;
         }
@@ -277,9 +295,9 @@ public class BossMonster : MonoBehaviour, IHitable
         IHitable playerHitable = _target.GetComponent<IHitable>();
         if (playerHitable != null && Vector3.Distance(_target.position, transform.position) < HitDistance)
         {
-       
+
             PlayAttackSound(a);
-            
+
             transform.LookAt(_target);
             DamageInfo damageInfo = new DamageInfo(DamageType.Normal, Damage);
             playerHitable.Hit(damageInfo);
@@ -361,20 +379,42 @@ public class BossMonster : MonoBehaviour, IHitable
     }
     public void Hit(DamageInfo damage)
     {
+        if (_isDead) // 보스가 죽으면 더이상 딜이 들어가지 않음
+            return;
+
+        Vector3 heightOffset = new Vector3(0f, 5f, 0f);
+        
+        BloodFactory.Instance.Make(damage.Position, damage.Normal, this.gameObject);
+        
         Health -= damage.Amount;
+        SoundManager.instance.PlayAudio("BearHit2");
         if (Health <= 0)
         {
+            _isDead = true;
             _animator.SetTrigger("Die");
             _currentState = MonsterState.Die;
+
+            SoundManager.instance.PlayAudio("BearDie");
+
+            if (_endingScene != null)
+            {
+                _endingScene.OnBossDeath();
+            }
+            else
+            {
+                Debug.LogError("EndingScene 스크립트가 초기화되지 않았습니다!");
+            }
         }
         if (Vector3.Distance(transform.position, _target.position) >= _moveDistanceRemaining)
         {
             _moveDistanceRemaining = MoveDistance;
         }
     }
+
     public void Die()
     {
         StartCoroutine(DestroyAfterDeath(_bossDestroyTime));
+
     }
 
     IEnumerator DestroyAfterDeath(float delay)
@@ -383,4 +423,5 @@ public class BossMonster : MonoBehaviour, IHitable
 
         gameObject.SetActive(false);
     }
+
 }

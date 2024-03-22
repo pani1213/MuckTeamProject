@@ -42,7 +42,7 @@ public class FoodPudu : MonoBehaviour, IHitable
     private Vector3 _knockbackEndPosition;
     private const float KNOCKBACK_DURATION = 0.2f;
     private float _knockbackProgress = 0f;
-    public float KnockbackPower = 1.2f;
+    public float KnockbackPower = 0.8f;
 
     private FoodPuduState _currentState = FoodPuduState.Idle;
     public GameObject bloodEffectPrefab;
@@ -109,19 +109,20 @@ public class FoodPudu : MonoBehaviour, IHitable
 
         // 전방으로만 이동
         Vector3 move = transform.forward * MoveSpeed * Time.deltaTime;
-            
-            _characterController.Move(move); // 이동
+        move.y = 0;
+
+        _characterController.Move(move); // 이동
 
             // 시작 위치로부터 일정 거리 이상 멀어지면 원래 위치로 돌아가기
             if (Vector3.Distance(transform.position, StartPosition) > MoveDistance)
             {
             // 시작 위치로 되돌아가는 로직 추가
             Vector3 returnDirection = (StartPosition - transform.position).normalized;
-            
+            returnDirection.y = 0;
+
            _characterController.Move(returnDirection * MoveSpeed * Time.deltaTime);
 
             }
-
     }
 
     private void Damaged()
@@ -135,7 +136,6 @@ public class FoodPudu : MonoBehaviour, IHitable
             Vector3 dir = transform.position - _mainCharacter.position; // dir: 방향
             dir.y = 0;
             dir.Normalize();
-
             _knockbackEndPosition = transform.position + dir * KnockbackPower; // 넉백 됐을 때 위치
         }
         _knockbackProgress += Time.deltaTime / KNOCKBACK_DURATION;
@@ -159,7 +159,7 @@ public class FoodPudu : MonoBehaviour, IHitable
         {
             return;
         }
-        //SoundManager.instance.PlayAudio(3);
+        //SoundManager.instance.PlayAudio("Blood1");
         // 데미지 입으면 피흘리기
          BloodFactory.Instance.Make(this.transform.position + Vector3.up, damage.Normal,this.gameObject);
 
@@ -167,10 +167,6 @@ public class FoodPudu : MonoBehaviour, IHitable
 
         if (FoodPuduHealth <= 0)
         {
-            ItemObjectScript item = Instantiate(ItemInfoManager.instance.itemdic[1013]);
-            item.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
-            item.InIt(1022, UnityEngine.Random.Range(1, 5), ItemType.Item);
-
             // 체력이 0 이하가 되면 사망 처리
             _animator.SetTrigger("IdleToDie"); // Idle에서 Die로 직접 전환
             _animator.Play("Die", 1);
@@ -183,7 +179,7 @@ public class FoodPudu : MonoBehaviour, IHitable
             _currentState = FoodPuduState.Damaged;
             _animator.SetTrigger("IdleToDamaged");
             _animator.Play("Damaged", 1);
-            _animator.SetFloat("AnimationSpeed", 0.1f);
+            
         }
 
         damagedCooldownTimer = damagedCooldownDuration;
@@ -225,7 +221,6 @@ public class FoodPudu : MonoBehaviour, IHitable
         gameObject.SetActive(true); // Pudu 활성화
 
         HealthSliderUI.gameObject.SetActive(true); // HealthSliderUI를 활성화
-
     }
 
 }

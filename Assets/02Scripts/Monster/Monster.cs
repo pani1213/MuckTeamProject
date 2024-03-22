@@ -11,7 +11,8 @@ public enum MonsterState
     Comeback,
     Attack,
     Damaged,
-    Die
+    Die,
+    Dead
 }
 public enum MonsterType
 {
@@ -265,6 +266,7 @@ public class Monster : MonoBehaviour, IHitable
             playerHitable.Hit(damageInfo);
             _attackTimer = 0f;
             Debug.Log("¶§·È´Ù");
+            SoundManager.instance.PlayAudio("MeleeAttack");
 
             transform.LookAt(_target);
         }
