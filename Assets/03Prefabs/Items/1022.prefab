@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,8 +105,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.09766403, y: 0.08457956, z: 0.018135814}
-  m_Center: {x: 0, y: 0, z: 0.009067907}
+  m_Size: {x: 0.09766403, y: 0.08457956, z: 0.084236175}
+  m_Center: {x: 0, y: -2.7622452e-17, z: 0.0068899873}
 --- !u!114 &-6355773554027598080
 MonoBehaviour:
   m_ObjectHideFlags: 0

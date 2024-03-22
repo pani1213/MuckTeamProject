@@ -51,12 +51,12 @@ public class PlayerMoveAbility : MonoBehaviour
     }
     private void Update()
     {
-            Move();
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                CameraRotation();       // 마우스 위아래(Y) 움직임
-                CharacterRotation();   // 마우스 좌우(X) 움직임
-            }
+        Move();
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            CameraRotation();       // 마우스 위아래(Y) 움직임
+            CharacterRotation();   // 마우스 좌우(X) 움직임
+        }
         ClampPlayerPosition();
 
     }
@@ -64,7 +64,11 @@ public class PlayerMoveAbility : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
-
+        Debug.Log(h);
+        if (h != 0 || v != 0)
+            PlayFootStepSound();
+        else
+            stepCooltime = 0f;
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
         cameraForward.y = 0; // 수직 이동을 제거하여 순수한 수평 이동만을 고려합니다.
@@ -150,5 +154,18 @@ public class PlayerMoveAbility : MonoBehaviour
 
         // 플레이어의 위치를 업데이트합니다.
         transform.position = clampedPosition;
+    }
+    float stepCooltime= 1;
+    private void PlayFootStepSound()
+    {
+        stepCooltime += Time.deltaTime;
+
+        if (stepCooltime > 0.5f )
+        {
+            Debug.Log(0);
+            SoundManager.instance.PlayAudio("footstep");
+            stepCooltime = 0;
+        }
+
     }
 }

@@ -25,6 +25,8 @@ public class ResourceObjScript : MonoBehaviour, IHitable
 
             Destroy(gameObject);
         }
+
+      
     }
     public void DropItems()
     {

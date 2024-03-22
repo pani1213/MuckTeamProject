@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerHand : MonoBehaviour
 {
-    public Text informationText_UI;
     public Animator animator;
     public BoxCollider BoxCollider;
     public GameObject AttachPosition;
@@ -68,16 +67,23 @@ public class PlayerHand : MonoBehaviour
         }
         if (hit.collider == null)
         {
-            informationText_UI.text = "";
+            GameManager.instance._noticeText.text= "";
         }
         else
         {
             if (hit.collider.CompareTag("Item"))
-                informationText_UI.text = "Prees 'E' key Get Item";
+                GameManager.instance._noticeText.text = "Prees 'E' key Get Item";
             else if (hit.collider.CompareTag("InvenBox"))
-                informationText_UI.text = "Prees 'E' key Open the Box";
+                GameManager.instance._noticeText.text = "Prees 'E' key Open the Box";
+            else if (hit.collider.CompareTag("Box"))
+            {
+                if (25 > ItemInfoManager.instance.GetCoinCount())
+                    GameManager.instance._noticeText.text = $"There are not enough coins, have : {ItemInfoManager.instance.GetCoinCount()}";
+                else
+                    GameManager.instance._noticeText.text = $"Open boxes to get random effects!, have : {ItemInfoManager.instance.GetCoinCount()}";
+            }
             else
-                informationText_UI.text = "";
+                GameManager.instance._noticeText.text = "";
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (hit.collider.CompareTag("Item"))
@@ -141,7 +147,6 @@ public class PlayerHand : MonoBehaviour
         {
             Debug.Log("Event");
             UseFoodItem();
-
             if (--ItemInfoManager.instance.itemInventory[currentIndex].count <= 0)
                 AttachItem = null;
             
@@ -153,7 +158,6 @@ public class PlayerHand : MonoBehaviour
     IEnumerator Attack_Coroutione()
     {
         isAttackDiley = false;
-        Debug.Log(1);
         BoxCollider.enabled = true;
         yield return new WaitForFixedUpdate();
         BoxCollider.enabled = false;
