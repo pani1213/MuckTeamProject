@@ -64,11 +64,11 @@ public class PlayerMoveAbility : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal"); // 좌우(방향키 왼쪽/오른쪽) 
         float v = Input.GetAxis("Vertical"); // 수직(방향키 위/아래) 
-        Debug.Log(h);
-        if (h != 0 || v != 0)
-            PlayFootStepSound();
-        else
-            stepCooltime = 0f;
+     
+       // if (h != 0 || v != 0)
+       //     PlayFootStepSound();
+       // else
+       //     stepCooltime = 0f;
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 cameraRight = Camera.main.transform.right;
         cameraForward.y = 0; // 수직 이동을 제거하여 순수한 수평 이동만을 고려합니다.
