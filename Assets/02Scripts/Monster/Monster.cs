@@ -349,6 +349,7 @@ public class Monster : MonoBehaviour, IHitable
             // 넉백 상태로 전환
             _animator.SetTrigger("Damaged"); // 넉백 애니메이션 실행
             _currentState = MonsterState.Damaged;
+            SoundManager.instance.PlayAudio("MonsterHit");
         }
     }
     public void Die()
