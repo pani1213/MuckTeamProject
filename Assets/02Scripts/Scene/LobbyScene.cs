@@ -13,6 +13,6 @@ public class LobbyScene : MonoBehaviour
     public void OnClickStart()
     {
         Debug.Log("게임시작");
-        SceneManager.LoadScene((int)SecneNames.Main);
+        SceneManager.LoadScene(1);
     }
 }

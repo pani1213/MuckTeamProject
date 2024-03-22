@@ -26,9 +26,11 @@ public class PlayerAttackRange : MonoBehaviour
             if (other.CompareTag("Boss"))
             {
                 Debug.Log(00);
-                other.gameObject.transform.parent.GetComponent<BossMonster>().Hit(new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage)));
+                DamageInfo damageInfo = new DamageInfo(DamageType.Normal, (SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage));
+                damageInfo.Position = (other.transform.position + transform.position) / 2f;
+                other.gameObject.transform.parent.GetComponent<BossMonster>().Hit(damageInfo);
                 SurvivalGauge.Instance.PlayerHealth += (int)((SurvivalGauge.Instance.Damage + PlayerHand.attachmentDamage) * SurvivalGauge.Instance.lifestealPercentage);
-
+              
             }
             if (other.CompareTag("Pudu"))
             {

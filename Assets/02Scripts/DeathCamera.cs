@@ -44,11 +44,14 @@ public class DeathCamera : MonoBehaviour
 
     private IEnumerator End_Coroutine()
     {
+        
         yield return new WaitForSeconds(2);
 
         if (Input.anyKey)
         {
-            SceneManager.LoadScene("StartScene");
+            UnityEditor.EditorApplication.isPlaying = false;
+
+
         }
     } 
 }

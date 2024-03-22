@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartSceneController : MonoBehaviour
@@ -28,7 +29,10 @@ public class StartSceneController : MonoBehaviour
             cooltime = 0;
         }
 
-
+        if (Input.anyKey)
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
 }

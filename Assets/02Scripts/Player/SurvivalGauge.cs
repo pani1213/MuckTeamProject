@@ -98,7 +98,10 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
     public void Hit(DamageInfo damageInfo)
     {
-        
+
+   
+
+
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
         
@@ -107,8 +110,14 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
         if (PlayerHealth <= 0)
         {
+            if (!IsPlayerDead)
+            {
+                SoundManager.instance.bgmSource.clip = SoundManager.instance.GetAudioClip("GameOver");
+                SoundManager.instance.bgmSource.Play();
+            }
             // 무덤이 만들어지고 / 공중으로 카메라가 가서 위에서 비춤(카메라는 DeathCamera 스크립트에서)
             // GameOver UI 띄우기
+
             IsPlayerDead = true;
             GameObject tombstoneInstance = Instantiate(tombstonePrefab, transform.position, Quaternion.identity);
             deathCamera.target = tombstoneInstance.transform;
@@ -136,7 +145,7 @@ public class SurvivalGauge : MonoBehaviour, IHitable
             yield return null;
         }
 
-
+        yield return null;
         // 데미지 효과 종료 후 알파 값을 다시 0으로 설정
         damageEffectUI.color = new Color(1, 0, 0, 0);
         damageEffectUI.enabled = false;

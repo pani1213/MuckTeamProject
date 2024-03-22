@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager instance;
 
-    private AudioSource bgmSource;
+    public AudioSource bgmSource;
     private GameObject soundPoolParent;
     private Queue<GameObject> soundObjectPool = new Queue<GameObject>();
 
@@ -35,7 +35,7 @@ public class SoundManager : MonoBehaviour
         soundPoolParent = new GameObject("SoundPool");
     }
 
-    private AudioClip GetAudioClip(string clipname)
+    public AudioClip GetAudioClip(string clipname)
     {
         for (int i = 0; i < audioClips.Length; i++)
         {
