@@ -98,10 +98,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
 
     public void Hit(DamageInfo damageInfo)
     {
-
-   
-
-
         PlayerHealth -= damageInfo.Amount - Defense;
         // 플레이어 데미지 입을 때마다 빨간 원이 점점 커지게끔 UI
         
