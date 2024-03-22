@@ -168,6 +168,10 @@ public class FoodPudu : MonoBehaviour, IHitable
         if (FoodPuduHealth <= 0)
         {
             // 체력이 0 이하가 되면 사망 처리
+            ItemObjectScript item = Instantiate(ItemInfoManager.instance.itemdic[1013]);
+            item.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            item.InIt(1022, UnityEngine.Random.Range(1, 5), ItemType.Item);
+
             _animator.SetTrigger("IdleToDie"); // Idle에서 Die로 직접 전환
             _animator.Play("Die", 1);
             isDead = true;

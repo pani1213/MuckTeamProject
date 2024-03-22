@@ -139,7 +139,7 @@ public class ItemInfoManager : Singleton<ItemInfoManager>
             if (itemInventory[i].item != null && itemInventory[i].item.id == 1022)
                 return itemInventory[i].count;    
         }
-        return 0;
+        return -1;
     }
     public void SetCoin(int _count)
     {

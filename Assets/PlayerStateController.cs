@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerStateController : MonoBehaviour
 {
     public Image hp, hungry, stamina;
-    public Text coinText;
     public void SetHp()
     {
         float PlayerHealth = SurvivalGauge.Instance.PlayerHealth;
@@ -37,15 +35,11 @@ public class PlayerStateController : MonoBehaviour
 
         stamina.fillAmount = normalizedStamina;
     }
-    public void SetCoin()
-    {
-        coinText.text = $": {ItemInfoManager.instance.GetCoinCount()}";
-    }
+
     private void Update()
     {
         SetHp();
         SetHungry();
         SetStamina();
-        SetCoin();
     }
 }

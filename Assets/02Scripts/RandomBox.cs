@@ -75,7 +75,7 @@ public class RandomBox : MonoBehaviour
 
             if (25 > ItemInfoManager.instance.GetCoinCount())
             {
-                GameManager.instance.cameraShake.Shake();
+                Debug.Log("µ·¾øÀ½");
                 return;
             }
             else
