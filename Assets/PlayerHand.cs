@@ -82,6 +82,7 @@ public class PlayerHand : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Item"))
                 {
+                    Debug.Log("itemGet");
                     hit.collider.gameObject.GetComponent<ItemObjectScript>().GetItem();
                     SoundManager.instance.PlayAudio("ItemDrop");
                 }
@@ -156,7 +157,6 @@ public class PlayerHand : MonoBehaviour
     IEnumerator Attack_Coroutione()
     {
         isAttackDiley = false;
-        Debug.Log(1);
         SoundManager.instance.PlayAudio("Swing");
         BoxCollider.enabled = true;
         yield return new WaitForFixedUpdate();

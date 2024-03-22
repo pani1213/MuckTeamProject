@@ -122,12 +122,10 @@ public class InventoryController : MonoBehaviour
                 if (_currentSeletItemSlot.InvenItem.item != null && _dropItemSlot.InvenItem.item != null &&
                     _currentSeletItemSlot.InvenItem.item.id == _dropItemSlot.InvenItem.item.id)
                 {
-                    Debug.Log("ÇÕÄ§");
                     ItemInfoManager.instance.ItemMerge(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
                 }
                 else
                 { 
-                    Debug.Log("¹Ù²Þ");
                     ItemInfoManager.instance.InvenSwap(_currentSeletItemSlot.InvenItem, _dropItemSlot.InvenItem);
                 }
                 if (_currentSeletItemSlot != null)

@@ -16,6 +16,11 @@ public class ResourceObjScript : MonoBehaviour, IHitable
     public void Hit(DamageInfo damageInfo)
     {
         hp -= damageInfo.Amount;
+
+       GameObject vfx= VFX_PoolManager.instance.GetPoolObject("VFX");
+        vfx.SetActive(true);
+        vfx.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+
         Debug.Log(hp);
         SoundManager.instance.PlayAudio("TreeHit");
         if (hp <= 0)

@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class BuildController : MonoBehaviour
     public CreateButtonSlot buttonSlot;
     public List<CreateButtonSlot> buttonSlots;
     public GameObject gridObject;
-
+    public GameObject bubbleText;
     private int id;
     public void InIt(int _id)
     {
@@ -36,7 +35,10 @@ public class BuildController : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.I))
+        {
+            bubbleText.SetActive(false);
             Exit();
+        }
 
 
     }

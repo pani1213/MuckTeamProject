@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartSceneController : MonoBehaviour
 {
+
+
+    private void Start()
+    {
+       
+        Application.targetFrameRate = 60;
+        Screen.SetResolution(1600, 900, false);
+    }
 
     public Text press_Text_UI;
     string pressText = "Press Ani Key";

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -181,8 +179,6 @@ public class SurvivalGauge : MonoBehaviour, IHitable
         Stamina = Mathf.Clamp(Stamina, 0, MaxStamina); // 값이 넘어가지 않도록
         _characterController.Move(dir * Time.deltaTime);
     }
-
-
     private void UpdateHunger()
     {
         // Hunger를 _hungerTimer가 증가함에 따라(100까지) 100에서 0이 되도록 하기

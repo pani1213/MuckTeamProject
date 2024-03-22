@@ -27,8 +27,13 @@ public class ScrollController : MonoBehaviour
     {
         if (endText != null && endText.transform.localPosition.y >= 30)
         {
-            if(Input.anyKey)
-                UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+
+
             Debug.Log(0);
             return;
         }

@@ -63,7 +63,7 @@ public class RandomBox : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && Input.GetKeyDown(KeyCode.H))
         {
             Debug.Log("아이템 생성");
             ItemInfoManager.instance.InsertItemInventory(JsonParsingManager.instance.ItemDic[1022]);

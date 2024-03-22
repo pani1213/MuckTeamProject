@@ -14,6 +14,7 @@ TagManager:
   - Tree
   - Pudu
   - InvenBox
+  - VFX
   layers:
   - Default
   - TransparentFX

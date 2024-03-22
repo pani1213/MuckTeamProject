@@ -20,10 +20,8 @@ public class SoundManager : MonoBehaviour
             instance = this;
         }
         else if (instance != this)
-        {
             Destroy(gameObject);
-        }
-
+        
         // BGM AudioSource ¼³Á¤
         GameObject bgmObject = new GameObject("BGM");
         bgmSource = bgmObject.AddComponent<AudioSource>();
